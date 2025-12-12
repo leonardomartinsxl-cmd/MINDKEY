@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Relatório Premium — MindKey</title>
+<style>
+  :root{
+    --bg:#f5f7fa; --card:#fff; --accent:#6A4DFF; --accent2:#1ED4C5; --muted:#334155;
+    --glass: rgba(11,17,30,0.04);
+    --maxw:1000px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,system-ui,Arial;background:linear-gradient(180deg,var(--bg),#eef6ff);color:#0b1220}
+  .wrap{max-width:var(--maxw);margin:28px auto;padding:18px}
+  header{display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(90deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;color:white;font-weight:800}
+  h1{margin:0;font-size:22px}
+  .meta{color:var(--muted);font-size:13px;margin-top:6px}
+  details{background:var(--card);padding:16px;border-radius:12px;margin-top:14px;box-shadow:0 6px 18px rgba(16,24,40,0.04);border:1px solid rgba(15,23,42,0.03)}
+  summary{font-weight:700;cursor:pointer;outline:none}
+  .row{display:flex;gap:12px;align-items:center}
+  .badge{display:inline-block;padding:6px 10px;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent2));color:white;font-weight:700}
+  .small{color:var(--muted);font-size:14px}
+  ul{margin:8px 0 0 18px}
+  .code{background:#0b1220;color:#e6ffee;padding:12px;border-radius:8px;white-space:pre-wrap;margin-top:10px;overflow:auto}
+  .actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .btn{background:linear-gradient(90deg,var(--accent),var(--accent2));color:white;padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:700}
+  .btn-outline{background:transparent;border:1px solid rgba(11,17,30,0.06);padding:9px 12px;border-radius:10px;cursor:pointer;color:var(--muted)}
+  .grid-4{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:12px}
+  .panel{background:linear-gradient(180deg,rgba(106,77,255,0.03),rgba(30,212,197,0.02));padding:12px;border-radius:10px}
+  .label{font-size:13px;color:#334155}
+  footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
+  @media(max-width:820px){.row{flex-direction:column;align-items:flex-start}}
+</style>
+</head>
+<body>
+<div class="wrap" role="main">
+  <header>
+    <div class="brand">
+      <div class="logo">MK</div>
+      <div>
+        <h1>Relatório Premium — MindKey</h1>
+        <div id="subtitle" class="meta">Relatório profundo de autoconhecimento</div>
+      </div>
+    </div>
+    <div class="row">
+      <button id="printBtn" class="btn-outline">Salvar / Imprimir (PDF)</button>
+      <button id="copyAll" class="btn">Copiar resumo</button>
+    </div>
+  </header>
+
+  <section id="intro" style="margin-top:16px">
+    <div class="panel">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div class="label">Nome do produto</div>
+          <div style="font-weight:700;font-size:18px">MindKey — Mapa de Tendências Comportamentais (Premium)</div>
+          <div class="small">Relatório místico-científico — versão detalhada</div>
+        </div>
+        <div style="text-align:right">
+          <div class="label">Perfil principal</div>
+          <div id="profileMain" style="font-weight:800;font-size:18px">--</div>
+          <div id="profileSub" class="small">--</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1 PERFIS -->
+  <details open>
+    <summary>🔥 1. Perfis Base (DISC + Energia)</summary>
+    <div style="margin-top:10px">
+      <div class="grid-4">
+        <div><div class="label">Dominância</div><div id="barD">--</div></div>
+        <div><div class="label">Influência</div><div id="barI">--</div></div>
+        <div><div class="label">Estabilidade</div><div id="barS">--</div></div>
+        <div><div class="label">Conformidade</div><div id="barC">--</div></div>
+      </div>
+
+      <div style="margin-top:12px" id="percDesc" class="small">Descrição gráfica do perfil</div>
+    </div>
+  </details>
+
+  <!-- 2 Interpretação -->
+  <details>
+    <summary>🔮 2. Interpretação Mística + Científica</summary>
+    <div style="margin-top:10px">
+      <div id="archetype" style="font-weight:800;font-size:16px">O Desbravador Visionário</div>
+      <p id="archetypeDesc" class="small">Descrição do arquétipo — combinação de fogo e ar, etc.</p>
+    </div>
+  </details>
+
+  <!-- 3 Pontos Fortes -->
+  <details>
+    <summary>🌟 3. Pontos Fortes</summary>
+    <ul id="strengths"></ul>
+  </details>
+
+  <!-- 4 Pontos Cegos -->
+  <details>
+    <summary>⚠️ 4. Pontos Cegos</summary>
+    <ul id="blindspots"></ul>
+  </details>
+
+  <!-- 5 Frases -->
+  <details>
+    <summary>❤️ 5. Você em Frases</summary>
+    <ul id="phrases"></ul>
+  </details>
+
+  <!-- 6 Decisão -->
+  <details>
+    <summary>🧠 6. Tomada de Decisão</summary>
+    <div id="decisionDesc" class="small"></div>
+  </details>
+
+  <!-- 7 Pressão -->
+  <details>
+    <summary>💥 7. Comportamento sob Pressão</summary>
+    <div id="pressureDesc" class="small"></div>
+  </details>
+
+  <!-- 8 Areas -->
+  <details>
+    <summary>🧩 8. Áreas da Vida (Trabalho / Amor / Amizades / etc.)</summary>
+    <div style="margin-top:10px">
+      <h4>Trabalho</h4><p id="workDesc" class="small"></p>
+      <h4>Vida Amorosa</h4><p id="loveDesc" class="small"></p>
+      <h4>Amizades</h4><p id="friendsDesc" class="small"></p>
+      <h4>Conflitos</h4><p id="conflictDesc" class="small"></p>
+      <h4>Liderança</h4><p id="leadDesc" class="small"></p>
+      <h4>Aprendizagem</h4><p id="learnDesc" class="small"></p>
+    </div>
+  </details>
+
+  <!-- 9 Mapa Social -->
+  <details>
+    <summary>🌌 9. Mapa Social — quem combina & quem entra em conflito</summary>
+    <div style="margin-top:10px">
+      <p id="socialMap" class="small"></p>
+    </div>
+  </details>
+
+  <!-- 10 Motivadores -->
+  <details>
+    <summary>🚀 10. Motivadores</summary>
+    <ul id="motivators"></ul>
+  </details>
+
+  <!-- 11 Gatilhos -->
+  <details>
+    <summary>🧨 11. Gatilhos Emocionais Negativos</summary>
+    <ul id="triggers"></ul>
+  </details>
+
+  <!-- 12 Plano -->
+  <details>
+    <summary>🎯 12. Plano de Evolução (passos práticos)</summary>
+    <ul id="plan"></ul>
+  </details>
+
+  <!-- 13 Guia de Comunicação -->
+  <details>
+    <summary>🔵 13. Guia de Comunicação (como falar com esta pessoa)</summary>
+    <div id="commGuide" class="small"></div>
+  </details>
+
+  <!-- 14 Narrativa -->
+  <details>
+    <summary>🧿 14. Narrativa Profunda</summary>
+    <p id="narrative" class="small"></p>
+  </details>
+
+  <!-- PROMPTS -->
+  <details>
+    <summary>🤖 16. Prompt para IA (BÁSICO)</summary>
+    <div class="code" id="promptBasic"></div>
+    <div class="actions">
+      <button id="copyBasic" class="btn">Copiar Prompt Básico</button>
+      <button id="openChatBasic" class="btn-outline">Abrir no ChatGPT (nova aba)</button>
+    </div>
+  </details>
+
+  <details>
+    <summary>🤖 17. Prompt para IA (AVANÇADO)</summary>
+    <div class="code" id="promptAdvanced"></div>
+    <div class="actions">
+      <button id="copyAdv" class="btn">Copiar Prompt Avançado</button>
+      <button id="openChatAdv" class="btn-outline">Abrir no ChatGPT (nova aba)</button>
+    </div>
+  </details>
+
+  <footer>
+    <div class="small" style="margin-top:18px">MindKey — Mapa de Tendências Comportamentais (versão demo). Esta ferramenta não substitui avaliação profissional.</div>
+  </footer>
+</div>
+
+<script>
+/*
+  relatorio_premium.html
+  - lê query params (primary, counts) para preencher automaticamente
+  - se não houver params, usa exemplo demo
+  - oferece copiar prompts e abrir no ChatGPT (prepara URL com prompt)
+  - botão imprimir usa window.print()
+*/
+
+/* UTIL: ler query string */
+function qs() {
+  const p = {};
+  location.search.slice(1).split('&').forEach(s=>{
+    if(!s) return;
+    const [k,v] = s.split('=').map(decodeURIComponent);
+    p[k]=v;
+  });
+  return p;
+}
+
+/* DADOS PADRÃO (exemplo se não passar params) */
+const demo = {
+  primaryLabel: "Visionário (Dominância alta)",
+  secondaryLabel: "Influente (moderado)",
+  counts: {A:8,B:5,C:4,D:3},
+  archetype: "O Desbravador Visionário",
+  archetypeDesc: "Visão, iniciativa e foco em impacto. Fogo + Ar. Transforma caos em movimento.",
+  strengths: [
+    "Coragem decisional — age antes de esperar consenso",
+    "Liderança instintiva — pessoas te seguem pela clareza",
+    "Alta tolerância a risco calculado",
+    "Visão estratégica e velocidade mental"
+  ],
+  blindspots: [
+    "Impaciência que gera atritos",
+    "Dificuldade em delegar com confiança",
+    "Tendência a sobrecarregar-se",
+    "Comunicação direta demais em contextos sensíveis"
+  ],
+  phrases: [
+    "Resolvo em minutos o que demora dias",
+    "O que me irrita é falta de clareza",
+    "Meu radar é encontrar oportunidades"
+  ],
+  decision: "Rápida, com ênfase em resultado. Prefere opções diretas com prós/cons.",
+  pressure: "Aumenta intensidade, foca em soluções e corta o desnecessário.",
+  work: "Brilha com metas claras, autonomia e pressão positiva.",
+  love: "Ama em ações; precisa de parceria forte e que respeite seu ritmo.",
+  friends: "Poucos, profundos e leais. Prefere qualidade a quantidade.",
+  conflict: "Enfrenta, corta ambiguidade e busca solução imediata.",
+  lead: "Líder visionário, exige resultados, inspira por exemplo.",
+  learn: "Aprende fazendo; prefere experimentação.",
+  socialMap: "Combina com perfis estáveis e organizados; conflito com indecisos ou excessivamente emocionais.",
+  motivators: ["Liberdade","Desafio","Autonomia","Impacto"],
+  triggers: ["Lentidão","Burocracia","Falta de clareza"],
+  plan: [
+    "Delegue 1 tarefa por semana com instruções claras",
+    "Pratique 5 min de pausa antes de decisões grandes",
+    "Peça feedback estruturado (1 pergunta por vez)"
+  ],
+  narrative: "Você transforma realidade com presença e ação — não segue, abre caminhos."
+};
+
+/* monta prompt básico e avançado (texto enriquecido) */
+function makePrompts(primaryLabel, explanation, countsObj){
+  const basic = `You are an assistant helping a person with the following behavioral profile:
+- Primary: ${primaryLabel}
+- Key traits: ${explanation}
+- Quick data: ${JSON.stringify(countsObj)}
+
+Communication preferences: short answers, clear logic, actionable steps, no fluff.
+When giving guidance, adapt to this person’s energy: bold, objective, strategic, high-tempo.
+
+When asked, provide:
+1) What they are feeling;
+2) What likely motivated the other person;
+3) A ready-to-say sentence the user can use;
+4) A single practical action to do now.
+
+Situation: [descreva aqui]`;
+  const adv = `ACT AS: Personalized assistant for a user with the following deep profile:
+ARCHETYPE: ${primaryLabel} / ${explanation}
+TRAITS: decisive; strategic; fast-thinking; action-oriented; low tolerance for inefficiency.
+
+COMMUNICATION RULES:
+- Bullet points or 1-3 step actions only.
+- No superfluous text; be direct.
+- Present options with pros/cons.
+- Provide a 1-line script the user can say.
+
+Example output format:
+- Feeling:
+- Motivation of other:
+- Script:
+- Action (1 step):
+
+Now respond to: [descreva a situação]`;
+
+  return {basic, adv};
+}
+
+/* preenche a tela com dados */
+function fillAll(data){
+  document.getElementById('profileMain').textContent = data.primaryLabel || '—';
+  document.getElementById('profileSub').textContent = data.secondaryLabel ? ('Secundário: ' + data.secondaryLabel) : '';
+  document.getElementById('barD').textContent = 'Dominância: ' + (data.counts?.A ?? '-') + ' pts';
+  document.getElementById('barI').textContent = 'Influência: ' + (data.counts?.B ?? '-');
+  document.getElementById('barS').textContent = 'Estabilidade: ' + (data.counts?.C ?? '-');
+  document.getElementById('barC').textContent = 'Conformidade: ' + (data.counts?.D ?? '-');
+  const percDesc = `Visão: Dominância alto; Influência moderada; Estabilidade baixa; Conformidade baixa. Breakdown: ${JSON.stringify(data.counts||{})}`;
+  document.getElementById('percDesc').textContent = percDesc;
+
+  document.getElementById('archetype').textContent = data.archetype || '';
+  document.getElementById('archetypeDesc').textContent = data.archetypeDesc || '';
+
+  // arrays
+  const fillList = (id, arr) => {
+    const el = document.getElementById(id);
+    el.innerHTML = '';
+    (arr||[]).forEach(it=>{
+      const li = document.createElement('li');
+      li.textContent = it;
+      el.appendChild(li);
+    });
+  };
+  fillList('strengths', data.strengths || []);
+  fillList('blindspots', data.blindspots || []);
+  fillList('phrases', data.phrases || []);
+  fillList('motivators', data.motivators || []);
+  fillList('triggers', data.triggers || []);
+  fillList('plan', data.plan || []);
+
+  document.getElementById('decisionDesc').textContent = data.decision || '';
+  document.getElementById('pressureDesc').textContent = data.pressure || '';
+  document.getElementById('workDesc').textContent = data.work || '';
+  document.getElementById('loveDesc').textContent = data.love || '';
+  document.getElementById('friendsDesc').textContent = data.friends || '';
+  document.getElementById('conflictDesc').textContent = data.conflict || '';
+  document.getElementById('leadDesc').textContent = data.lead || '';
+  document.getElementById('learnDesc').textContent = data.learn || '';
+  document.getElementById('socialMap').textContent = data.socialMap || '';
+  document.getElementById('commGuide').textContent = data.commGuide || (data.primaryLabel + ' prefere: clareza, objetivo e passo a passo.');
+  document.getElementById('narrative').textContent = data.narrative || '';
+
+  // prompts
+  const {basic, adv} = makePrompts(data.primaryLabel || '—', data.archetypeDesc||'', data.counts||{});
+  document.getElementById('promptBasic').textContent = basic;
+  document.getElementById('promptAdvanced').textContent = adv;
+}
+
+/* MAIN: read qs, parse counts if present */
+(function(){
+  const params = qs();
+  // expected params (optional): primary, secondary, counts (JSON encoded)
+  let payload = null;
+  if(params.primary){
+    // try parse counts if provided as counts=A,B,C,D or countsJson
+    const counts = {};
+    if(params.countsJson){
+      try{ Object.assign(counts, JSON.parse(params.countsJson)); }catch(e){}
+    } else if(params.counts){
+      // counts format A:8,B:5,C:4,D:3 or 8,5,4,3
+      const c = params.counts.split(',');
+      if(c.length===4){
+        counts.A = Number(c[0]); counts.B = Number(c[1]); counts.C = Number(c[2]); counts.D = Number(c[3]);
+      } else {
+        // try key:value
+        params.counts.split(';').forEach(pair=>{
+          const [k,v]=pair.split(':');
+          if(k && v) counts[k]=Number(v);
+        });
+      }
+    }
+    payload = {
+      primaryLabel: params.primary,
+      secondaryLabel: params.secondary || '',
+      counts: (Object.keys(counts).length?counts:demo.counts),
+      archetype: params.archetype || demo.archetype,
+      archetypeDesc: params.archetypeDesc || demo.archetypeDesc,
+      strengths: params.strengths ? params.strengths.split('|') : demo.strengths,
+      blindspots: params.blindspots ? params.blindspots.split('|') : demo.blindspots,
+      phrases: params.phrases ? params.phrases.split('|') : demo.phrases,
+      decision: params.decision || demo.decision,
+      pressure: params.pressure || demo.pressure,
+      work: params.work || demo.work,
+      love: params.love || demo.love,
+      friends: params.friends || demo.friends,
+      conflict: params.conflict || demo.conflict,
+      lead: params.lead || demo.lead,
+      learn: params.learn || demo.learn,
+      socialMap: params.socialMap || demo.socialMap,
+      motivators: params.motivators ? params.motivators.split('|') : demo.motivators,
+      triggers: params.triggers ? params.triggers.split('|') : demo.triggers,
+      plan: params.plan ? params.plan.split('|') : demo.plan,
+      narrative: params.narrative || demo.narrative,
+      commGuide: params.commGuide || ''
+    };
+  } else {
+    payload = demo; // fallback demo
+  }
+
+  // fill UI
+  fillAll(payload);
+
+  // copy buttons
+  document.getElementById('copyBasic').addEventListener('click', ()=>{
+    const txt = document.getElementById('promptBasic').textContent || '';
+    navigator.clipboard?.writeText(txt).then(()=>alert('Prompt básico copiado!')).catch(()=>alert('Copiar falhou — selecione e copie manualmente.'));
+  });
+  document.getElementById('copyAdv').addEventListener('click', ()=>{
+    const txt = document.getElementById('promptAdvanced').textContent || '';
+    navigator.clipboard?.writeText(txt).then(()=>alert('Prompt avançado copiado!')).catch(()=>alert('Copiar falhou — selecione e copie manualmente.'));
+  });
+
+  document.getElementById('printBtn').addEventListener('click', ()=> window.print());
+  document.getElementById('copyAll').addEventListener('click', ()=>{
+    // copy a short summary
+    const summary = `${payload.primaryLabel} — ${payload.archetype}\n${payload.archetypeDesc}\nForças: ${payload.strengths.join(', ')}\nPontos a melhorar: ${payload.blindspots.join(', ')}\nPlano: ${payload.plan.join(' | ')}`;
+    navigator.clipboard?.writeText(summary).then(()=>alert('Resumo copiado!')).catch(()=>alert('Falha ao copiar resumo.'));
+  });
+
+  // open ChatGPT with prompt helper (construct url to chat.openai.com/chat if possible)
+  function openChatWith(prompt){
+    // We'll open a new tab to ChatGPT with the prompt in query if desired — but ChatGPT doesn't support prefilled prompt via url reliably.
+    // Safer: open a new window with a data:text/plain showing the prompt so user can copy quickly.
+    const w = window.open('', '_blank');
+    w.document.write(`<pre style="white-space:pre-wrap;font-family:monospace;padding:20px">${escapeHtml(prompt)}</pre>`);
+    w.document.title = 'Prompt — Copie e cole no ChatGPT';
+  }
+  document.getElementById('openChatBasic').addEventListener('click', ()=>{
+    openChatWith(document.getElementById('promptBasic').textContent||'');
+  });
+  document.getElementById('openChatAdv').addEventListener('click', ()=>{
+    openChatWith(document.getElementById('promptAdvanced').textContent||'');
+  });
+
+  function escapeHtml(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+// ===============================
+// MindKey — QUIZ PREMIUM (FINAL)
+// ===============================
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  // 🔹 BOTÃO
+  const btn = document.getElementById("take-premium");
+  if (!btn) return;
+
+  btn.addEventListener("click", () => {
+
+    // 🔹 COLETA RESPOSTAS
+    const answers = [];
+    for (let i = 0; i < 30; i++) {
+      const selected = document.querySelector(`.opt[data-q="p${i}"].selected`);
+      if (!selected) {
+        alert("Responda todas as 30 perguntas para gerar o relatório.");
+        return;
+      }
+      answers.push(selected.dataset.val);
+    }
+
+    // 🔹 SCORE
+    const score = { A: 0, B: 0, C: 0, D: 0 };
+    answers.forEach(a => score[a]++);
+
+    const sorted = Object.keys(score).sort((a, b) => score[b] - score[a]);
+    const primaryKey = sorted[0];
+    const secondaryKey = sorted[1];
+
+    const profiles = {
+      A: {
+        label: "Analítico",
+        traits: [
+          "Lógico e estratégico",
+          "Observador profundo",
+          "Busca controle por conhecimento",
+          "Age após entender o cenário"
+        ],
+        risks: [
+          "Excesso de análise",
+          "Dificuldade em agir rápido",
+          "Pode parecer frio"
+        ]
+      },
+      B: {
+        label: "Dominante",
+        traits: [
+          "Decisivo e direto",
+          "Focado em resultados",
+          "Alta energia de liderança",
+          "Avesso à lentidão"
+        ],
+        risks: [
+          "Impaciência",
+          "Conflitos diretos",
+          "Dificuldade em ouvir"
+        ]
+      },
+      C: {
+        label: "Estável",
+        traits: [
+          "Calmo e confiável",
+          "Busca harmonia",
+          "Bom ouvinte",
+          "Evita conflitos"
+        ],
+        risks: [
+          "Dificuldade em se posicionar",
+          "Resistência a mudanças",
+          "Autoanulação"
+        ]
+      },
+      D: {
+        label: "Influente",
+        traits: [
+          "Comunicativo",
+          "Inspirador",
+          "Emocionalmente expressivo",
+          "Cria conexões rápido"
+        ],
+        risks: [
+          "Dispersão",
+          "Busca excessiva por validação",
+          "Falta de foco"
+        ]
+      }
+    };
+
+    const primary = profiles[primaryKey];
+    const secondary = profiles[secondaryKey];
+
+    // 🔹 CONTAINER
+    const container = document.getElementById("premium-report");
+    if (!container) {
+      alert("Erro: container do relatório não encontrado.");
+      return;
+    }
+
+    // 🔹 RELATÓRIO HTML
+    container.innerHTML = `
+      <h2>🔍 Relatório Premium MindKey</h2>
+
+      <h3>Perfil Predominante</h3>
+      <p><strong>${primary.label}</strong></p>
+      <ul>
+        ${primary.traits.map(t => `<li>${t}</li>`).join("")}
+      </ul>
+
+      <h3>Perfil Secundário</h3>
+      <p><strong>${secondary.label}</strong></p>
+      <ul>
+        ${secondary.traits.map(t => `<li>${t}</li>`).join("")}
+      </ul>
+
+      <h3>⚠ Pontos de Atenção</h3>
+      <ul>
+        ${primary.risks.map(r => `<li>${r}</li>`).join("")}
+      </ul>
+
+      <h3>📊 Distribuição Comportamental</h3>
+      <p>
+        Analítico: ${score.A} • 
+        Dominante: ${score.B} • 
+        Estável: ${score.C} • 
+        Influente: ${score.D}
+      </p>
+
+      <h3>🤖 Prompt Personalizado para IA</h3>
+      <pre>
+You are an assistant helping a person with the following behavioral profile:
+
+Primary profile: ${primary.label}
+Secondary profile: ${secondary.label}
+
+Key traits:
+${primary.traits.join(", ")}
+
+Communication rules:
+- Seja direto
+- Adapte o tom ao perfil
+- Entregue ações práticas
+- Evite respostas genéricas
+
+Sempre responda considerando este perfil.
+      </pre>
+
+      <button id="copy-premium-prompt" class="btn">Copiar Prompt</button>
+    `;
+
+    // 🔹 COPIAR PROMPT
+    document.getElementById("copy-premium-prompt").addEventListener("click", () => {
+      const text = container.querySelector("pre").innerText;
+      navigator.clipboard.writeText(text);
+      alert("Prompt copiado com sucesso!");
+    });
+
+    // 🔹 SCROLL
+    container.scrollIntoView({ behavior: "smooth" });
+
+  });
+});
