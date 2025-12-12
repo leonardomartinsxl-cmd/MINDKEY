@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MindKey — Descubra sua chave comportamental</title>
+<style>
+:root {
+  --bg:#071023; --card:#0b1220; 
+  --accent1:#6A4DFF; --accent2:#1ED4C5; 
+  --muted:#9AA7B2;
+}
+*{box-sizing:border-box;}
+body {
+  margin:0;
+  font-family: Inter, Arial, sans-serif;
+  background: linear-gradient(180deg, var(--bg), #060c1a);
+  color:#e6eef8;
+}
+.container { max-width:1100px; margin:auto; padding:20px; }
+.nav { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
+.logo { font-size:24px; font-weight:700; color:var(--accent1); }
+.links button {
+  margin-left:10px; padding:8px 12px; border-radius:10px;
+  background:linear-gradient(90deg,var(--accent1),var(--accent2));
+  border:none; color:white; cursor:pointer;
+}
+.hero {
+  margin-top:20px; padding:40px;
+  background:linear-gradient(180deg,rgba(255,255,255,0.03),transparent);
+  border-radius:16px; text-align:center;
+}
+.hero h1 { font-size:40px; margin:0 0 10px 0; }
+.hero p { font-size:18px; opacity:0.8; }
+.cta button {
+  margin:10px 6px; padding:12px 20px; border-radius:12px;
+  background:linear-gradient(90deg,var(--accent1),var(--accent2));
+  border:none; color:white; cursor:pointer; font-size:16px;
+}
+.quiz, #premium-area {
+  margin-top:40px; padding:25px;
+  background:var(--card); border-radius:14px;
+}
+.q { background:rgba(255,255,255,0.05); padding:14px; border-radius:8px; margin-bottom:12px; }
+.opts label { margin-right:12px; }
+.actions button {
+  padding:10px 14px; margin-right:10px; border-radius:10px; border:none; cursor:pointer;
+}
+pre {
+  background:#061224; padding:14px; border-radius:8px; white-space:pre-wrap;
+}
+.footer { margin-top:40px; text-align:center; color:var(--muted); font-size:14px; }
+</style>
+</head>
+
+<body>
+<div class="container">
+
+  <!-- NAV -->
+  <header class="nav">
+    <div class="logo">MindKey</div>
+    <nav class="links">
+      <button id="start-free">Teste Grátis</button>
+      <button id="start-premium">Versão Premium</button>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>Desbloqueie sua mente</h1>
+    <p>Análise comportamental + guia social + prompt personalizado para IA.</p>
+    <div class="cta">
+      <button id="cta-free">Fazer Teste Grátis</button>
+      <button id="cta-premium">Quero o Premium</button>
+    </div>
+  </section>
+
+  <!-- QUIZ FREE -->
+  <section class="quiz" id="quiz-area" hidden>
+    <h2>Teste Grátis — 5 Perguntas</h2>
+
+    <form id="quiz-form">
+      <div class="q"><p>1) Quando algo te irrita, o que domina?</p>
+        <label><input type="radio" name="q0" value="A">Lógica</label>
+        <label><input type="radio" name="q0" value="B">Impulso</label>
+        <label><input type="radio" name="q0" value="C">Silêncio</label>
+        <label><input type="radio" name="q0" value="D">Emoção</label>
+      </div>
+
+      <div class="q"><p>2) No amor, você tende a:</p>
+        <label><input type="radio" name="q1" value="A">Proteger</label>
+        <label><input type="radio" name="q1" value="B">Conquistar</label>
+        <label><input type="radio" name="q1" value="C">Controlar</label>
+        <label><input type="radio" name="q1" value="D">Conectar</label>
+      </div>
+
+      <div class="q"><p>3) No trabalho, você:</p>
+        <label><input type="radio" name="q2" value="A">Lidera</label>
+        <label><input type="radio" name="q2" value="B">Influencia</label>
+        <label><input type="radio" name="q2" value="C">Evita conflitos</label>
+        <label><input type="radio" name="q2" value="D">Cria soluções</label>
+      </div>
+
+      <div class="q"><p>4) Quando elogiado, você:</p>
+        <label><input type="radio" name="q3" value="A">Se energiza</label>
+        <label><input type="radio" name="q3" value="B">Brinca</label>
+        <label><input type="radio" name="q3" value="C">Fica tímido</label>
+        <label><input type="radio" name="q3" value="D">Desconfia</label>
+      </div>
+
+      <div class="q"><p>5) Na decisão importante:</p>
+        <label><input type="radio" name="q4" value="A">Analisa tudo</label>
+        <label><input type="radio" name="q4" value="B">Decide rápido</label>
+        <label><input type="radio" name="q4" value="C">Pede conselho</label>
+        <label><input type="radio" name="q4" value="D">Espera o momento</label>
+      </div>
+
+      <div class="actions">
+        <button type="submit">Enviar</button>
+        <button type="button" id="cancel-quiz">Cancelar</button>
+      </div>
+    </form>
+
+    <div id="result" hidden>
+      <h3>Resultado</h3>
+      <pre id="result-text"></pre>
+      <button id="upgrade">Desbloquear Premium</button>
+    </div>
+  </section>
+
+  <!-- PREMIUM PREVIEW -->
+  <section id="premium-area" hidden>
+    <h2>Versão Premium</h2>
+    <p>Prévia reduzida (Protótipo)</p>
+
+    <button id="premium-generate">Gerar Relatório Premium</button>
+
+    <div id="premium-result" hidden>
+      <h3>Relatório Premium</h3>
+      <pre id="premium-text"></pre>
+      <h4>Prompt Personalizado</h4>
+      <pre id="premium-prompt"></pre>
+    </div>
+  </section>
+
+  <footer class="footer">
+    MindKey • Protótipo — Contato: Leo Cowboy — 137-577
+  </footer>
+
+</div>
+
+<script>
+// --- Show Free Quiz ---
+document.getElementById("cta-free").onclick = () => {
+  quizArea.hidden = false;
+  premiumArea.hidden = true;
+};
+document.getElementById("start-free").onclick = () => {
+  quizArea.hidden = false;
+  premiumArea.hidden = true;
+};
+
+// --- Cancel ---
+document.getElementById("cancel-quiz").onclick = () => quizArea.hidden = true;
+
+// --- Free Quiz Logic ---
+const quizForm = document.getElementById("quiz-form");
+quizForm.onsubmit = function(e){
+  e.preventDefault();
+  const answers=[];
+  for(let i=0;i<5;i++){
+    let v = quizForm[`q${i}`].value;
+    if(!v){ alert("Responda tudo"); return; }
+    answers.push(v);
+  }
+
+  // Fake quick scoring
+  const count={A:0,B:0,C:0,D:0};
+  answers.forEach(a=>count[a]++);
+  let best = Object.keys(count).sort((a,b)=>count[b]-count[a])[0];
+
+  const map={
+    A:"Analítico",
+    B:"Dominante",
+    C:"Estável",
+    D:"Influente"
+  };
+
+  resultText.textContent = 
+    `Seu perfil predominante é: ${map[best]}\n\n`+
+    `Respostas:\n${answers.join(" - ")}`;
+
+  result.hidden = false;
+};
+
+// --- Upgrade to premium ---
+document.getElementById("upgrade").onclick = () => {
+  premiumArea.hidden = false;
+  window.scrollTo({top:800,behavior:"smooth"});
+};
+
+// --- Premium demo generation ---
+document.getElementById("premium-generate").onclick = () => {
+
+  const report = `
+🔮 Essência: Analítico + Dominante  
+🧠 Modo mental: estratégia + precisão  
+⚔️ Pontos cegos: excesso de autocobrança  
+❤️ Amor: melhora quando expressa vulnerabilidade  
+💼 Trabalho: seu poder é a tomada de decisão lógica  
+`;
+
+  const prompt = `
+Sou Analítico com traços Dominantes.  
+Gosto de clareza, decisões racionais e respostas diretas.  
+Sempre responda levando isso em consideração.  
+Agora vou descrever minha situação...`;
+
+  document.getElementById("premium-text").textContent = report;
+  document.getElementById("premium-prompt").textContent = prompt;
+  document.getElementById("premium-result").hidden = false;
+};
+</script>
+
+</body>
+</html>
