@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MINDKEY — Relatório Premium</title>
+
+<link rel="stylesheet" href="styles.css">
+
+<style>
+/* ESTILO ESPECÍFICO DO RELATÓRIO */
+.report-block{
+  background: var(--card);
+  border-radius: 18px;
+  padding: 28px;
+  margin-bottom: 28px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.report-block h2{
+  margin-top:0;
+  font-size:24px;
+}
+
+.highlight{
+  color: var(--accent);
+  font-weight:600;
+}
+
+.prompt-box{
+  background:#0b0c0f;
+  border-radius:14px;
+  padding:20px;
+  border:1px solid rgba(255,255,255,0.05);
+  white-space:pre-wrap;
+  line-height:1.6;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Relatório Comportamental Premium</h1>
+<p class="subtitle">
+Análise profunda baseada no seu perfil MindKey.
+</p>
+
+<div id="report"></div>
+
+<div class="report-block">
+<h2>Prompt Premium de Inteligência Artificial</h2>
+
+<div class="prompt-box" id="promptIA"></div>
+</div>
+
+<div class="report-block center">
+<p class="muted">
+MindKey é uma ferramenta de autoconhecimento e não substitui acompanhamento profissional.
+</p>
+</div>
+
+</div>
+
+<script>
+// ===== PERFIS (SIMULAÇÃO INICIAL) =====
+// Depois isso virá do quiz/pagamento
+const perfilPrincipal = "Dominante";
+const perfilSecundario = "Analítico";
+
+// ===== CONTEÚDO DOS PERFIS =====
+const perfis = {
+ Dominante:{
+  descricao:"Você é movido por ação, decisão e resultados. Tem forte necessidade de controle e progresso.",
+  pressao:"Sob pressão, tende a assumir tudo sozinho e agir de forma intensa.",
+  pontoForte:"Capacidade de liderança, coragem e rapidez na tomada de decisão.",
+  risco:"Autoritarismo, impaciência e desgaste emocional.",
+  recomendacao:"Aprenda a delegar, ouvir mais e pausar antes de decisões críticas."
+ },
+ Analítico:{
+  descricao:"Você busca lógica, clareza e compreensão profunda antes de agir.",
+  pressao:"Sob pressão, pode travar analisando demais.",
+  pontoForte:"Precisão, inteligência estratégica e visão de longo prazo.",
+  risco:"Excesso de autocrítica e procrastinação.",
+  recomendacao:"Defina prazos para decidir e aceite que errar faz parte."
+ },
+ Relacional:{
+  descricao:"Você é guiado por emoções, vínculos e empatia.",
+  pressao:"Sob pressão, absorve emoções externas e evita conflitos.",
+  pontoForte:"Comunicação, empatia e construção de conexões.",
+  risco:"Dependência emocional e dificuldade em impor limites.",
+  recomendacao:"Aprenda a dizer não e priorizar suas necessidades."
+ },
+ Adaptável:{
+  descricao:"Você valoriza liberdade, leveza e equilíbrio.",
+  pressao:"Sob pressão, pode se afastar ou evitar decisões.",
+  pontoForte:"Flexibilidade, criatividade e resiliência.",
+  risco:"Falta de constância e comprometimento.",
+  recomendacao:"Crie rotinas mínimas e metas claras."
+ }
+};
+
+// ===== GERAR RELATÓRIO =====
+const r = document.getElementById("report");
+
+r.innerHTML = `
+<div class="report-block">
+<h2>Perfil Predominante: <span class="highlight">${perfilPrincipal}</span></h2>
+<p>${perfis[perfilPrincipal].descricao}</p>
+</div>
+
+<div class="report-block">
+<h2>Perfil Secundário: <span class="highlight">${perfilSecundario}</span></h2>
+<p>${perfis[perfilSecundario].descricao}</p>
+</div>
+
+<div class="report-block">
+<h2>Como você age sob pressão</h2>
+<p>${perfis[perfilPrincipal].pressao}</p>
+</div>
+
+<div class="report-block">
+<h2>Seu principal ponto forte</h2>
+<p>${perfis[perfilPrincipal].pontoForte}</p>
+</div>
+
+<div class="report-block">
+<h2>Risco comportamental</h2>
+<p>${perfis[perfilPrincipal].risco}</p>
+</div>
+
+<div class="report-block">
+<h2>Recomendações práticas</h2>
+<p>${perfis[perfilPrincipal].recomendacao}</p>
+</div>
+`;
+
+// ===== PROMPT PREMIUM =====
+document.getElementById("promptIA").textContent = `
+Sou uma pessoa com perfil comportamental predominante ${perfilPrincipal}
+e perfil secundário ${perfilSecundario} segundo a análise MindKey.
+
+Quero que você:
+• Analise meus padrões de decisão
+• Identifique pontos de autossabotagem
+• Mostre como melhorar minha comunicação
+• Sugira caminhos de evolução profissional e emocional
+
+Seja direto, prático e alinhado ao meu perfil comportamental.
+`;
+</script>
+
+</body>
+</html>
