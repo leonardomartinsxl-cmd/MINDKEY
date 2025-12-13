@@ -1,27 +1,341 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MindKey</title>
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>Mapa Comportamental</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0f0f0f;
+      color: #ffffff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .hidden { display: none; }
+
+    .progress { margin-bottom: 20px; }
+
+    .progress-text {
+      font-size: 14px;
+      opacity: 0.8;
+      margin-bottom: 5px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: #2a2a2a;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: #4cafef;
+      transition: width 0.3s ease;
+    }
+
+    .question {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .option {
+      padding: 14px;
+      background: #1e1e1e;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .option.selected {
+      border-color: #4cafef;
+      background: #16242f;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 30px;
+    }
+
+    button {
+      padding: 10px 18px;
+      background: #4cafef;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .block {
+      margin-top: 25px;
+      padding: 15px;
+      background: #161616;
+      border-radius: 8px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 130px;
+      background: #0f0f0f;
+      color: #ffffff;
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+      padding: 10px;
+      margin-top: 10px;
+      resize: vertical;
+    }
+
+    .premium-tease {
+      margin-top: 30px;
+      padding: 20px;
+      border: 1px dashed #4cafef;
+      border-radius: 8px;
+      opacity: 0.85;
+    }
+  </style>
 </head>
+
 <body>
+
 <div class="container">
-<header class="header">
-<div class="logo">MK</div>
-<h1>MindKey</h1>
-</header>
 
+  <!-- QUIZ -->
+  <div id="quiz">
 
-<section class="card">
-<h2>Descubra seu perfil comportamental</h2>
-<p class="small">Um quiz rápido que revela como você pensa, decide e se comunica.</p>
-<a href="quiz_free.html" class="btn">Começar teste gratuito</a>
-</section>
+    <div class="progress">
+      <div class="progress-text">
+        Pergunta <span id="currentQuestion">1</span> de <span id="totalQuestions">12</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
 
+    <div class="question" id="questionText"></div>
+    <div class="options" id="options"></div>
 
-<footer class="footer">MindKey • Autoconhecimento não clínico</footer>
+    <div class="buttons">
+      <button id="prevBtn" disabled>Voltar</button>
+      <button id="nextBtn" disabled>Próxima</button>
+    </div>
+
+  </div>
+
+  <!-- RESULTADO -->
+  <div id="result" class="hidden">
+
+    <h2 id="resultProfile"></h2>
+
+    <p style="opacity:.9">
+      Esse padrão aparece de forma recorrente nas suas decisões, relações e forma
+      de lidar com pressão. Não é quem você é — é como você tende a reagir.
+    </p>
+
+    <div class="block">
+      <strong>Forças naturais</strong>
+      <p id="resultStrengths"></p>
+    </div>
+
+    <div class="block">
+      <strong>Pontos de atenção</strong>
+      <p id="resultWeaknesses"></p>
+    </div>
+
+    <!-- MINI PROMPT -->
+    <div class="block">
+      <strong>Seu prompt personalizado</strong>
+      <p style="opacity:0.8">
+        Use este prompt sempre que quiser uma resposta realmente alinhada ao seu perfil.
+      </p>
+
+      <textarea id="promptText" readonly></textarea>
+      <button style="margin-top:10px" onclick="copyPrompt()">Copiar prompt</button>
+    </div>
+
+    <div class="premium-tease">
+      <strong>Relatório completo profissional • amoroso • social</strong><br><br>
+      + Análise profunda de padrões inconscientes<br>
+      + Prompt poderoso com I.A<br><br>
+      <em>Nem tudo é espiritual.<br>Bora se conhecer melhor.</em>
+    </div>
+
+  </div>
+
 </div>
+
+<script>
+  const profiles = {
+    Analítico: {
+      strengths: "Você enxerga padrões, riscos e incoerências onde a maioria não vê. Sua mente busca lógica, clareza e previsibilidade.",
+      weaknesses: "O excesso de análise pode gerar travas, adiamentos e autocobrança elevada.",
+      tendency: "analisar profundamente antes de agir, buscando minimizar erros"
+    },
+    Comunicador: {
+      strengths: "Você percebe nuances emocionais, cria conexões e se expressa com naturalidade.",
+      weaknesses: "Pode se influenciar demais pelo ambiente ou priorizar os outros em excesso.",
+      tendency: "agir com base nas emoções, relações e percepções sociais"
+    },
+    Executor: {
+      strengths: "Você age rápido, decide com firmeza e resolve o que precisa ser resolvido.",
+      weaknesses: "Impaciência, rigidez e dificuldade em desacelerar.",
+      tendency: "agir rapidamente para resolver, mesmo com informações incompletas"
+    },
+    Estrategista: {
+      strengths: "Você pensa em camadas, antecipa cenários e entende consequências.",
+      weaknesses: "Pode assumir controle excessivo e carregar peso desnecessário.",
+      tendency: "avaliar o longo prazo antes de qualquer movimento"
+    }
+  };
+
+  const questions = [
+    {
+      question: "Quando surge um problema inesperado, sua reação inicial costuma ser:",
+      options: [
+        { text: "Analisar todos os cenários possíveis", profile: "Analítico" },
+        { text: "Conversar e sentir o clima da situação", profile: "Comunicador" },
+        { text: "Agir rápido para resolver", profile: "Executor" },
+        { text: "Pensar no impacto futuro", profile: "Estrategista" }
+      ]
+    },
+    {
+      question: "Em decisões importantes, você costuma confiar mais em:",
+      options: [
+        { text: "Dados e lógica", profile: "Analítico" },
+        { text: "Sentimentos e relações", profile: "Comunicador" },
+        { text: "Ação e resultado", profile: "Executor" },
+        { text: "Visão de longo prazo", profile: "Estrategista" }
+      ]
+    }
+  ];
+
+  let current = 0;
+  let answers = [];
+  let scores = { Analítico: 0, Comunicador: 0, Executor: 0, Estrategista: 0 };
+
+  const qText = document.getElementById("questionText");
+  const optionsDiv = document.getElementById("options");
+  const nextBtn = document.getElementById("nextBtn");
+  const prevBtn = document.getElementById("prevBtn");
+
+  document.getElementById("totalQuestions").textContent = questions.length;
+
+  function loadQuestion() {
+    const q = questions[current];
+    qText.textContent = q.question;
+    optionsDiv.innerHTML = "";
+
+    q.options.forEach((o, i) => {
+      const div = document.createElement("div");
+      div.className = "option";
+      div.textContent = o.text;
+
+      if (answers[current] === i) div.classList.add("selected");
+
+      div.onclick = () => {
+        document.querySelectorAll(".option").forEach(el => el.classList.remove("selected"));
+        div.classList.add("selected");
+        answers[current] = i;
+        nextBtn.disabled = false;
+      };
+
+      optionsDiv.appendChild(div);
+    });
+
+    document.getElementById("currentQuestion").textContent = current + 1;
+    document.getElementById("progressFill").style.width =
+      ((current + 1) / questions.length) * 100 + "%";
+
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = answers[current] === undefined;
+  }
+
+  nextBtn.onclick = () => {
+    if (current < questions.length - 1) {
+      current++;
+      loadQuestion();
+    } else {
+      showResult();
+    }
+  };
+
+  prevBtn.onclick = () => {
+    current--;
+    loadQuestion();
+  };
+
+  function showResult() {
+    questions.forEach((q, i) => {
+      scores[q.options[answers[i]].profile]++;
+    });
+
+    const result = Object.keys(scores).reduce((a, b) =>
+      scores[a] > scores[b] ? a : b
+    );
+
+    document.getElementById("quiz").classList.add("hidden");
+    document.getElementById("result").classList.remove("hidden");
+
+    document.getElementById("resultProfile").textContent =
+      "Seu perfil predominante é: " + result;
+
+    document.getElementById("resultStrengths").textContent =
+      profiles[result].strengths;
+
+    document.getElementById("resultWeaknesses").textContent =
+      profiles[result].weaknesses;
+
+    document.getElementById("promptText").value =
+`Sou do perfil comportamental ${result}.
+Esse perfil influencia diretamente minhas decisões, reações e relações.
+
+Minha tendência natural é ${profiles[result].tendency}, o que em alguns contextos me ajuda,
+mas em outros pode gerar dificuldades.
+
+Quero que você analise a situação abaixo considerando meu perfil psicológico e comportamental.
+Me ajude a:
+
+• Entender por que ajo assim  
+• Identificar padrões envolvidos  
+• Saber como lidar melhor  
+• O que evitar  
+• Como evoluir sem ir contra quem eu sou  
+
+Situação específica:
+(descreva aqui com o máximo de contexto possível)`;
+  }
+
+  function copyPrompt() {
+    const textarea = document.getElementById("promptText");
+    textarea.select();
+    document.execCommand("copy");
+    alert("Prompt copiado!");
+  }
+
+  loadQuestion();
+</script>
+
 </body>
 </html>
