@@ -57,10 +57,22 @@ button{
 .soft{
  background:var(--soft);
  border-radius:14px;
- padding:18px;
- margin-top:20px
+ padding:20px;
+ margin-top:22px
 }
 .highlight{color:var(--accent)}
+textarea{
+ width:100%;
+ height:160px;
+ background:#0b0c0f;
+ color:#eaeaea;
+ border:1px solid #2a2e37;
+ border-radius:12px;
+ padding:16px;
+ margin-top:14px;
+ resize:none
+}
+h3{margin-bottom:6px}
 </style>
 </head>
 
@@ -87,7 +99,6 @@ suas decisões, relações e carreira.
 </div>
 
 <script>
-// ================= PERGUNTAS FREE =================
 const questions=[
 {c:"Profissional",q:"Você prefere agir rápido ou analisar antes?",a:[["Agir rápido","Executor"],["Analisar","Analítico"]]},
 {c:"Profissional",q:"Você se sente confortável liderando?",a:[["Sim","Executor"],["Prefiro pensar","Estrategista"]]},
@@ -131,63 +142,70 @@ function finish(){
  const sorted=Object.entries(pontos).sort((a,b)=>b[1]-a[1]);
  const perfil=sorted[0][0];
 
- const leitura={
+ const data={
   Executor:{
-   irrita:"Pessoas lentas, desculpas repetidas e falta de atitude. Você se irrita porque sente que poderia resolver mais rápido.",
-   trabalho:"Ambientes de decisão, pressão saudável, metas claras e autonomia.",
-   elogios:[
-    "Você assume responsabilidade quando outros recuam.",
-    "Sua presença transmite comando, mesmo em silêncio."
-   ],
-   espelho:"Você não é impaciente — você só pensa mais rápido que a maioria."
+   irrita:"Lentidão, indecisão e pessoas que evitam responsabilidade.",
+   motiva:"Desafios, metas claras, autonomia e progresso visível.",
+   melhorar:"Aprender a desacelerar e ouvir antes de agir.",
+   elogios:["Você age quando outros hesitam.","Sua energia move ambientes."],
+   prompt:`Meu perfil comportamental é EXECUTOR.
+Analise meus padrões de decisão, meus pontos cegos e me dê orientações práticas
+para melhorar minha vida profissional, amorosa e social.
+Seja direto, estratégico e realista.`
   },
   Analítico:{
-   irrita:"Falta de lógica, improviso emocional e decisões sem critério. Você se irrita porque valoriza coerência.",
-   trabalho:"Processos, estratégia, análise e ambientes previsíveis.",
-   elogios:[
-    "Você enxerga riscos que evitam erros futuros.",
-    "Sua mente cria ordem onde outros veem confusão."
-   ],
-   espelho:"Você não é frio — você só precisa de sentido para se envolver."
+   irrita:"Improviso sem lógica, decisões emocionais e falta de critério.",
+   motiva:"Planejamento, clareza, previsibilidade e domínio técnico.",
+   melhorar:"Expressar mais emoções e aceitar incertezas.",
+   elogios:["Você enxerga riscos antes que eles apareçam.","Sua lógica evita erros graves."],
+   prompt:`Meu perfil comportamental é ANALÍTICO.
+Quero uma análise profunda dos meus padrões mentais,
+meus bloqueios emocionais e como posso evoluir sem perder minha racionalidade.
+Use exemplos práticos.`
   },
   Comunicador:{
-   irrita:"Ambientes frios, silêncio forçado e pessoas inacessíveis.",
-   trabalho:"Atividades com pessoas, comunicação, influência e relacionamento.",
-   elogios:[
-    "Você percebe emoções que muitos ignoram.",
-    "Sua comunicação muda o clima de qualquer ambiente."
-   ],
-   espelho:"Você não é sensível demais — você só sente mais fundo."
+   irrita:"Ambientes frios, silêncio excessivo e falta de conexão.",
+   motiva:"Relacionamentos, reconhecimento e troca emocional.",
+   melhorar:"Criar limites emocionais e foco.",
+   elogios:["Você conecta pessoas naturalmente.","Sua comunicação transforma ambientes."],
+   prompt:`Meu perfil comportamental é COMUNICADOR.
+Quero entender como usar melhor minha comunicação,
+evitar desgaste emocional e crescer profissionalmente mantendo minha essência.`
   },
   Estrategista:{
    irrita:"Pressão imediata, controle excessivo e decisões impulsivas.",
-   trabalho:"Autonomia, visão estratégica e liberdade mental.",
-   elogios:[
-    "Você enxerga possibilidades antes dos outros.",
-    "Sua calma vem de visão, não de passividade."
-   ],
-   espelho:"Você não procrastina — você amadurece decisões."
+   motiva:"Liberdade, visão de longo prazo e autonomia.",
+   melhorar:"Transformar ideias em ação com mais constância.",
+   elogios:["Você enxerga possibilidades ocultas.","Sua visão cria caminhos."],
+   prompt:`Meu perfil comportamental é ESTRATEGISTA.
+Analise meus padrões de pensamento,
+meus bloqueios de execução e como transformar visão em resultados práticos.`
   }
  };
 
- const d=leitura[perfil];
-
- localStorage.setItem("mindkey_result",JSON.stringify({
-  main:perfil,
-  secondary:sorted[1][0]
- }));
+ const d=data[perfil];
 
  quiz.innerHTML=`
  <h2>Seu perfil predominante</h2>
  <h3 class="highlight">${perfil}</h3>
 
  <div class="soft">
-  <p><strong>O que costuma te irritar:</strong><br>${d.irrita}</p>
-  <p><strong>Onde você funciona melhor:</strong><br>${d.trabalho}</p>
+  <h3>O que te irrita</h3>
+  <p>${d.irrita}</p>
  </div>
 
  <div class="soft">
-  <p><strong>Pontos fortes:</strong></p>
+  <h3>O que te motiva</h3>
+  <p>${d.motiva}</p>
+ </div>
+
+ <div class="soft">
+  <h3>Ponto a melhorar</h3>
+  <p>${d.melhorar}</p>
+ </div>
+
+ <div class="soft">
+  <h3>Pontos fortes</h3>
   <ul>
    <li>${d.elogios[0]}</li>
    <li>${d.elogios[1]}</li>
@@ -195,7 +213,8 @@ function finish(){
  </div>
 
  <div class="soft">
-  <em>${d.espelho}</em>
+  <h3>Prompt inteligente (copie e cole no ChatGPT)</h3>
+  <textarea readonly>${d.prompt}</textarea>
  </div>
 
  <button onclick="location.href='premium_report.html'">
