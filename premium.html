@@ -2,73 +2,77 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+<title>MINDKEY — Relatório Premium</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MINDKEY — Relatório Completo</title>
 
 <style>
 :root{
-  --bg:#0f1220;
-  --card:#171a2f;
-  --primary:#7c7cff;
-  --text:#f1f1f1;
+  --bg:#0e0e16;
+  --card:#161625;
+  --text:#f2f2f2;
   --muted:#b4b4c7;
+  --accent:#7c7cff;
 }
 
 *{box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
 
 body{
   margin:0;
-  background:linear-gradient(180deg,#0f1220,#0b0d18);
+  background:var(--bg);
   color:var(--text);
 }
 
 .container{
-  max-width:800px;
+  max-width:820px;
   margin:auto;
-  padding:40px 20px;
+  padding:20px;
 }
 
 .card{
   background:var(--card);
-  border-radius:16px;
+  border-radius:14px;
   padding:24px;
-  margin-bottom:24px;
-  box-shadow:0 10px 30px rgba(0,0,0,.35);
+  margin-top:24px;
 }
 
 .center{text-align:center}
-
 .hidden{display:none}
 
-p{
-  color:var(--muted);
-  line-height:1.6;
-}
-
 button{
-  background:var(--primary);
+  background:var(--accent);
   color:#fff;
   border:none;
-  padding:14px 26px;
+  padding:14px 28px;
   border-radius:30px;
-  font-size:15px;
   cursor:pointer;
+  font-size:15px;
 }
 
-button:hover{opacity:.85}
-
 .option{
-  display:block;
-  background:#232651;
-  margin:10px 0;
+  background:#1f1f33;
   padding:14px;
-  border-radius:12px;
+  border-radius:10px;
+  margin-top:12px;
   cursor:pointer;
-  transition:.2s;
 }
 
 .option:hover{
-  background:#2f3270;
+  background:#2b2b55;
+}
+
+hr{
+  border:0;
+  height:1px;
+  background:#2a2a44;
+  margin:26px 0;
+}
+
+textarea{
+  background:#0e0e16;
+  color:#fff;
+  border:1px solid #2a2a44;
+  border-radius:10px;
+  padding:14px;
 }
 </style>
 </head>
@@ -77,213 +81,163 @@ button:hover{opacity:.85}
 
 <div class="container">
 
-<!-- INTRO PREMIUM -->
-<div id="intro" class="card center">
-  <h1>MINDKEY — Teste Profundo</h1>
-  <p>
-    Este teste analisa seus padrões comportamentais
-    nos âmbitos profissional, amoroso e social.
-  </p>
-  <p>
-    Responda de forma instintiva.  
-    Não tente se explicar.
-  </p>
-  <button onclick="startPremium()">Iniciar Teste Completo</button>
-</div>
+  <!-- INTRO -->
+  <div id="intro" class="card center">
+    <h1>MINDKEY — Teste Profundo</h1>
+    <p>
+      Este teste analisa seus padrões comportamentais
+      nos âmbitos profissional, amoroso e social.
+    </p>
+    <p>Responda de forma instintiva.</p>
+    <button onclick="startPremium()">Iniciar Teste Completo</button>
+  </div>
 
-<!-- QUIZ PREMIUM -->
-<div id="quiz" class="card hidden">
-  <h3 id="context"></h3>
-  <h2 id="question"></h2>
-  <div id="options"></div>
-</div>
+  <!-- QUIZ -->
+  <div id="quiz" class="card hidden">
+    <h3 id="context"></h3>
+    <h2 id="question"></h2>
+    <div id="options"></div>
+  </div>
 
-<!-- RESULTADO PREMIUM -->
-<div id="result" class="card hidden center">
-  <h2>Leitura Comportamental Completa</h2>
+  <!-- RESULTADO -->
+  <div id="result" class="card hidden">
 
-  <p>
-    Seu perfil predominante é
-    <strong id="mainProfile"></strong>
-  </p>
+    <h2>Relatório Comportamental Completo</h2>
 
-  <p>
-    Seu perfil secundário é
-    <strong id="secondProfile"></strong>
-  </p>
+    <p>Perfil predominante: <strong id="mainProfile"></strong></p>
+    <p>Perfil secundário: <strong id="secondProfile"></strong></p>
 
-  <p style="margin-top:16px">
-    Esses dois perfis explicam como você
-    muda de comportamento conforme o contexto.
-  </p>
+    <hr>
 
-  <p style="margin-top:12px">
-    Na próxima etapa, você receberá
-    um relatório detalhado + prompt inteligente de I.A.
-  </p>
-</div>
+    <div id="profileReport"></div>
+
+    <hr>
+
+    <h3>Prompt Inteligente de I.A</h3>
+
+    <textarea readonly>
+Quero que você atue como um analista comportamental profundo,
+especialista em padrões de decisão, personalidade e comportamento humano.
+
+Meu perfil comportamental predominante é: [PERFIL PRINCIPAL]
+Meu perfil secundário é: [PERFIL SECUNDÁRIO]
+
+Esses perfis descrevem como eu ajo quando estou no automático,
+especialmente sob pressão, em conflitos ou decisões importantes.
+
+A situação que estou vivendo é:
+[DESCREVA A SITUAÇÃO AQUI]
+
+Com base no meu perfil comportamental, me ajude com:
+1. O que está me influenciando internamente
+2. Onde posso estar repetindo padrões limitantes
+3. Qual a forma mais inteligente de agir
+4. O que evitar para não me sabotar
+5. Como lidar emocionalmente com isso
+    </textarea>
+
+  </div>
 
 </div>
 
 <script>
-// ================== PERGUNTAS PREMIUM ==================
-
-// PROFISSIONAL
+// ===== PERGUNTAS PREMIUM (EXEMPLO BASE) =====
 const premiumProfessional = [
- {q:"Quando precisa liderar algo importante, você tende a:",a:[
-  ["Planejar tudo antes","Analítico"],
-  ["Engajar as pessoas","Comunicador"],
-  ["Assumir controle rápido","Executor"],
-  ["Definir direção clara","Estrategista"]
- ]},
- {q:"No trabalho, você perde a paciência quando:",a:[
-  ["Há desorganização","Analítico"],
-  ["Falta empatia","Comunicador"],
-  ["Nada anda","Executor"],
-  ["Não há visão","Estrategista"]
- ]},
- {q:"Você se sente mais valorizado quando:",a:[
-  ["Reconhecem sua precisão","Analítico"],
-  ["Reconhecem sua comunicação","Comunicador"],
-  ["Reconhecem seus resultados","Executor"],
-  ["Reconhecem sua visão","Estrategista"]
- ]},
- {q:"Diante de pressão extrema, você:",a:[
-  ["Se fecha e analisa","Analítico"],
-  ["Sente o peso emocional","Comunicador"],
-  ["Age sem hesitar","Executor"],
-  ["Recalcula a rota","Estrategista"]
- ]},
- {q:"Seu erro mais comum no trabalho é:",a:[
-  ["Excesso de cautela","Analítico"],
-  ["Se envolver demais","Comunicador"],
-  ["Ser impulsivo","Executor"],
-  ["Ignorar detalhes","Estrategista"]
- ]},
- {q:"Você confia mais em líderes que:",a:[
-  ["São coerentes","Analítico"],
-  ["São humanos","Comunicador"],
-  ["São firmes","Executor"],
-  ["São visionários","Estrategista"]
+ {q:"Você prefere decisões rápidas ou bem analisadas?",a:[
+   ["Bem analisadas","Analítico"],
+   ["Rápidas","Executor"]
  ]}
 ];
 
-// AMOROSO
 const premiumLove = [
- {q:"Em relacionamentos, você tende a:",a:[
-  ["Analisar comportamentos","Analítico"],
-  ["Sentir intensamente","Comunicador"],
-  ["Agir conforme sente","Executor"],
-  ["Observar padrões","Estrategista"]
- ]},
- {q:"Você se afasta quando:",a:[
-  ["Perde lógica","Analítico"],
-  ["Se sente ignorado","Comunicador"],
-  ["Perde admiração","Executor"],
-  ["Vê repetição de erros","Estrategista"]
- ]},
- {q:"Você demonstra amor mais por:",a:[
-  ["Cuidado prático","Analítico"],
-  ["Palavras e presença","Comunicador"],
-  ["Atitudes","Executor"],
-  ["Planejamento","Estrategista"]
- ]},
- {q:"Seu maior medo emocional é:",a:[
-  ["Instabilidade","Analítico"],
-  ["Rejeição","Comunicador"],
-  ["Dependência","Executor"],
-  ["Perder direção","Estrategista"]
- ]},
- {q:"Quando ama, você:",a:[
-  ["Cuida em silêncio","Analítico"],
-  ["Se entrega","Comunicador"],
-  ["Protege","Executor"],
-  ["Constrói futuro","Estrategista"]
+ {q:"Em conflitos amorosos você tende a:",a:[
+   ["Conversar","Comunicador"],
+   ["Se afastar","Estrategista"]
  ]}
 ];
 
-// SOCIAL
 const premiumSocial = [
- {q:"Em ambientes sociais, você:",a:[
-  ["Observa","Analítico"],
-  ["Interage","Comunicador"],
-  ["Conduz","Executor"],
-  ["Analisa o grupo","Estrategista"]
- ]},
- {q:"Você se sente desconfortável quando:",a:[
-  ["Há caos","Analítico"],
-  ["Há frieza","Comunicador"],
-  ["Há passividade","Executor"],
-  ["Há superficialidade","Estrategista"]
- ]},
- {q:"As pessoas costumam te ver como:",a:[
-  ["Reservado","Analítico"],
-  ["Acessível","Comunicador"],
-  ["Forte","Executor"],
-  ["Inteligente","Estrategista"]
- ]},
- {q:"Seu papel natural em grupos é:",a:[
-  ["Estruturar","Analítico"],
-  ["Conectar","Comunicador"],
-  ["Decidir","Executor"],
-  ["Direcionar","Estrategista"]
- ]},
- {q:"Você se desgasta socialmente quando:",a:[
-  ["Há excesso de estímulo","Analítico"],
-  ["Há carga emocional","Comunicador"],
-  ["Há conflito","Executor"],
-  ["Falta profundidade","Estrategista"]
+ {q:"Em grupos você costuma:",a:[
+   ["Assumir liderança","Executor"],
+   ["Observar primeiro","Analítico"]
  ]}
 ];
 
-// ================== LÓGICA ==================
-
+// ===== JUNÇÃO =====
 const premiumQuestions = [
  ...premiumProfessional.map(q=>({...q,context:"Profissional"})),
  ...premiumLove.map(q=>({...q,context:"Amoroso"})),
  ...premiumSocial.map(q=>({...q,context:"Social"}))
 ];
 
-let index = 0;
-let score = {Analítico:0,Comunicador:0,Executor:0,Estrategista:0};
+let pIndex=0;
+let pScore={Analítico:0,Comunicador:0,Executor:0,Estrategista:0};
 
+// ===== CONTROLE =====
 function startPremium(){
  document.getElementById("intro").classList.add("hidden");
  document.getElementById("quiz").classList.remove("hidden");
- loadQuestion();
+ loadPremiumQuestion();
 }
 
-function loadQuestion(){
- const q = premiumQuestions[index];
- document.getElementById("context").textContent = q.context;
- document.getElementById("question").textContent = q.q;
-
- const opt = document.getElementById("options");
- opt.innerHTML = "";
- q.a.forEach(o=>{
-  const d = document.createElement("div");
+function loadPremiumQuestion(){
+ const q=premiumQuestions[pIndex];
+ document.getElementById("context").textContent=q.context;
+ document.getElementById("question").textContent=q.q;
+ const o=document.getElementById("options");
+ o.innerHTML="";
+ q.a.forEach(x=>{
+  const d=document.createElement("div");
   d.className="option";
-  d.textContent=o[0];
-  d.onclick=()=>answer(o[1]);
-  opt.appendChild(d);
+  d.textContent=x[0];
+  d.onclick=()=>answerPremium(x[1]);
+  o.appendChild(d);
  });
 }
 
-function answer(type){
- score[type]++;
- index++;
- if(index<premiumQuestions.length) loadQuestion();
- else showResult();
+function answerPremium(type){
+ pScore[type]++;
+ pIndex++;
+ if(pIndex<premiumQuestions.length){
+  loadPremiumQuestion();
+ }else{
+  showPremiumResult();
+ }
 }
 
-function showResult(){
+function showPremiumResult(){
  document.getElementById("quiz").classList.add("hidden");
  document.getElementById("result").classList.remove("hidden");
 
- const sorted = Object.entries(score).sort((a,b)=>b[1]-a[1]);
- document.getElementById("mainProfile").textContent = sorted[0][0];
- document.getElementById("secondProfile").textContent = sorted[1][0];
+ const sorted=Object.entries(pScore).sort((a,b)=>b[1]-a[1]);
+ document.getElementById("mainProfile").textContent=sorted[0][0];
+ document.getElementById("secondProfile").textContent=sorted[1][0];
+ document.getElementById("profileReport").innerHTML=reports[sorted[0][0]];
 }
+
+// ===== RELATÓRIOS =====
+const reports={
+ Analítico:`
+ <h3>Perfil Analítico</h3>
+ <p>Mente lógica, profunda e orientada à clareza.</p>
+ <ul><li>Força: raciocínio</li><li>Armadilha: excesso de análise</li></ul>
+ `,
+ Comunicador:`
+ <h3>Perfil Comunicador</h3>
+ <p>Movido por conexão humana e expressão.</p>
+ <ul><li>Força: empatia</li><li>Armadilha: aprovação</li></ul>
+ `,
+ Executor:`
+ <h3>Perfil Executor</h3>
+ <p>Ação, decisão e resultado.</p>
+ <ul><li>Força: coragem</li><li>Armadilha: impulsividade</li></ul>
+ `,
+ Estrategista:`
+ <h3>Perfil Estrategista</h3>
+ <p>Visão de longo prazo e antecipação.</p>
+ <ul><li>Força: planejamento</li><li>Armadilha: distanciamento</li></ul>
+ `
+};
 </script>
 
 </body>
