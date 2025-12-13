@@ -1,110 +1,206 @@
-const questions = [
- {
-  q: "Quando você precisa decidir algo importante sob pressão, o que mais pesa?",
-  a: [
-   ["Evitar erro e risco", "Analítico"],
-   ["Como isso afeta as pessoas", "Comunicador"],
-   ["Resolver logo e seguir", "Executor"],
-   ["Pensar nas consequências futuras", "Estrategista"]
-  ]
- },
- {
-  q: "Em conflitos, o que costuma te incomodar primeiro?",
-  a: [
-   ["Incoerência ou falta de lógica", "Analítico"],
-   ["Frieza ou distância emocional", "Comunicador"],
-   ["Falta de ação", "Executor"],
-   ["Falta de visão do todo", "Estrategista"]
-  ]
- },
- {
-  q: "Quando algo não sai como planejado, você tende a:",
-  a: [
-   ["Revisar tudo para entender o erro", "Analítico"],
-   ["Sentir antes de reagir", "Comunicador"],
-   ["Agir rápido para corrigir", "Executor"],
-   ["Aprender e ajustar a estratégia", "Estrategista"]
-  ]
- },
- {
-  q: "No ambiente profissional, você se sente mais confortável quando:",
-  a: [
-   ["Tudo está bem definido", "Analítico"],
-   ["Existe abertura para diálogo", "Comunicador"],
-   ["As coisas estão andando", "Executor"],
-   ["Existe direção clara", "Estrategista"]
-  ]
- },
- {
-  q: "Quando precisa se posicionar, você normalmente:",
-  a: [
-   ["Pensa bastante antes de falar", "Analítico"],
-   ["Expressa o que sente", "Comunicador"],
-   ["Fala de forma direta", "Executor"],
-   ["Escolhe o melhor momento", "Estrategista"]
-  ]
- },
- {
-  q: "O que mais costuma te gerar frustração?",
-  a: [
-   ["Bagunça e improviso", "Analítico"],
-   ["Indiferença emocional", "Comunicador"],
-   ["Lentidão e indecisão", "Executor"],
-   ["Falta de planejamento", "Estrategista"]
-  ]
- },
- {
-  q: "Em grupos, sua tendência natural é:",
-  a: [
-   ["Observar antes de agir", "Analítico"],
-   ["Criar conexão", "Comunicador"],
-   ["Assumir a frente", "Executor"],
-   ["Organizar o caminho", "Estrategista"]
-  ]
- },
- {
-  q: "Quando alguém erra com você, o que vem primeiro?",
-  a: [
-   ["Tentar entender racionalmente", "Analítico"],
-   ["Sentir a quebra emocional", "Comunicador"],
-   ["Confrontar ou se afastar", "Executor"],
-   ["Avaliar o impacto disso", "Estrategista"]
-  ]
- },
- {
-  q: "Você confia mais em decisões baseadas em:",
-  a: [
-   ["Análise e dados", "Analítico"],
-   ["Intuição emocional", "Comunicador"],
-   ["Experiência prática", "Executor"],
-   ["Visão estratégica", "Estrategista"]
-  ]
- },
- {
-  q: "Quando precisa escolher entre segurança e oportunidade, você tende a:",
-  a: [
-   ["Priorizar segurança", "Analítico"],
-   ["Pensar nas pessoas envolvidas", "Comunicador"],
-   ["Arriscar se fizer sentido", "Executor"],
-   ["Calcular o custo-benefício", "Estrategista"]
-  ]
- },
- {
-  q: "Seu maior ponto forte aparece quando você:",
-  a: [
-   ["Mantém controle e precisão", "Analítico"],
-   ["Cria vínculo e empatia", "Comunicador"],
-   ["Age com decisão", "Executor"],
-   ["Enxerga além do agora", "Estrategista"]
-  ]
- },
- {
-  q: "Seu maior desafio costuma surgir quando:",
-  a: [
-   ["As coisas fogem do controle", "Analítico"],
-   ["Você precisa impor limites", "Comunicador"],
-   ["Precisa esperar demais", "Executor"],
-   ["Precisa lidar com detalhes", "Estrategista"]
-  ]
- }
-];
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>MINDKEY — Relatório Comportamental</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Inter, Arial, sans-serif;
+      background: #0f0f0f;
+      color: #f2f2f2;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 40px 24px;
+    }
+
+    h1, h2, h3 {
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      opacity: 0.8;
+      margin-bottom: 40px;
+    }
+
+    .block {
+      background: #1f1f1f;
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .highlight {
+      color: #4dd0e1;
+      font-weight: 600;
+    }
+
+    ul {
+      padding-left: 18px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    .profiles {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .profile-box {
+      flex: 1;
+      min-width: 240px;
+      background: #121212;
+      padding: 20px;
+      border-radius: 12px;
+    }
+
+    .cta {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    button {
+      background: #4dd0e1;
+      color: #000;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        color: #000;
+      }
+
+      .block {
+        background: #fff;
+        border: 1px solid #ddd;
+      }
+
+      button {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>MINDKEY</h1>
+    <p class="subtitle">
+      Relatório Comportamental Estratégico 360°
+    </p>
+
+    <!-- PERFIL GERAL -->
+    <div class="block">
+      <h2>Resumo Geral</h2>
+      <p>
+        Seu perfil predominante é <span class="highlight" id="primaryProfile">Executor</span>,
+        com forte influência do perfil <span class="highlight" id="secondaryProfile">Analítico</span>.
+      </p>
+
+      <p id="crossInsight">
+        Você tende a agir com rapidez e decisão, mas utiliza a análise como freio
+        em situações de maior risco.
+      </p>
+    </div>
+
+    <!-- PERFIS -->
+    <div class="block">
+      <h2>Distribuição de Perfis</h2>
+
+      <div class="profiles">
+        <div class="profile-box">
+          <h3>Profissional</h3>
+          <p id="professionalText">
+            Foco em execução, metas claras e decisões rápidas.
+            Pode pecar pela impaciência.
+          </p>
+        </div>
+
+        <div class="profile-box">
+          <h3>Amoroso</h3>
+          <p id="loveText">
+            Demonstra sentimentos por atitudes.
+            Pode ter dificuldade em verbalizar emoções.
+          </p>
+        </div>
+
+        <div class="profile-box">
+          <h3>Social</h3>
+          <p id="socialText">
+            Assume liderança naturalmente, mas prefere ambientes objetivos.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PONTOS FORTES -->
+    <div class="block">
+      <h2>Pontos Fortes</h2>
+      <ul>
+        <li>Capacidade de decisão sob pressão</li>
+        <li>Foco em resultados concretos</li>
+        <li>Autonomia e iniciativa</li>
+      </ul>
+    </div>
+
+    <!-- PONTOS DE ATENÇÃO -->
+    <div class="block">
+      <h2>Pontos de Atenção</h2>
+      <ul>
+        <li>Tendência a atropelar processos</li>
+        <li>Dificuldade em lidar com indecisão alheia</li>
+        <li>Risco de desgaste emocional</li>
+      </ul>
+    </div>
+
+    <!-- PROMPT IA -->
+    <div class="block">
+      <h2>Seu Prompt Estratégico de I.A</h2>
+
+      <pre id="promptText">
+Sou do perfil Executor com influência Analítica.
+Quero uma análise prática e direta da situação abaixo,
+considerando meus padrões de decisão e reação,
+sem respostas genéricas ou motivacionais.
+
+Situação:
+[DESCREVA AQUI]
+      </pre>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta">
+      <button onclick="window.print()">Salvar Relatório em PDF</button>
+    </div>
+  </div>
+
+  <script>
+    // Aqui você pode futuramente injetar dados reais do quiz
+    // usando localStorage ou parâmetros de URL
+  </script>
+</body>
+</html>
