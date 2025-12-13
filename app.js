@@ -1,40 +1,53 @@
-/* ===== PERFIS MINDKEY ===== */
+function getResult(){
+  return JSON.parse(localStorage.getItem("mindkey_result"));
+}
 
-const PERFIS = {
-  Dominante:{
-    descricao:"Você é movido por ação, decisão e resultados. Tem liderança natural e necessidade de controle.",
-    pressao:"Sob pressão, tende a assumir tudo sozinho e agir de forma intensa.",
-    pontoForte:"Liderança, coragem e rapidez para decidir.",
-    risco:"Impulsividade, impaciência e desgaste emocional.",
-    recomendacao:"Aprenda a delegar, ouvir mais e pausar antes de decisões críticas."
-  },
-  Analítico:{
-    descricao:"Você busca lógica, clareza e compreensão profunda antes de agir.",
-    pressao:"Sob pressão, pode travar analisando demais.",
-    pontoForte:"Precisão, estratégia e visão de longo prazo.",
-    risco:"Excesso de autocrítica e procrastinação.",
-    recomendacao:"Defina prazos claros para decidir e aceite que errar faz parte."
-  },
-  Relacional:{
-    descricao:"Você é guiado por emoções, empatia e vínculos.",
-    pressao:"Sob pressão, absorve emoções externas e evita conflitos.",
-    pontoForte:"Comunicação, empatia e construção de conexões.",
-    risco:"Dependência emocional e dificuldade em impor limites.",
-    recomendacao:"Aprenda a dizer não e priorizar suas próprias necessidades."
-  },
-  Adaptável:{
-    descricao:"Você valoriza liberdade, leveza e equilíbrio.",
-    pressao:"Sob pressão, pode se afastar ou evitar decisões importantes.",
-    pontoForte:"Flexibilidade, criatividade e resiliência.",
-    risco:"Falta de constância e comprometimento.",
-    recomendacao:"Crie rotinas mínimas e metas claras para manter consistência."
-  }
-};
+function profileText(profile){
+  const map={
+    Analítico:{
+      title:"Analítico",
+      text:"Você possui uma mente estratégica, lógica e orientada à clareza. Busca segurança através do entendimento profundo das situações e tende a se destacar em ambientes que exigem precisão, planejamento e visão de longo prazo."
+    },
+    Comunicador:{
+      title:"Comunicador",
+      text:"Seu comportamento é guiado por emoções, conexões humanas e expressão. Você gera impacto através da comunicação, empatia e influência social, sendo essencial em ambientes colaborativos."
+    },
+    Executor:{
+      title:"Executor",
+      text:"Você é movido por ação, resultado e liderança. Prefere resolver rápido clarificar depois. Possui energia elevada, tomada de decisão firme e forte presença em momentos críticos."
+    },
+    Estrategista:{
+      title:"Estrategista",
+      text:"Você observa antes de agir. Valoriza visão, estrutura e controle do cenário. Costuma enxergar oportunidades antes dos outros e atua melhor quando tem autonomia para pensar."
+    }
+  };
+  return map[profile];
+}
 
-/* ===== UTIL ===== */
+function loadReport(){
+  const data=getResult();
+  if(!data) return;
 
-function getTopProfiles(scores){
-  return Object.entries(scores)
-    .sort((a,b)=>b[1]-a[1])
-    .map(x=>x[0]);
+  document.getElementById("mainProfile").textContent=data.main;
+  document.getElementById("secondProfile").textContent=data.secondary;
+
+  const main=profileText(data.main);
+  const sec=profileText(data.secondary);
+
+  document.getElementById("report").innerHTML=`
+    <div class="soft">
+      <h3>Perfil Dominante — ${main.title}</h3>
+      <p>${main.text}</p>
+    </div>
+
+    <div class="soft">
+      <h3>Perfil Secundário — ${sec.title}</h3>
+      <p>${sec.text}</p>
+    </div>
+  `;
+
+  document.getElementById("prompt").textContent=
+`Sou uma pessoa com perfil dominante ${main.title} e secundário ${sec.title}.
+Quero ajuda para evoluir no campo profissional, emocional e social,
+respeitando minha forma natural de pensar, decidir e agir.`;
 }
