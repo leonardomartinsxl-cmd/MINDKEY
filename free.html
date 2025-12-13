@@ -4,103 +4,205 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MINDKEY — Teste Gratuito</title>
-<link rel="stylesheet" href="styles.css">
+
+<style>
+:root{
+ --bg:#0b0c0f;
+ --card:#15171c;
+ --soft:#1f2229;
+ --text:#eaeaea;
+ --muted:#a1a1aa;
+ --accent:#4dd0e1;
+}
+*{box-sizing:border-box;font-family:Inter,system-ui,sans-serif}
+body{
+ margin:0;
+ background:linear-gradient(180deg,#0b0c0f,#0f1117);
+ color:var(--text)
+}
+.container{
+ max-width:860px;
+ margin:auto;
+ padding:56px 20px 80px
+}
+.card{
+ background:var(--card);
+ border-radius:18px;
+ padding:28px;
+ border:1px solid rgba(255,255,255,.05)
+}
+.center{text-align:center}
+.hidden{display:none}
+h1{font-size:36px;margin-bottom:8px}
+.subtitle{color:var(--muted);margin-bottom:40px}
+.option{
+ background:var(--soft);
+ padding:16px;
+ border-radius:14px;
+ margin-top:14px;
+ cursor:pointer;
+ transition:.15s
+}
+.option:hover{background:#2a2e37}
+button{
+ background:linear-gradient(135deg,#4dd0e1,#00acc1);
+ color:#000;
+ border:none;
+ padding:16px 36px;
+ border-radius:999px;
+ font-weight:600;
+ cursor:pointer;
+ margin-top:24px
+}
+.soft{
+ background:var(--soft);
+ border-radius:14px;
+ padding:18px;
+ margin-top:20px
+}
+.highlight{color:var(--accent)}
+</style>
 </head>
 
 <body>
-
 <div class="container">
 
-  <div class="block">
-    <h1>Teste Gratuito — MINDKEY</h1>
-    <p>Responda com sinceridade. Não existe resposta certa.</p>
-  </div>
+<!-- INTRO -->
+<div id="intro" class="card center">
+<h1>MINDKEY</h1>
+<p class="subtitle">
+Descubra padrões do seu comportamento que influenciam<br>
+suas decisões, relações e carreira.
+</p>
+<button onclick="start()">Iniciar Teste</button>
+</div>
 
-  <div class="block" id="quiz"></div>
+<!-- QUIZ -->
+<div id="quiz" class="card hidden">
+<h3 id="context" class="highlight"></h3>
+<h2 id="question"></h2>
+<div id="options"></div>
+</div>
 
 </div>
 
 <script>
-const perguntas = [
-  {t:"Quando surge um problema inesperado, você costuma:",o:[
-    ["Agir rapidamente e assumir o controle","Executor"],
-    ["Analisar antes de decidir","Analítico"],
-    ["Pensar no impacto nas pessoas","Comunicador"],
-    ["Manter a calma e adaptar-se","Estrategista"]
-  ]},
-  {t:"Em grupo, você normalmente:",o:[
-    ["Lidera naturalmente","Executor"],
-    ["Observa antes de se posicionar","Analítico"],
-    ["Conecta as pessoas","Comunicador"],
-    ["Segue o fluxo","Estrategista"]
-  ]},
-  {t:"Você se sente mais confortável quando:",o:[
-    ["Tem controle da situação","Executor"],
-    ["Tudo faz sentido lógico","Analítico"],
-    ["O clima está harmonioso","Comunicador"],
-    ["Nada é rígido demais","Estrategista"]
-  ]},
-  {t:"Em decisões importantes você:",o:[
-    ["Decide rápido","Executor"],
-    ["Analisa prós e contras","Analítico"],
-    ["Considera sentimentos","Comunicador"],
-    ["Segue a intuição","Estrategista"]
-  ]},
-  {t:"Seu ritmo de trabalho é:",o:[
-    ["Intenso","Executor"],
-    ["Constante","Analítico"],
-    ["Colaborativo","Comunicador"],
-    ["Flexível","Estrategista"]
-  ]},
-  {t:"Você se motiva mais por:",o:[
-    ["Resultados","Executor"],
-    ["Conhecimento","Analítico"],
-    ["Reconhecimento","Comunicador"],
-    ["Liberdade","Estrategista"]
-  ]}
+// ================= PERGUNTAS FREE =================
+const questions=[
+{c:"Profissional",q:"Você prefere agir rápido ou analisar antes?",a:[["Agir rápido","Executor"],["Analisar","Analítico"]]},
+{c:"Profissional",q:"Você se sente confortável liderando?",a:[["Sim","Executor"],["Prefiro pensar","Estrategista"]]},
+{c:"Amoroso",q:"Quando algo incomoda você fala?",a:[["Sim","Comunicador"],["Guardo","Estrategista"]]},
+{c:"Amoroso",q:"Você decide mais pela emoção ou lógica?",a:[["Emoção","Comunicador"],["Lógica","Analítico"]]},
+{c:"Social",q:"Você observa o ambiente antes de agir?",a:[["Sim","Analítico"],["Não","Executor"]]},
+{c:"Social",q:"Você se adapta fácil a pessoas novas?",a:[["Sim","Comunicador"],["Depende","Estrategista"]]}
 ];
 
-let atual=0;
+let i=0;
 let pontos={Executor:0,Analítico:0,Comunicador:0,Estrategista:0};
 
-const quiz=document.getElementById("quiz");
-
-function render(){
-  const p=perguntas[atual];
-  quiz.innerHTML=`
-    <h3>${p.t}</h3>
-    ${p.o.map(x=>`<div class="soft" onclick="answer('${x[1]}')">${x[0]}</div>`).join("")}
-    <p style="margin-top:16px;color:var(--muted)">Pergunta ${atual+1} de ${perguntas.length}</p>
-  `;
+function start(){
+ intro.classList.add("hidden");
+ quiz.classList.remove("hidden");
+ load();
 }
 
-function answer(tipo){
-  pontos[tipo]++;
-  atual++;
-  if(atual<perguntas.length){
-    render();
-  }else{
-    finish();
-  }
+function load(){
+ const q=questions[i];
+ context.textContent=q.c;
+ question.textContent=q.q;
+ options.innerHTML="";
+ q.a.forEach(x=>{
+  const d=document.createElement("div");
+  d.className="option";
+  d.textContent=x[0];
+  d.onclick=()=>answer(x[1]);
+  options.appendChild(d);
+ });
+}
+
+function answer(p){
+ pontos[p]++;
+ i++;
+ if(i>=questions.length){finish();return;}
+ load();
 }
 
 function finish(){
-  const sorted=Object.entries(pontos).sort((a,b)=>b[1]-a[1]);
-  localStorage.setItem("mindkey_result",JSON.stringify({
-    main:sorted[0][0],
-    secondary:sorted[1][0]
-  }));
-  quiz.innerHTML=`
-    <h2>Teste concluído</h2>
-    <p>Seu perfil predominante foi identificado.</p>
-    <button onclick="location.href='premium_report.html'">
-      Desbloquear relatório completo
-    </button>
-  `;
+ const sorted=Object.entries(pontos).sort((a,b)=>b[1]-a[1]);
+ const perfil=sorted[0][0];
+
+ const leitura={
+  Executor:{
+   irrita:"Pessoas lentas, desculpas repetidas e falta de atitude. Você se irrita porque sente que poderia resolver mais rápido.",
+   trabalho:"Ambientes de decisão, pressão saudável, metas claras e autonomia.",
+   elogios:[
+    "Você assume responsabilidade quando outros recuam.",
+    "Sua presença transmite comando, mesmo em silêncio."
+   ],
+   espelho:"Você não é impaciente — você só pensa mais rápido que a maioria."
+  },
+  Analítico:{
+   irrita:"Falta de lógica, improviso emocional e decisões sem critério. Você se irrita porque valoriza coerência.",
+   trabalho:"Processos, estratégia, análise e ambientes previsíveis.",
+   elogios:[
+    "Você enxerga riscos que evitam erros futuros.",
+    "Sua mente cria ordem onde outros veem confusão."
+   ],
+   espelho:"Você não é frio — você só precisa de sentido para se envolver."
+  },
+  Comunicador:{
+   irrita:"Ambientes frios, silêncio forçado e pessoas inacessíveis.",
+   trabalho:"Atividades com pessoas, comunicação, influência e relacionamento.",
+   elogios:[
+    "Você percebe emoções que muitos ignoram.",
+    "Sua comunicação muda o clima de qualquer ambiente."
+   ],
+   espelho:"Você não é sensível demais — você só sente mais fundo."
+  },
+  Estrategista:{
+   irrita:"Pressão imediata, controle excessivo e decisões impulsivas.",
+   trabalho:"Autonomia, visão estratégica e liberdade mental.",
+   elogios:[
+    "Você enxerga possibilidades antes dos outros.",
+    "Sua calma vem de visão, não de passividade."
+   ],
+   espelho:"Você não procrastina — você amadurece decisões."
+  }
+ };
+
+ const d=leitura[perfil];
+
+ localStorage.setItem("mindkey_result",JSON.stringify({
+  main:perfil,
+  secondary:sorted[1][0]
+ }));
+
+ quiz.innerHTML=`
+ <h2>Seu perfil predominante</h2>
+ <h3 class="highlight">${perfil}</h3>
+
+ <div class="soft">
+  <p><strong>O que costuma te irritar:</strong><br>${d.irrita}</p>
+  <p><strong>Onde você funciona melhor:</strong><br>${d.trabalho}</p>
+ </div>
+
+ <div class="soft">
+  <p><strong>Pontos fortes:</strong></p>
+  <ul>
+   <li>${d.elogios[0]}</li>
+   <li>${d.elogios[1]}</li>
+  </ul>
+ </div>
+
+ <div class="soft">
+  <em>${d.espelho}</em>
+ </div>
+
+ <button onclick="location.href='premium_report.html'">
+  Quero a análise completa
+ </button>
+ `;
 }
-
-render();
 </script>
-
 </body>
 </html>
