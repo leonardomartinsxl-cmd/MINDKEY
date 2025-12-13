@@ -4,228 +4,88 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MINDKEY — Teste Gratuito</title>
-
-<style>
-body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:#0e0e16;
-  color:#f2f2f2;
-}
-
-.container{
-  max-width:800px;
-  margin:auto;
-  padding:24px;
-}
-
-.card{
-  background:#161625;
-  border-radius:16px;
-  padding:24px;
-  margin-top:24px;
-}
-
-h1,h2,h3{
-  margin-top:0;
-}
-
-button{
-  width:100%;
-  padding:14px;
-  border:none;
-  border-radius:10px;
-  background:#7c7cff;
-  color:#fff;
-  font-size:16px;
-  margin-top:12px;
-  cursor:pointer;
-}
-
-.option{
-  background:#1f1f33;
-  padding:14px;
-  border-radius:10px;
-  margin-top:10px;
-  cursor:pointer;
-}
-
-.option:hover{
-  background:#2a2a44;
-}
-
-.progress{
-  margin-top:12px;
-  color:#b4b4c7;
-  font-size:14px;
-}
-</style>
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
 <div class="container">
-
-  <h1>Teste Gratuito — MINDKEY</h1>
-  <p>Responda com sinceridade. Não existe resposta certa.</p>
-
-  <div class="card" id="quiz"></div>
-
+<h1>Teste Gratuito — MINDKEY</h1>
+<p class="subtitle">Responda com sinceridade. Não existe resposta certa.</p>
+<div class="card" id="quiz"></div>
 </div>
 
+<script src="app.js"></script>
 <script>
-const perguntas = [
-  {
-    texto:"Quando surge um problema inesperado, você costuma:",
-    a:{t:"Agir rapidamente e assumir o controle", p:"dominante"},
-    b:{t:"Analisar antes de decidir", p:"analitico"},
-    c:{t:"Pensar no impacto nas pessoas", p:"relacional"},
-    d:{t:"Manter a calma e adaptar-se", p:"adaptavel"}
-  },
-  {
-    texto:"Em grupo, você normalmente:",
-    a:{t:"Lidera naturalmente", p:"dominante"},
-    b:{t:"Observa antes de se posicionar", p:"analitico"},
-    c:{t:"Conecta as pessoas", p:"relacional"},
-    d:{t:"Segue o fluxo", p:"adaptavel"}
-  },
-  {
-    texto:"Você se sente mais confortável quando:",
-    a:{t:"Tem controle da situação", p:"dominante"},
-    b:{t:"Tudo faz sentido lógico", p:"analitico"},
-    c:{t:"O clima está harmonioso", p:"relacional"},
-    d:{t:"Nada é rígido demais", p:"adaptavel"}
-  },
-  {
-    texto:"Em decisões importantes você:",
-    a:{t:"Decide rápido", p:"dominante"},
-    b:{t:"Analisa prós e contras", p:"analitico"},
-    c:{t:"Considera sentimentos", p:"relacional"},
-    d:{t:"Segue a intuição", p:"adaptavel"}
-  },
-  {
-    texto:"Quando é contrariado você:",
-    a:{t:"Enfrenta", p:"dominante"},
-    b:{t:"Questiona", p:"analitico"},
-    c:{t:"Se afeta emocionalmente", p:"relacional"},
-    d:{t:"Evita conflito", p:"adaptavel"}
-  },
-  {
-    texto:"Seu ritmo de trabalho é:",
-    a:{t:"Intenso", p:"dominante"},
-    b:{t:"Constante", p:"analitico"},
-    c:{t:"Colaborativo", p:"relacional"},
-    d:{t:"Flexível", p:"adaptavel"}
-  },
-  {
-    texto:"Você se motiva mais por:",
-    a:{t:"Resultados", p:"dominante"},
-    b:{t:"Conhecimento", p:"analitico"},
-    c:{t:"Reconhecimento", p:"relacional"},
-    d:{t:"Liberdade", p:"adaptavel"}
-  },
-  {
-    texto:"Em conflitos você tende a:",
-    a:{t:"Resolver direto", p:"dominante"},
-    b:{t:"Argumentar", p:"analitico"},
-    c:{t:"Conciliar", p:"relacional"},
-    d:{t:"Se afastar", p:"adaptavel"}
-  },
-  {
-    texto:"Você prefere ambientes:",
-    a:{t:"Desafiadores", p:"dominante"},
-    b:{t:"Organizados", p:"analitico"},
-    c:{t:"Acolhedores", p:"relacional"},
-    d:{t:"Livres", p:"adaptavel"}
-  },
-  {
-    texto:"Seu maior medo é:",
-    a:{t:"Perder controle", p:"dominante"},
-    b:{t:"Errar", p:"analitico"},
-    c:{t:"Rejeição", p:"relacional"},
-    d:{t:"Ficar preso", p:"adaptavel"}
-  },
-  {
-    texto:"As pessoas costumam te ver como:",
-    a:{t:"Decidido", p:"dominante"},
-    b:{t:"Racional", p:"analitico"},
-    c:{t:"Empático", p:"relacional"},
-    d:{t:"Tranquilo", p:"adaptavel"}
-  },
-  {
-    texto:"Você se sente realizado quando:",
-    a:{t:"Conquista algo grande", p:"dominante"},
-    b:{t:"Entende profundamente", p:"analitico"},
-    c:{t:"Ajuda alguém", p:"relacional"},
-    d:{t:"Está em paz", p:"adaptavel"}
-  }
+const perguntas=[
+ {
+  t:"Quando surge um problema inesperado, você costuma:",
+  o:[
+    ["Agir rapidamente e assumir o controle","Dominante"],
+    ["Analisar antes de decidir","Analítico"],
+    ["Pensar no impacto nas pessoas","Relacional"],
+    ["Manter a calma e adaptar-se","Adaptável"]
+  ]
+ },
+ {
+  t:"Em grupo, você normalmente:",
+  o:[
+    ["Lidera naturalmente","Dominante"],
+    ["Observa antes de se posicionar","Analítico"],
+    ["Conecta as pessoas","Relacional"],
+    ["Segue o fluxo","Adaptável"]
+  ]
+ },
+ {
+  t:"Você se sente mais confortável quando:",
+  o:[
+    ["Tem controle da situação","Dominante"],
+    ["Tudo faz sentido lógico","Analítico"],
+    ["O clima está harmonioso","Relacional"],
+    ["Nada é rígido demais","Adaptável"]
+  ]
+ }
 ];
 
-let atual = 0;
-let pontos = {
-  dominante:0,
-  analitico:0,
-  relacional:0,
-  adaptavel:0
-};
+let atual=0;
+let score={Dominante:0,Analítico:0,Relacional:0,Adaptável:0};
+const quiz=document.getElementById("quiz");
 
-const quiz = document.getElementById("quiz");
-
-function mostrarPergunta(){
-  const p = perguntas[atual];
-  quiz.innerHTML = `
-    <h3>${p.texto}</h3>
-
-    <div class="option" onclick="responder('${p.a.p}')">${p.a.t}</div>
-    <div class="option" onclick="responder('${p.b.p}')">${p.b.t}</div>
-    <div class="option" onclick="responder('${p.c.p}')">${p.c.t}</div>
-    <div class="option" onclick="responder('${p.d.p}')">${p.d.t}</div>
-
-    <div class="progress">Pergunta ${atual+1} de ${perguntas.length}</div>
-  `;
+function render(){
+ const p=perguntas[atual];
+ quiz.innerHTML=`<h3>${p.t}</h3>`;
+ p.o.forEach(x=>{
+  const d=document.createElement("div");
+  d.className="option";
+  d.textContent=x[0];
+  d.onclick=()=>responder(x[1]);
+  quiz.appendChild(d);
+ });
 }
 
 function responder(perfil){
-  pontos[perfil]++;
-  atual++;
-
-  if(atual < perguntas.length){
-    mostrarPergunta();
-  } else {
-    mostrarResultado();
-  }
+ score[perfil]++;
+ atual++;
+ if(atual < perguntas.length){
+  render();
+ } else {
+  finalizar();
+ }
 }
 
-function mostrarResultado(){
-  let perfilFinal = Object.keys(pontos).reduce((a,b)=> pontos[a]>pontos[b]?a:b);
-
-  const textos = {
-    dominante:"Você é movido por ação, decisão e conquista. Tem liderança natural e busca controle.",
-    analitico:"Você busca lógica, clareza e entendimento profundo. Prefere decisões bem pensadas.",
-    relacional:"Você é guiado por emoções, vínculos e empatia. Constrói conexões fortes.",
-    adaptavel:"Você valoriza liberdade, leveza e equilíbrio. Se ajusta bem às situações."
-  };
-
-  quiz.innerHTML = `
-    <h2>Seu perfil predominante</h2>
-    <h3>${perfilFinal.toUpperCase()}</h3>
-
-    <p>${textos[perfilFinal]}</p>
-
-    <h3>Mini Prompt de I.A</h3>
-    <p>
-      "Sou do perfil ${perfilFinal}. Tenho tendência a agir dessa forma.
-      Quero ajuda para lidar melhor com desafios pessoais e profissionais
-      respeitando meu perfil comportamental."
-    </p>
-
-    <button onclick="window.location.href='premium.html'">
-      Quero o relatório completo (Premium)
-    </button>
-  `;
+function finalizar(){
+ const perfilFinal=getTopProfiles(score)[0];
+ quiz.innerHTML=`
+ <h2>Seu perfil predominante</h2>
+ <h3>${perfilFinal}</h3>
+ <p>${PERFIS[perfilFinal].descricao}</p>
+ <button onclick="location.href='premium.html'">
+ Quero meu relatório completo (Premium)
+ </button>
+ `;
 }
 
-mostrarPergunta();
+render();
 </script>
 
 </body>
