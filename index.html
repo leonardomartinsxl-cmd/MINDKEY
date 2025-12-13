@@ -3,77 +3,138 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MINDKEY — Teste Comportamental</title>
+<title>MINDKEY — Autoconhecimento Inteligente</title>
 
 <style>
 :root{
-  --bg:#0f1220;
-  --card:#171a2f;
-  --primary:#7c7cff;
-  --text:#f1f1f1;
+  --bg:#0e0e16;
+  --card:#161625;
+  --text:#f2f2f2;
   --muted:#b4b4c7;
+  --accent:#7c7cff;
 }
 
 *{box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
 
 body{
   margin:0;
-  background:linear-gradient(180deg,#0f1220,#0b0d18);
+  background:var(--bg);
   color:var(--text);
 }
 
+a{text-decoration:none;color:inherit}
+
 .container{
-  max-width:800px;
+  max-width:1100px;
   margin:auto;
-  padding:40px 20px;
+  padding:24px;
+}
+
+/* HERO */
+.hero{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:24px;
+  padding:80px 0;
+}
+
+.hero h1{
+  font-size:42px;
+  line-height:1.2;
+}
+
+.hero p{
+  color:var(--muted);
+  font-size:18px;
+  max-width:600px;
+}
+
+.hero .actions{
+  margin-top:24px;
+}
+
+.btn{
+  display:inline-block;
+  padding:16px 32px;
+  border-radius:40px;
+  font-size:16px;
+}
+
+.btn-primary{
+  background:var(--accent);
+  color:#fff;
+}
+
+.btn-outline{
+  border:1px solid var(--accent);
+  color:var(--accent);
+  margin-left:12px;
+}
+
+/* SECTIONS */
+.section{
+  margin-top:80px;
+}
+
+.section h2{
+  font-size:32px;
+  margin-bottom:12px;
+}
+
+.section p{
+  color:var(--muted);
+  max-width:700px;
+}
+
+/* CARDS */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:20px;
+  margin-top:32px;
 }
 
 .card{
   background:var(--card);
   border-radius:16px;
   padding:24px;
-  margin-bottom:24px;
-  box-shadow:0 10px 30px rgba(0,0,0,.35);
 }
 
-h1,h2{
+.card h3{
   margin-top:0;
 }
 
-p{
+.card p{
   color:var(--muted);
-  line-height:1.6;
-}
-
-button{
-  background:var(--primary);
-  color:#fff;
-  border:none;
-  padding:14px 26px;
-  border-radius:30px;
   font-size:15px;
-  cursor:pointer;
 }
 
-button:hover{opacity:.85}
-
-.option{
-  display:block;
-  background:#232651;
-  margin:10px 0;
-  padding:14px;
-  border-radius:12px;
-  cursor:pointer;
-  transition:.2s;
+/* CTA FINAL */
+.cta{
+  background:linear-gradient(135deg,#7c7cff,#5a5aff);
+  border-radius:24px;
+  padding:48px;
+  margin-top:100px;
+  text-align:center;
 }
 
-.option:hover{
-  background:#2f3270;
+.cta h2{
+  font-size:34px;
+  margin-bottom:12px;
 }
 
-.hidden{display:none}
+.cta p{
+  color:#eaeaff;
+  margin-bottom:24px;
+}
 
-.center{text-align:center}
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:40px 0;
+  color:var(--muted);
+  font-size:14px;
+}
 </style>
 </head>
 
@@ -81,194 +142,31 @@ button:hover{opacity:.85}
 
 <div class="container">
 
-<!-- LANDING -->
-<div id="landing" class="card center">
-  <h1>MINDKEY</h1>
-  <p>
-    Você não age igual em todas as situações.  
-    E isso não é incoerência — é padrão comportamental.
-  </p>
-  <p>
-    Este teste identifica como você tende a decidir, reagir
-    e se posicionar quando age no automático.
-  </p>
-  <button onclick="startFree()">Descobrir Meu Perfil</button>
-</div>
+  <!-- HERO -->
+  <section class="hero">
+    <h1>
+      Nem tudo é espiritual.<br>
+      Às vezes você só precisa se conhecer melhor.
+    </h1>
 
-<!-- QUIZ -->
-<div id="quiz" class="card hidden">
-  <h2 id="question"></h2>
-  <div id="options"></div>
-</div>
-
-<!-- RESULTADO -->
-<div id="result" class="card hidden center">
-  <h2>Seu Perfil Predominante</h2>
-
-  <p>
-    Com base nas suas respostas, seu padrão predominante é
-    <strong id="profile"></strong>.
-  </p>
-
-  <p id="description"></p>
-
-  <!-- TRANSIÇÃO PARA PREMIUM -->
-  <p style="margin-top:18px;color:#b4b4c7;">
-    Este resultado mostra apenas sua tendência comportamental dominante.
-  </p>
-
-  <div style="margin-top:24px;text-align:center;">
-    <a href="premium.html" style="
-      display:inline-block;
-      padding:14px 26px;
-      background:#7c7cff;
-      color:#ffffff;
-      border-radius:30px;
-      text-decoration:none;
-      font-size:15px;
-    ">
-      Ver Relatório Completo
-    </a>
-
-    <p style="margin-top:12px;font-size:14px;color:#b4b4c7;">
-      Relatório profissional + amoroso + social  
-      + prompt inteligente de I.A
+    <p>
+      O MINDKEY é uma análise comportamental inteligente que revela
+      como você pensa, decide e reage — no profissional, amoroso e social.
     </p>
-  </div>
-</div>
 
-</div>
+    <div class="actions">
+      <a href="free.html" class="btn btn-primary">
+        Fazer teste gratuito
+      </a>
 
-<script>
-const questions = [
- {q:"Quando você precisa decidir algo importante sob pressão, o que mais pesa?",
-  a:[
-   ["Evitar erro e risco","Analítico"],
-   ["Como isso afeta as pessoas","Comunicador"],
-   ["Resolver logo e seguir","Executor"],
-   ["Pensar nas consequências futuras","Estrategista"]
-  ]},
- {q:"Em conflitos, o que costuma te incomodar primeiro?",
-  a:[
-   ["Incoerência ou falta de lógica","Analítico"],
-   ["Frieza emocional","Comunicador"],
-   ["Falta de ação","Executor"],
-   ["Falta de visão do todo","Estrategista"]
-  ]},
- {q:"Quando algo não sai como planejado, você tende a:",
-  a:[
-   ["Revisar tudo","Analítico"],
-   ["Sentir antes de reagir","Comunicador"],
-   ["Agir rápido","Executor"],
-   ["Ajustar a estratégia","Estrategista"]
-  ]},
- {q:"No trabalho, você se sente melhor quando:",
-  a:[
-   ["Tudo está bem definido","Analítico"],
-   ["Há diálogo","Comunicador"],
-   ["As coisas andam","Executor"],
-   ["Existe direção clara","Estrategista"]
-  ]},
- {q:"Quando precisa se posicionar:",
-  a:[
-   ["Pensa bem antes","Analítico"],
-   ["Expressa o que sente","Comunicador"],
-   ["Fala direto","Executor"],
-   ["Escolhe o momento","Estrategista"]
-  ]},
- {q:"O que mais te frustra?",
-  a:[
-   ["Bagunça","Analítico"],
-   ["Indiferença","Comunicador"],
-   ["Lentidão","Executor"],
-   ["Falta de planejamento","Estrategista"]
-  ]},
- {q:"Em grupos, você tende a:",
-  a:[
-   ["Observar","Analítico"],
-   ["Conectar pessoas","Comunicador"],
-   ["Assumir a frente","Executor"],
-   ["Organizar o caminho","Estrategista"]
-  ]},
- {q:"Quando alguém erra com você:",
-  a:[
-   ["Analisa racionalmente","Analítico"],
-   ["Sente a quebra emocional","Comunicador"],
-   ["Confronta","Executor"],
-   ["Avalia o impacto","Estrategista"]
-  ]},
- {q:"Você confia mais em:",
-  a:[
-   ["Dados","Analítico"],
-   ["Intuição","Comunicador"],
-   ["Experiência","Executor"],
-   ["Visão estratégica","Estrategista"]
-  ]},
- {q:"Entre segurança e oportunidade:",
-  a:[
-   ["Segurança","Analítico"],
-   ["Pessoas envolvidas","Comunicador"],
-   ["Arriscar","Executor"],
-   ["Custo-benefício","Estrategista"]
-  ]},
- {q:"Seu ponto forte aparece quando:",
-  a:[
-   ["Mantém controle","Analítico"],
-   ["Cria empatia","Comunicador"],
-   ["Decide rápido","Executor"],
-   ["Enxerga além","Estrategista"]
-  ]},
- {q:"Seu maior desafio surge quando:",
-  a:[
-   ["Perde controle","Analítico"],
-   ["Precisa impor limites","Comunicador"],
-   ["Precisa esperar","Executor"],
-   ["Lida com detalhes","Estrategista"]
-  ]}
-];
+      <a href="premium.html" class="btn btn-outline">
+        Ver versão premium
+      </a>
+    </div>
+  </section>
 
-let index=0;
-let score={Analítico:0,Comunicador:0,Executor:0,Estrategista:0};
-
-function startFree(){
- document.getElementById("landing").classList.add("hidden");
- document.getElementById("quiz").classList.remove("hidden");
- loadQuestion();
-}
-
-function loadQuestion(){
- const q=questions[index];
- document.getElementById("question").textContent=q.q;
- const opt=document.getElementById("options");
- opt.innerHTML="";
- q.a.forEach(o=>{
-  const d=document.createElement("div");
-  d.className="option";
-  d.textContent=o[0];
-  d.onclick=()=>answer(o[1]);
-  opt.appendChild(d);
- });
-}
-
-function answer(type){
- score[type]++;
- index++;
- if(index<questions.length) loadQuestion();
- else showResult();
-}
-
-function showResult(){
- document.getElementById("quiz").classList.add("hidden");
- document.getElementById("result").classList.remove("hidden");
-
- const profile=Object.keys(score).reduce((a,b)=>score[a]>score[b]?a:b);
- document.getElementById("profile").textContent=profile;
-
- document.getElementById("description").textContent =
-  "Esse padrão aparece quando você age no automático, especialmente sob pressão. "+
-  "Ele influencia suas decisões, seus conflitos e a forma como as pessoas te percebem.";
-}
-</script>
-
-</body>
-</html>
+  <!-- COMO FUNCIONA -->
+  <section class="section">
+    <h2>Como funciona</h2>
+    <p>
+      Em poucos minu
