@@ -5,18 +5,83 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MINDKEY — Relatório Premium</title>
 <link rel="stylesheet" href="styles.css">
+
+<style>
+.gate{
+  position:fixed;
+  inset:0;
+  background:rgba(11,12,15,.92);
+  backdrop-filter:blur(6px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:10;
+}
+
+.gate-box{
+  max-width:520px;
+  background:var(--card);
+  border-radius:20px;
+  padding:36px;
+  text-align:center;
+  border:1px solid rgba(255,255,255,.05);
+}
+
+.gate-box h2{
+  margin-bottom:12px;
+}
+
+.gate-box p{
+  color:var(--muted);
+  margin-bottom:20px;
+}
+
+.features{
+  text-align:left;
+  margin:20px 0;
+}
+
+.features li{
+  margin-bottom:10px;
+}
+</style>
 </head>
 
 <body onload="loadReport()">
+
+<!-- GATE PREMIUM -->
+<div class="gate" id="gate">
+  <div class="gate-box">
+    <h2>Desbloqueie seu Relatório Premium</h2>
+    <p>
+      Acesse sua análise completa com orientações práticas
+      para vida profissional, amorosa e social.
+    </p>
+
+    <ul class="features">
+      <li>✔ Perfil dominante + secundário</li>
+      <li>✔ Leitura comportamental aprofundada</li>
+      <li>✔ Prompt inteligente para IA</li>
+      <li>✔ Clareza prática para decisões</li>
+    </ul>
+
+    <button onclick="unlock()">Desbloquear agora</button>
+
+    <p style="font-size:13px;margin-top:14px;color:var(--muted)">
+      * Etapa de validação — pagamento será ativado em breve
+    </p>
+  </div>
+</div>
 
 <div class="container">
 
   <div class="block">
     <h1>Relatório Comportamental</h1>
     <p>
-      Esta análise foi gerada a partir do seu padrão de respostas.
-      Ela reflete tendências naturais de comportamento — não rótulos fixos.
+      Esta análise reflete padrões naturais do seu comportamento.
+      Use como ferramenta de autoconhecimento e crescimento.
     </p>
+
     <p><strong>Perfil dominante:</strong> <span id="mainProfile"></span></p>
     <p><strong>Perfil secundário:</strong> <span id="secondProfile"></span></p>
   </div>
@@ -25,15 +90,19 @@
 
   <div class="block">
     <h2>Prompt Inteligente</h2>
-    <p>
-      Copie e cole este prompt em uma IA (ChatGPT, Gemini, etc)
-      para receber orientações personalizadas:
-    </p>
+    <p>Copie e use em uma IA:</p>
     <pre id="prompt"></pre>
   </div>
 
 </div>
 
 <script src="app.js"></script>
+
+<script>
+function unlock(){
+  document.getElementById("gate").style.display="none";
+}
+</script>
+
 </body>
 </html>
