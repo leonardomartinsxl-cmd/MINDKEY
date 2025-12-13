@@ -1,187 +1,290 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MINDKEY — Relatório Completo</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MINDKEY — Relatório Completo</title>
 
-  <style>
-    :root {
-      --bg: #0f1220;
-      --card: #171a2f;
-      --primary: #7c7cff;
-      --text: #f1f1f1;
-      --muted: #b4b4c7;
-      --accent: #2b2f55;
-    }
+<style>
+:root{
+  --bg:#0f1220;
+  --card:#171a2f;
+  --primary:#7c7cff;
+  --text:#f1f1f1;
+  --muted:#b4b4c7;
+}
 
-    * {
-      box-sizing: border-box;
-      font-family: Arial, Helvetica, sans-serif;
-    }
+*{box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
 
-    body {
-      margin: 0;
-      background: linear-gradient(180deg, #0f1220, #0b0d18);
-      color: var(--text);
-    }
+body{
+  margin:0;
+  background:linear-gradient(180deg,#0f1220,#0b0d18);
+  color:var(--text);
+}
 
-    header {
-      padding: 60px 20px;
-      text-align: center;
-      max-width: 900px;
-      margin: auto;
-    }
+.container{
+  max-width:800px;
+  margin:auto;
+  padding:40px 20px;
+}
 
-    header h1 {
-      font-size: 36px;
-      margin-bottom: 16px;
-      letter-spacing: 1px;
-    }
+.card{
+  background:var(--card);
+  border-radius:16px;
+  padding:24px;
+  margin-bottom:24px;
+  box-shadow:0 10px 30px rgba(0,0,0,.35);
+}
 
-    header p {
-      font-size: 18px;
-      color: var(--muted);
-      line-height: 1.6;
-    }
+.center{text-align:center}
 
-    section {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
+.hidden{display:none}
 
-    .card {
-      background: var(--card);
-      border-radius: 16px;
-      padding: 24px;
-      margin-bottom: 24px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.35);
-    }
+p{
+  color:var(--muted);
+  line-height:1.6;
+}
 
-    .card h2 {
-      font-size: 22px;
-      margin-bottom: 12px;
-      color: var(--primary);
-    }
+button{
+  background:var(--primary);
+  color:#fff;
+  border:none;
+  padding:14px 26px;
+  border-radius:30px;
+  font-size:15px;
+  cursor:pointer;
+}
 
-    .card p {
-      color: var(--muted);
-      line-height: 1.6;
-      margin-bottom: 12px;
-    }
+button:hover{opacity:.85}
 
-    ul {
-      padding-left: 18px;
-    }
+.option{
+  display:block;
+  background:#232651;
+  margin:10px 0;
+  padding:14px;
+  border-radius:12px;
+  cursor:pointer;
+  transition:.2s;
+}
 
-    li {
-      margin-bottom: 10px;
-      color: var(--muted);
-    }
-
-    .cta {
-      text-align: center;
-      margin: 60px 0;
-    }
-
-    .price {
-      font-size: 28px;
-      margin: 16px 0;
-      color: var(--primary);
-    }
-
-    button {
-      background: var(--primary);
-      color: #fff;
-      border: none;
-      padding: 16px 28px;
-      border-radius: 30px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: .3s;
-    }
-
-    button:hover {
-      opacity: .85;
-    }
-
-    footer {
-      text-align: center;
-      padding: 30px 20px;
-      color: var(--muted);
-      font-size: 14px;
-    }
-  </style>
+.option:hover{
+  background:#2f3270;
+}
+</style>
 </head>
 
 <body>
 
-<header>
-  <h1>MINDKEY — Relatório Profundo de Personalidade</h1>
+<div class="container">
+
+<!-- INTRO PREMIUM -->
+<div id="intro" class="card center">
+  <h1>MINDKEY — Teste Profundo</h1>
   <p>
-    Você já percebeu que age diferente no trabalho, nos relacionamentos
-    e em ambientes sociais — mas nunca entendeu exatamente por quê?
+    Este teste analisa seus padrões comportamentais
+    nos âmbitos profissional, amoroso e social.
   </p>
-</header>
+  <p>
+    Responda de forma instintiva.  
+    Não tente se explicar.
+  </p>
+  <button onclick="startPremium()">Iniciar Teste Completo</button>
+</div>
 
-<section>
+<!-- QUIZ PREMIUM -->
+<div id="quiz" class="card hidden">
+  <h3 id="context"></h3>
+  <h2 id="question"></h2>
+  <div id="options"></div>
+</div>
 
-  <div class="card">
-    <h2>O que este relatório analisa</h2>
-    <p>
-      Diferente de testes superficiais, o MINDKEY Premium identifica
-      <strong>padrões ocultos</strong> que influenciam suas decisões,
-      reações emocionais e comportamentos automáticos.
-    </p>
-    <ul>
-      <li>Como você reage sob pressão</li>
-      <li>Como se posiciona em relações amorosas</li>
-      <li>Seu padrão social real (não o personagem)</li>
-      <li>Bloqueios comportamentais recorrentes</li>
-    </ul>
-  </div>
+<!-- RESULTADO PREMIUM -->
+<div id="result" class="card hidden center">
+  <h2>Leitura Comportamental Completa</h2>
 
-  <div class="card">
-    <h2>O que você recebe</h2>
-    <ul>
-      <li>36 perguntas profundas e estratégicas</li>
-      <li>Análise profissional, amorosa e social</li>
-      <li>Identificação de padrão dominante e secundário</li>
-      <li>Pontos fortes claros e vulnerabilidades reais</li>
-      <li>Relatório direto, sem linguagem genérica</li>
-    </ul>
-  </div>
+  <p>
+    Seu perfil predominante é
+    <strong id="mainProfile"></strong>
+  </p>
 
-  <div class="card">
-    <h2>Prompt Inteligente de I.A</h2>
-    <p>
-      Ao final do relatório, você recebe um prompt exclusivo,
-      ajustado ao seu perfil, para consultar o ChatGPT de forma
-      precisa, profunda e contextualizada.
-    </p>
-    <p>
-      Nada de respostas genéricas.  
-      A I.A passa a entender <strong>como você funciona</strong>.
-    </p>
-  </div>
+  <p>
+    Seu perfil secundário é
+    <strong id="secondProfile"></strong>
+  </p>
 
-</section>
+  <p style="margin-top:16px">
+    Esses dois perfis explicam como você
+    muda de comportamento conforme o contexto.
+  </p>
 
-<div class="cta">
-  <p class="price">Acesso completo por R$ 29,90</p>
-  <button onclick="alert('Checkout será ativado em breve')">
-    Quero Meu Relatório Completo
-  </button>
-
-  <p style="margin-top:14px;color:var(--muted)">
-    Pagamento e login serão ativados em breve
+  <p style="margin-top:12px">
+    Na próxima etapa, você receberá
+    um relatório detalhado + prompt inteligente de I.A.
   </p>
 </div>
 
-<footer>
-  © 2025 MINDKEY — Autoconhecimento aplicado à realidade
-</footer>
+</div>
+
+<script>
+// ================== PERGUNTAS PREMIUM ==================
+
+// PROFISSIONAL
+const premiumProfessional = [
+ {q:"Quando precisa liderar algo importante, você tende a:",a:[
+  ["Planejar tudo antes","Analítico"],
+  ["Engajar as pessoas","Comunicador"],
+  ["Assumir controle rápido","Executor"],
+  ["Definir direção clara","Estrategista"]
+ ]},
+ {q:"No trabalho, você perde a paciência quando:",a:[
+  ["Há desorganização","Analítico"],
+  ["Falta empatia","Comunicador"],
+  ["Nada anda","Executor"],
+  ["Não há visão","Estrategista"]
+ ]},
+ {q:"Você se sente mais valorizado quando:",a:[
+  ["Reconhecem sua precisão","Analítico"],
+  ["Reconhecem sua comunicação","Comunicador"],
+  ["Reconhecem seus resultados","Executor"],
+  ["Reconhecem sua visão","Estrategista"]
+ ]},
+ {q:"Diante de pressão extrema, você:",a:[
+  ["Se fecha e analisa","Analítico"],
+  ["Sente o peso emocional","Comunicador"],
+  ["Age sem hesitar","Executor"],
+  ["Recalcula a rota","Estrategista"]
+ ]},
+ {q:"Seu erro mais comum no trabalho é:",a:[
+  ["Excesso de cautela","Analítico"],
+  ["Se envolver demais","Comunicador"],
+  ["Ser impulsivo","Executor"],
+  ["Ignorar detalhes","Estrategista"]
+ ]},
+ {q:"Você confia mais em líderes que:",a:[
+  ["São coerentes","Analítico"],
+  ["São humanos","Comunicador"],
+  ["São firmes","Executor"],
+  ["São visionários","Estrategista"]
+ ]}
+];
+
+// AMOROSO
+const premiumLove = [
+ {q:"Em relacionamentos, você tende a:",a:[
+  ["Analisar comportamentos","Analítico"],
+  ["Sentir intensamente","Comunicador"],
+  ["Agir conforme sente","Executor"],
+  ["Observar padrões","Estrategista"]
+ ]},
+ {q:"Você se afasta quando:",a:[
+  ["Perde lógica","Analítico"],
+  ["Se sente ignorado","Comunicador"],
+  ["Perde admiração","Executor"],
+  ["Vê repetição de erros","Estrategista"]
+ ]},
+ {q:"Você demonstra amor mais por:",a:[
+  ["Cuidado prático","Analítico"],
+  ["Palavras e presença","Comunicador"],
+  ["Atitudes","Executor"],
+  ["Planejamento","Estrategista"]
+ ]},
+ {q:"Seu maior medo emocional é:",a:[
+  ["Instabilidade","Analítico"],
+  ["Rejeição","Comunicador"],
+  ["Dependência","Executor"],
+  ["Perder direção","Estrategista"]
+ ]},
+ {q:"Quando ama, você:",a:[
+  ["Cuida em silêncio","Analítico"],
+  ["Se entrega","Comunicador"],
+  ["Protege","Executor"],
+  ["Constrói futuro","Estrategista"]
+ ]}
+];
+
+// SOCIAL
+const premiumSocial = [
+ {q:"Em ambientes sociais, você:",a:[
+  ["Observa","Analítico"],
+  ["Interage","Comunicador"],
+  ["Conduz","Executor"],
+  ["Analisa o grupo","Estrategista"]
+ ]},
+ {q:"Você se sente desconfortável quando:",a:[
+  ["Há caos","Analítico"],
+  ["Há frieza","Comunicador"],
+  ["Há passividade","Executor"],
+  ["Há superficialidade","Estrategista"]
+ ]},
+ {q:"As pessoas costumam te ver como:",a:[
+  ["Reservado","Analítico"],
+  ["Acessível","Comunicador"],
+  ["Forte","Executor"],
+  ["Inteligente","Estrategista"]
+ ]},
+ {q:"Seu papel natural em grupos é:",a:[
+  ["Estruturar","Analítico"],
+  ["Conectar","Comunicador"],
+  ["Decidir","Executor"],
+  ["Direcionar","Estrategista"]
+ ]},
+ {q:"Você se desgasta socialmente quando:",a:[
+  ["Há excesso de estímulo","Analítico"],
+  ["Há carga emocional","Comunicador"],
+  ["Há conflito","Executor"],
+  ["Falta profundidade","Estrategista"]
+ ]}
+];
+
+// ================== LÓGICA ==================
+
+const premiumQuestions = [
+ ...premiumProfessional.map(q=>({...q,context:"Profissional"})),
+ ...premiumLove.map(q=>({...q,context:"Amoroso"})),
+ ...premiumSocial.map(q=>({...q,context:"Social"}))
+];
+
+let index = 0;
+let score = {Analítico:0,Comunicador:0,Executor:0,Estrategista:0};
+
+function startPremium(){
+ document.getElementById("intro").classList.add("hidden");
+ document.getElementById("quiz").classList.remove("hidden");
+ loadQuestion();
+}
+
+function loadQuestion(){
+ const q = premiumQuestions[index];
+ document.getElementById("context").textContent = q.context;
+ document.getElementById("question").textContent = q.q;
+
+ const opt = document.getElementById("options");
+ opt.innerHTML = "";
+ q.a.forEach(o=>{
+  const d = document.createElement("div");
+  d.className="option";
+  d.textContent=o[0];
+  d.onclick=()=>answer(o[1]);
+  opt.appendChild(d);
+ });
+}
+
+function answer(type){
+ score[type]++;
+ index++;
+ if(index<premiumQuestions.length) loadQuestion();
+ else showResult();
+}
+
+function showResult(){
+ document.getElementById("quiz").classList.add("hidden");
+ document.getElementById("result").classList.remove("hidden");
+
+ const sorted = Object.entries(score).sort((a,b)=>b[1]-a[1]);
+ document.getElementById("mainProfile").textContent = sorted[0][0];
+ document.getElementById("secondProfile").textContent = sorted[1][0];
+}
+</script>
 
 </body>
 </html>
