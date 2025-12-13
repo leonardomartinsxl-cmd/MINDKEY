@@ -1,46 +1,53 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Premium — MindKey</title>
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <title>Quiz Premium — MindKey</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
 <div class="container">
-<header class="header">
-  <div class="brand">
-    <div class="logo">MK</div>
-    <div>
-      <h1>MindKey</h1>
-      <div class="small">Relatório Premium</div>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="brand">
+      <div class="logo">MK</div>
+      <div>
+        <h1>MindKey</h1>
+        <div class="small">Quiz Premium</div>
+      </div>
     </div>
-  </div>
-</header>
+  </header>
 
-<section class="card">
-<h2>Relatório Premium</h2>
-<p class="small">
-Análise profunda aplicada a:
-</p>
-<ul class="small">
-  <li>Trabalho & carreira</li>
-  <li>Relacionamentos</li>
-  <li>Comunicação</li>
-  <li>Tomada de decisões</li>
-  <li>Padrões sabotadores</li>
-</ul>
+  <!-- INTRO -->
+  <section class="card">
+    <h2>Análise Profunda MindKey</h2>
+    <p class="small">
+      Este quiz desbloqueia seu relatório completo sobre trabalho, amor,
+      comunicação, decisões e comportamento sob pressão.
+    </p>
+  </section>
 
-<p class="small">
-Inclui um <strong>prompt avançado de IA</strong> para situações reais.
-</p>
+  <!-- PERGUNTAS PREMIUM -->
+  <section class="card quiz-area">
+    <div id="premium-questions"></div>
 
-<button class="btn">Desbloquear (em breve)</button>
-</section>
+    <button id="take-premium" class="btn" style="margin-top:16px">
+      Desbloquear Relatório Premium
+    </button>
+  </section>
 
-<footer class="footer">MindKey • Protótipo</footer>
+  <!-- RELATÓRIO -->
+  <section id="premium-report" class="card premium-report" style="margin-top:24px"></section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    MindKey • Relatório Premium — uso pessoal
+  </footer>
+
 </div>
 
+<script src="quiz_premium.js"></script>
 </body>
 </html>
