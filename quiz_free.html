@@ -1,35 +1,85 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Quiz Free — MindKey</title>
-<link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quiz Free — MindKey</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <div class="container">
-<header class="header">
-  <div class="brand">
-    <div class="logo">MK</div>
-    <div>
-      <h1>MindKey</h1>
-      <div class="small">Quiz Gratuito</div>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="brand">
+      <div class="logo">MK</div>
+      <div>
+        <h1>MindKey</h1>
+        <div class="small">Quiz Gratuito</div>
+      </div>
     </div>
-  </div>
-</header>
+  </header>
 
-<section class="card">
-<h2>Quiz Free</h2>
-<p class="small">
-Responda rapidamente e descubra seu perfil predominante.
-</p>
+  <!-- QUIZ -->
+  <section class="card quiz-area">
+    <h2>Descubra seu perfil predominante</h2>
+    <p class="small">
+      Responda intuitivamente. Não pense demais — a primeira reação costuma ser a mais verdadeira.
+    </p>
 
-<a href="index.html#quiz" class="btn">Iniciar Quiz</a>
-</section>
+    <!-- PERGUNTAS -->
+    <div id="quiz-questions"></div>
 
-<footer class="footer">MindKey • Protótipo</footer>
+    <!-- BOTÃO FINALIZAR -->
+    <button id="take-quiz" class="btn" style="margin-top:16px">
+      Finalizar Quiz
+    </button>
+  </section>
+
+  <!-- RESULTADO -->
+  <section id="result-box" class="card result-box" style="display:none">
+
+    <h2>Seu perfil predominante</h2>
+
+    <h3 id="result-primary" style="margin-bottom:6px"></h3>
+
+    <p id="result-explain" class="small"></p>
+
+    <p id="result-detail" class="small" style="margin-top:8px"></p>
+
+    <hr style="margin:16px 0;border:0;border-top:1px solid rgba(255,255,255,0.1)">
+
+    <h4>Mini prompt para IA</h4>
+    <p class="small">
+      Copie e use no ChatGPT para receber respostas adaptadas ao seu perfil:
+    </p>
+
+    <div id="prompt-area" class="prompt-box"></div>
+
+    <button id="copy-prompt" class="btn" style="margin-top:12px">
+      Copiar Prompt
+    </button>
+
+    <p class="small" style="margin-top:16px">
+      Quer um relatório profundo sobre trabalho, amor, decisões e comunicação?
+    </p>
+
+    <a href="quiz_premium.html" class="btn">
+      Fazer Análise Premium
+    </a>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    MindKey • Protótipo — Autoconhecimento não clínico
+  </footer>
+
 </div>
+
+<!-- JS -->
+<script src="app.js"></script>
 
 </body>
 </html>
