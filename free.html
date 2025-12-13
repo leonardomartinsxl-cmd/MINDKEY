@@ -10,79 +10,93 @@
 <body>
 
 <div class="container">
-<h1>Teste Gratuito — MINDKEY</h1>
-<p class="subtitle">Responda com sinceridade. Não existe resposta certa.</p>
-<div class="card" id="quiz"></div>
+
+  <div class="block">
+    <h1>Teste Gratuito — MINDKEY</h1>
+    <p>Responda com sinceridade. Não existe resposta certa.</p>
+  </div>
+
+  <div class="block" id="quiz"></div>
+
 </div>
 
-<script src="app.js"></script>
 <script>
-const perguntas=[
- {
-  t:"Quando surge um problema inesperado, você costuma:",
-  o:[
-    ["Agir rapidamente e assumir o controle","Dominante"],
+const perguntas = [
+  {t:"Quando surge um problema inesperado, você costuma:",o:[
+    ["Agir rapidamente e assumir o controle","Executor"],
     ["Analisar antes de decidir","Analítico"],
-    ["Pensar no impacto nas pessoas","Relacional"],
-    ["Manter a calma e adaptar-se","Adaptável"]
-  ]
- },
- {
-  t:"Em grupo, você normalmente:",
-  o:[
-    ["Lidera naturalmente","Dominante"],
+    ["Pensar no impacto nas pessoas","Comunicador"],
+    ["Manter a calma e adaptar-se","Estrategista"]
+  ]},
+  {t:"Em grupo, você normalmente:",o:[
+    ["Lidera naturalmente","Executor"],
     ["Observa antes de se posicionar","Analítico"],
-    ["Conecta as pessoas","Relacional"],
-    ["Segue o fluxo","Adaptável"]
-  ]
- },
- {
-  t:"Você se sente mais confortável quando:",
-  o:[
-    ["Tem controle da situação","Dominante"],
+    ["Conecta as pessoas","Comunicador"],
+    ["Segue o fluxo","Estrategista"]
+  ]},
+  {t:"Você se sente mais confortável quando:",o:[
+    ["Tem controle da situação","Executor"],
     ["Tudo faz sentido lógico","Analítico"],
-    ["O clima está harmonioso","Relacional"],
-    ["Nada é rígido demais","Adaptável"]
-  ]
- }
+    ["O clima está harmonioso","Comunicador"],
+    ["Nada é rígido demais","Estrategista"]
+  ]},
+  {t:"Em decisões importantes você:",o:[
+    ["Decide rápido","Executor"],
+    ["Analisa prós e contras","Analítico"],
+    ["Considera sentimentos","Comunicador"],
+    ["Segue a intuição","Estrategista"]
+  ]},
+  {t:"Seu ritmo de trabalho é:",o:[
+    ["Intenso","Executor"],
+    ["Constante","Analítico"],
+    ["Colaborativo","Comunicador"],
+    ["Flexível","Estrategista"]
+  ]},
+  {t:"Você se motiva mais por:",o:[
+    ["Resultados","Executor"],
+    ["Conhecimento","Analítico"],
+    ["Reconhecimento","Comunicador"],
+    ["Liberdade","Estrategista"]
+  ]}
 ];
 
 let atual=0;
-let score={Dominante:0,Analítico:0,Relacional:0,Adaptável:0};
+let pontos={Executor:0,Analítico:0,Comunicador:0,Estrategista:0};
+
 const quiz=document.getElementById("quiz");
 
 function render(){
- const p=perguntas[atual];
- quiz.innerHTML=`<h3>${p.t}</h3>`;
- p.o.forEach(x=>{
-  const d=document.createElement("div");
-  d.className="option";
-  d.textContent=x[0];
-  d.onclick=()=>responder(x[1]);
-  quiz.appendChild(d);
- });
+  const p=perguntas[atual];
+  quiz.innerHTML=`
+    <h3>${p.t}</h3>
+    ${p.o.map(x=>`<div class="soft" onclick="answer('${x[1]}')">${x[0]}</div>`).join("")}
+    <p style="margin-top:16px;color:var(--muted)">Pergunta ${atual+1} de ${perguntas.length}</p>
+  `;
 }
 
-function responder(perfil){
- score[perfil]++;
- atual++;
- if(atual < perguntas.length){
-  render();
- } else {
-  finalizar();
- }
+function answer(tipo){
+  pontos[tipo]++;
+  atual++;
+  if(atual<perguntas.length){
+    render();
+  }else{
+    finish();
+  }
 }
 
-function finalizar(){
- const perfilFinal=getTopProfiles(score)[0];
- quiz.innerHTML=`
- <h2>Seu perfil predominante</h2>
- <h3>${perfilFinal}</h3>
- <p>${PERFIS[perfilFinal].descricao}</p>
- <button onclick="location.href='premium.html'">
- Quero meu relatório completo (Premium)
- </button>
- `;
+function finish(){
+  const sorted=Object.entries(pontos).sort((a,b)=>b[1]-a[1]);
+  localStorage.setItem("mindkey_result",JSON.stringify({
+    main:sorted[0][0],
+    secondary:sorted[1][0]
+  }));
+  quiz.innerHTML=`
+    <h2>Teste concluído</h2>
+    <p>Seu perfil predominante foi identificado.</p>
+    <button onclick="location.href='premium_report.html'">
+      Desbloquear relatório completo
+    </button>
+  `;
 }
 
 render();
