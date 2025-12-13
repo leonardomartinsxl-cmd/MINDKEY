@@ -84,7 +84,7 @@ footer{text-align:center;margin-top:48px;color:var(--muted);font-size:13px}
   </div>
   <nav class="nav">
     <a href="#quiz">Quiz</a>
-    <a href="#premium">Premium</a>
+    <a href="quiz_premium.html">Premium</a>
   </nav>
 </header>
 
@@ -127,12 +127,13 @@ footer{text-align:center;margin-top:48px;color:var(--muted);font-size:13px}
 <a href="quiz_premium.html" class="btn" style="margin-top:14px">
   Desbloquear Relatório Premium
 </a>
+</section>
 
 <section id="premium" class="card" style="margin-top:32px">
 <h2>Relatório Premium</h2>
 <p class="small">
 Trabalho • Amor • Comunicação • Decisão • Pontos cegos • Prompt completo  
-<br><strong>Em breve desbloqueável</strong>
+<br><strong>Disponível no relatório premium</strong>
 </p>
 </section>
 
@@ -183,14 +184,14 @@ questions.forEach((q,i)=>{
 document.addEventListener("click",e=>{
   if(!e.target.classList.contains("opt"))return;
   const q=e.target.dataset.q;
-  document.querySelectorAll(`.opt[data-q="${q}"]`).forEach(b=>b.classList.remove("selected"));
+  document.querySelectorAll(\`.opt[data-q="\${q}"]\`).forEach(b=>b.classList.remove("selected"));
   e.target.classList.add("selected");
 });
 
 document.getElementById("finish").onclick=()=>{
   const score={A:0,B:0,C:0,D:0};
   for(let i=0;i<10;i++){
-    const sel=document.querySelector(`.opt[data-q="${i}"].selected`);
+    const sel=document.querySelector(\`.opt[data-q="\${i}"].selected\`);
     if(!sel){alert("Responda todas as perguntas");return;}
     score[sel.dataset.v]++;
   }
@@ -224,4 +225,3 @@ Situação: [descreva aqui]`;
 
 </body>
 </html>
-
