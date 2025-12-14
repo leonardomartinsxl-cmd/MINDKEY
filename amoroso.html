@@ -45,7 +45,6 @@ body{
  to{opacity:1}
 }
 
-h1,h2,h3{margin-top:0}
 p{color:var(--muted);line-height:1.6;}
 
 .option{
@@ -57,37 +56,34 @@ p{color:var(--muted);line-height:1.6;}
  transition:.2s;
 }
 
+.option.selected{
+ outline:2px solid var(--accent);
+ background:#2a2a66;
+}
+
 .option:hover{background:#2a2a66}
-.hidden{display:none}
 
-.result{
- background:#0b0b1a;
- border-radius:14px;
- padding:20px;
- margin-top:20px;
+.nav{
+ display:flex;
+ justify-content:space-between;
+ margin-top:22px;
 }
 
-textarea{
- width:100%;
- height:220px;
- background:#06060c;
+.nav button{
+ background:#1b1b3a;
  color:#fff;
- border:1px solid #333366;
- border-radius:14px;
- padding:14px;
+ border:1px solid rgba(255,255,255,.08);
+ padding:12px 26px;
+ border-radius:999px;
+ cursor:pointer;
+ transition:.2s;
 }
 
-button{
- background:linear-gradient(135deg,#4dd0e1,#00acc1);
- color:#000;
- border:none;
- padding:16px 36px;
- border-radius:999px;
- font-size:16px;
- font-weight:600;
- cursor:pointer;
- margin-top:14px;
+.nav button:hover{
+ background:#2a2a66;
 }
+
+.hidden{display:none}
 </style>
 </head>
 
@@ -98,110 +94,160 @@ button{
 <div id="start" class="card">
 <h1>🧠 Quiz Brutal — Perfil Amoroso</h1>
 
-<p><strong>Leia antes de começar:</strong></p>
-
 <p>
-Este não é um teste sobre quem você <em>gostaria</em> de ser no amor.<br>
-Ele mostra como você reage quando existe <strong>risco emocional real</strong>.
-</p>
-
-<p>
-As perguntas foram feitas para gerar desconforto.<br>
-Se alguma alternativa ativar defesa, justificativa ou resistência —<br>
-<strong>é justamente essa que deve ser escolhida</strong>.
+Este não é um teste para validar sua melhor versão.<br>
+É para expor o padrão que aparece quando o vínculo aperta.
 </p>
 
 <p style="font-size:14px;color:#888">
-Você não reconhece o padrão antes de marcar.<br>
-Você reconhece <em>depois</em>.
+Escolha o que mais incomoda.<br>
+O padrão aparece depois.
 </p>
 
-<div class="option" onclick="start()">Estou pronto(a) para me ver</div>
+<div class="option" onclick="start()">Começar</div>
 </div>
 
 <!-- QUIZ -->
 <div id="quiz" class="card hidden">
 <h2 id="q"></h2>
 <div id="opts"></div>
+
+<div class="nav">
+<button onclick="prev()">Anterior</button>
+<button onclick="next()">Próximo</button>
 </div>
-
-<!-- DASHBOARD -->
-<div id="dashboard" class="card hidden">
-<h2>📊 Mapa Comportamental</h2>
-<p>Este gráfico mostra como seus padrões emocionais se distribuem.</p>
-<canvas id="chart" height="260"></canvas>
-<div class="soft">
-Quanto mais equilibrado, maior sua flexibilidade emocional.
-</div>
-</div>
-
-<!-- RESULTADO -->
-<div id="result" class="card hidden">
-<h2>🧠 Relatório Amoroso — Leitura Profunda</h2>
-
-<div class="result">
-<strong>Perfil predominante:</strong> <span id="main"></span><br>
-<strong>Perfil secundário:</strong> <span id="sec"></span>
-</div>
-
-<div class="result">
-<h3>🔑 Seu padrão real de vínculo</h3>
-<p id="ativa"></p>
-</div>
-
-<div class="result">
-<h3>💎 Onde você é emocionalmente forte</h3>
-<ul id="elogios"></ul>
-</div>
-
-<div class="result">
-<h3>⚠️ Onde você se sabota sem perceber</h3>
-<p id="melhorar"></p>
-</div>
-
-<div class="result">
-<h3>🎯 Verdade essencial</h3>
-<p>
-O problema não é quem você ama.<br>
-É como você reage quando sente que pode perder.
-</p>
-</div>
-
-<hr>
-
-<h3>🤖 Prompt Premium MindKey</h3>
-<textarea readonly id="prompt"></textarea>
-
-<button onclick="location.href='profissional.html'">Próximo: Profissional 💼</button>
-
-<p style="font-size:13px;color:#888;margin-top:12px">
-Conteúdo de autoconhecimento. Não substitui acompanhamento profissional.
-</p>
 </div>
 
 </div>
 
 <script>
+const profiles=["Seguro","Ansioso","Evitativo","Intenso"];
+
 const questions=[
-{q:"Quando alguém se afasta emocionalmente, você:",a:[["Sente ansiedade","Ansioso"],["Mantém distância","Evitativo"]]},
-{q:"Em conflitos você tende a:",a:[["Buscar conversa imediata","Ansioso"],["Se fechar","Evitativo"]]},
-{q:"Você sente medo de abandono?",a:[["Sim","Ansioso"],["Não","Seguro"]]},
-{q:"Relacionamento ideal para você é:",a:[["Estável","Seguro"],["Intenso","Intenso"]]},
-{q:"Quando se apaixona:",a:[["Se entrega rápido","Ansioso"],["Mantém controle","Evitativo"]]},
-{q:"Discussões fazem você:",a:[["Oscilar emoções","Intenso"],["Buscar equilíbrio","Seguro"]]},
-{q:"Você valoriza mais:",a:[["Conexão","Ansioso"],["Liberdade","Evitativo"]]},
-{q:"Seu histórico amoroso é:",a:[["Estável","Seguro"],["Cheio de altos e baixos","Intenso"]]},
-{q:"Quando algo incomoda:",a:[["Fala","Ansioso"],["Guarda","Evitativo"]]},
-{q:"Você se sente responsável pelas emoções do outro?",a:[["Sim","Ansioso"],["Não","Seguro"]]},
-{q:"Amor para você é:",a:[["Presença","Seguro"],["Intensidade","Intenso"]]},
-{q:"Quando se sente rejeitado:",a:[["Insiste","Ansioso"],["Se afasta","Evitativo"]]},
-{q:"Você se considera emocionalmente:",a:[["Sensível","Ansioso"],["Controlado","Seguro"]]},
-{q:"Em relações você:",a:[["Busca fusão","Intenso"],["Busca equilíbrio","Seguro"]]},
-{q:"Seu maior desafio amoroso é:",a:[["Insegurança","Ansioso"],["Expressar sentimentos","Evitativo"]]}
+{q:"Quando alguém importante se afasta, seu corpo reage como:",a:[
+["Fico atento, mas sigo regulado","Seguro"],
+["Sinto aperto e urgência","Ansioso"],
+["Me fecho emocionalmente","Evitativo"],
+["Oscilo entre apego e raiva","Intenso"]
+]},
+{q:"Em conflitos afetivos você costuma:",a:[
+["Conversar buscando clareza","Seguro"],
+["Insistir para resolver","Ansioso"],
+["Evitar o confronto","Evitativo"],
+["Explodir ou dramatizar","Intenso"]
+]},
+{q:"Quando gosta de alguém:",a:[
+["Avança com consciência","Seguro"],
+["Acelera emocionalmente","Ansioso"],
+["Mantém controle","Evitativo"],
+["Se envolve por completo","Intenso"]
+]},
+{q:"Silêncio do outro geralmente significa:",a:[
+["Espaço necessário","Seguro"],
+["Possível rejeição","Ansioso"],
+["Alívio emocional","Evitativo"],
+["Tensão iminente","Intenso"]
+]},
+{q:"Seu maior medo no amor é:",a:[
+["Perder equilíbrio","Seguro"],
+["Ser abandonado","Ansioso"],
+["Perder autonomia","Evitativo"],
+["Não ser correspondido","Intenso"]
+]},
+{q:"Você se sente mais seguro quando:",a:[
+["Há diálogo","Seguro"],
+["Há confirmação constante","Ansioso"],
+["Há espaço","Evitativo"],
+["Há intensidade","Intenso"]
+]},
+{q:"Quando algo incomoda:",a:[
+["Comunico","Seguro"],
+["Reclamo","Ansioso"],
+["Guardo","Evitativo"],
+["Reajo","Intenso"]
+]},
+{q:"Seu histórico amoroso é:",a:[
+["Estável","Seguro"],
+["Ansioso","Ansioso"],
+["Distante","Evitativo"],
+["Caótico","Intenso"]
+]},
+{q:"Você se adapta ao outro:",a:[
+["Com limites","Seguro"],
+["Demais","Ansioso"],
+["Pouco","Evitativo"],
+["Tudo ou nada","Intenso"]
+]},
+{q:"Quando sente rejeição:",a:[
+["Reflete","Seguro"],
+["Insiste","Ansioso"],
+["Se afasta","Evitativo"],
+["Intensifica","Intenso"]
+]},
+{q:"Você se sente responsável pelo outro:",a:[
+["Não","Seguro"],
+["Sim","Ansioso"],
+["Evito","Evitativo"],
+["Depende do vínculo","Intenso"]
+]},
+{q:"Em relações você busca:",a:[
+["Estabilidade","Seguro"],
+["Garantia emocional","Ansioso"],
+["Liberdade","Evitativo"],
+["Profundidade","Intenso"]
+]},
+{q:"Discussões fazem você:",a:[
+["Ajustar","Seguro"],
+["Sofrer","Ansioso"],
+["Sumir","Evitativo"],
+["Explodir","Intenso"]
+]},
+{q:"Você ama quando:",a:[
+["Se sente seguro","Seguro"],
+["Sente necessidade","Ansioso"],
+["Não se sente pressionado","Evitativo"],
+["Sente intensidade","Intenso"]
+]},
+{q:"Seu padrão se repete quando:",a:[
+["O outro erra","Seguro"],
+["O outro se distancia","Ansioso"],
+["O outro se aproxima","Evitativo"],
+["O vínculo ameaça acabar","Intenso"]
+]},
+{q:"Você se sente visto quando:",a:[
+["É compreendido","Seguro"],
+["É escolhido","Ansioso"],
+["É respeitado","Evitativo"],
+["É desejado","Intenso"]
+]},
+{q:"Seu limite aparece quando:",a:[
+["Há desrespeito","Seguro"],
+["Há abandono","Ansioso"],
+["Há cobrança","Evitativo"],
+["Há frieza","Intenso"]
+]},
+{q:"Você costuma amar:",a:[
+["Com presença","Seguro"],
+["Com medo","Ansioso"],
+["Com cautela","Evitativo"],
+["Com intensidade","Intenso"]
+]},
+{q:"O amor te traz:",a:[
+["Crescimento","Seguro"],
+["Ansiedade","Ansioso"],
+["Conflito interno","Evitativo"],
+["Caos emocional","Intenso"]
+]},
+{q:"Seu padrão real é:",a:[
+["Equilíbrio","Seguro"],
+["Apego","Ansioso"],
+["Defesa","Evitativo"],
+["Fusão","Intenso"]
+]}
 ];
 
 let i=0;
-let score={Seguro:0,Ansioso:0,Evitativo:0,Intenso:0};
+let answers=new Array(questions.length).fill(null);
 
 function start(){
  document.getElementById("start").classList.add("hidden");
@@ -211,142 +257,25 @@ function start(){
 
 function load(){
  const q=questions[i];
- document.getElementById("q").textContent=q.q;
+ document.getElementById("q").textContent=(i+1)+". "+q.q;
  const o=document.getElementById("opts");
  o.innerHTML="";
- q.a.forEach(x=>{
+ q.a.forEach((x,idx)=>{
   const d=document.createElement("div");
   d.className="option";
+  if(answers[i]===idx) d.classList.add("selected");
   d.textContent=x[0];
-  d.onclick=()=>answer(x[1]);
+  d.onclick=()=>{answers[i]=idx;load();}
   o.appendChild(d);
  });
 }
 
-function answer(type){
- score[type]++;
- i++;
- if(i>=questions.length){show();}
- else load();
+function next(){
+ if(i<questions.length-1){i++;load();}
 }
 
-function renderChart(data){
- const canvas=document.getElementById("chart");
- const ctx=canvas.getContext("2d");
- const labels=Object.keys(data);
- const values=Object.values(data);
- const w=canvas.width=canvas.offsetWidth;
- const h=canvas.height;
- ctx.clearRect(0,0,w,h);
- const max=Math.max(...values)+1;
- const barWidth=w/labels.length*0.6;
- values.forEach((v,i)=>{
-  const x=(i+0.5)*(w/labels.length);
-  const barHeight=(v/max)*(h-60);
-  ctx.fillStyle="#4dd0e1";
-  ctx.fillRect(x-barWidth/2,h-barHeight-30,barWidth,barHeight);
-  ctx.fillStyle="#fff";
-  ctx.textAlign="center";
-  ctx.fillText(labels[i],x,h-10);
- });
-}
-
-function show(){
- document.getElementById("quiz").classList.add("hidden");
- document.getElementById("dashboard").classList.remove("hidden");
- document.getElementById("result").classList.remove("hidden");
- renderChart(score);
-
- const sorted=Object.entries(score).sort((a,b)=>b[1]-a[1]);
- const main=sorted[0][0];
- const sec=sorted[1][0];
-
- document.getElementById("main").textContent=main;
- document.getElementById("sec").textContent=sec;
-
- const textos={
-  Seguro:{
-   base:{
-    ativa:"Você costuma se envolver com clareza emocional. Normalmente sabe o que sente e não precisa criar jogos para sustentar uma relação.",
-    melhorar:"O risco é se tornar o adulto emocional da relação e ignorar quando o outro não está emocionalmente disponível.",
-    elogios:["Estabilidade emocional","Capacidade de diálogo honesto"]
-   },
-   secundarios:{
-    Intenso:"Quando algo toca fundo, você sente com força — mas ainda consegue se reorganizar sem implodir o vínculo.",
-    Ansioso:"Em momentos de instabilidade, você começa a se cobrar para manter tudo funcionando.",
-    Evitativo:"Você racionaliza sentimentos para evitar conflitos que prefere não enfrentar."
-   }
-  },
-
-  Ansioso:{
-   base:{
-    ativa:"Quando você gosta, sua mente entra em estado de alerta. Você observa sinais, mudanças de tom, tempo de resposta e presença emocional.",
-    melhorar:"Aprender a não transformar silêncio ou distância do outro em prova de rejeição.",
-    elogios:["Sensibilidade emocional","Capacidade de amar intensamente"]
-   },
-   secundarios:{
-    Intenso:"Quando sente ameaça de perda, suas emoções aceleram e o amor vira urgência.",
-    Seguro:"Você oscila entre confiar e se antecipar ao abandono.",
-    Evitativo:"Você quer proximidade, mas se critica por precisar tanto dela."
-   }
-  },
-
-  Evitativo:{
-   base:{
-    ativa:"Você se envolve mantendo controle emocional. Quando sente cobrança afetiva, seu impulso é se afastar.",
-    melhorar:"Entender que se fechar sem explicar também comunica rejeição.",
-    elogios:["Autonomia emocional","Capacidade de se manter inteiro"]
-   },
-   secundarios:{
-    Ansioso:"Você vive dividido entre querer vínculo e fugir dele.",
-    Seguro:"Você se afasta sem romper, mas deixa emoções não resolvidas.",
-    Intenso:"Quando sente demais, corta o contato emocional para se proteger."
-   }
-  },
-
-  Intenso:{
-   base:{
-    ativa:"Você não ama superficialmente. Quando se envolve, sente rápido, forte e profundamente.",
-    melhorar:"Criar pausa entre emoção e ação para não transformar intensidade em autossabotagem.",
-    elogios:["Paixão","Entrega emocional"]
-   },
-   secundarios:{
-    Ansioso:"O medo de perder amplifica pensamentos e reações.",
-    Seguro:"Você sente fundo, mas consegue se reorganizar.",
-    Evitativo:"Você alterna entre fusão total e afastamento brusco."
-   }
-  }
- };
-
- const perfil=textos[main];
-
- document.getElementById("ativa").textContent=
- perfil.base.ativa + " " + perfil.secundarios[sec];
-
- document.getElementById("melhorar").textContent=
- perfil.base.melhorar;
-
- const ul=document.getElementById("elogios");
- ul.innerHTML="";
- perfil.base.elogios.forEach(e=>{
-  const li=document.createElement("li");
-  li.textContent=e;
-  ul.appendChild(li);
- });
-
- localStorage.setItem("mindkey_amoroso",JSON.stringify({principal:main,secundario:sec}));
-
- document.getElementById("prompt").value=
-`Tenho perfil amoroso predominante ${main}, com traço secundário ${sec}.
-
-Estou vivendo a seguinte situação amorosa real:
-[DESCREVA A SITUAÇÃO]
-
-Analise considerando meus padrões emocionais reais.
-Identifique reações automáticas.
-Mostre pontos cegos.
-Diferencie o que está sob meu controle.
-Evite respostas genéricas.`;
+function prev(){
+ if(i>0){i--;load();}
 }
 </script>
 
