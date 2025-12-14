@@ -98,21 +98,22 @@ button{
 <div id="start" class="card">
 <h1>🧠 Quiz Brutal — Perfil Amoroso</h1>
 
-<p><strong>Atenção antes de começar:</strong></p>
+<p><strong>Leia antes de começar:</strong></p>
 
 <p>
 Este não é um teste sobre quem você <em>gostaria</em> de ser no amor.  
-É um espelho de como você reage quando existe <strong>risco emocional real</strong>.
+Ele mostra como você reage quando existe <strong>risco emocional real</strong>.
 </p>
 
 <p>
-Todas as alternativas são desconfortáveis de propósito.  
-Você não deve escolher a mais bonita —  
-mas a que gera resistência interna ou vontade de se justificar.
+As perguntas foram feitas para gerar desconforto.  
+Se alguma alternativa incomodar, resistir ou ativar justificativas internas —  
+<strong>é justamente essa que deve ser escolhida</strong>.
 </p>
 
 <p style="font-size:14px;color:#888">
-Regra psicológica: você reconhecerá o padrão <em>depois</em> de marcar a resposta.
+Regra psicológica: você não reconhece o padrão antes de marcar.  
+Você reconhece <em>depois</em>.
 </p>
 
 <div class="option" onclick="start()">Estou pronto(a) para me ver</div>
@@ -127,7 +128,7 @@ Regra psicológica: você reconhecerá o padrão <em>depois</em> de marcar a res
 <!-- DASHBOARD -->
 <div id="dashboard" class="card hidden">
 <h2>📊 Mapa Comportamental</h2>
-<p>Picos indicam reações automáticas sob envolvimento emocional real.</p>
+<p>Este gráfico mostra como seus padrões emocionais se distribuem.</p>
 <canvas id="chart" height="260"></canvas>
 <div class="soft">
 Quanto mais equilibrado, maior sua flexibilidade emocional.
@@ -182,96 +183,21 @@ Conteúdo de autoconhecimento. Não substitui acompanhamento profissional.
 
 <script>
 const questions=[
-{q:"Quando alguém começa a gostar mais de você do que o esperado, você:",a:[
-["Começa a analisar defeitos para reduzir o envolvimento","Seguro"],
-["Sente ansiedade e medo de perder a pessoa","Ansioso"],
-["Sente vontade de se afastar sem explicar","Evitativo"],
-["Tenta corresponder mesmo sentindo pressão interna","Intenso"]
-]},
-{q:"Em relacionamentos, você percebe que geralmente:",a:[
-["Entende tudo racionalmente, mas sente pouco","Seguro"],
-["Sente mais do que consegue sustentar","Ansioso"],
-["Some emocionalmente quando fica sério","Evitativo"],
-["Sustenta a relação mesmo às custas de si","Intenso"]
-]},
-{q:"Quando algo dá errado na relação, seu pensamento automático é:",a:[
-["Onde a lógica falhou?","Seguro"],
-["Eu devia ter feito mais","Ansioso"],
-["Isso era previsível","Evitativo"],
-["Isso vai passar, mas dói","Intenso"]
-]},
-{q:"Quando percebe que está se apegando, você:",a:[
-["Começa a se policiar emocionalmente","Seguro"],
-["Se entrega rápido demais","Ansioso"],
-["Cria distrações ou conflitos","Evitativo"],
-["Tenta ajustar o ritmo conscientemente","Intenso"]
-]},
-{q:"Quando alguém se afasta emocionalmente, você:",a:[
-["Repassa mentalmente tudo para entender","Seguro"],
-["Sente urgência em resolver","Ansioso"],
-["Finge indiferença e se fecha","Evitativo"],
-["Aceita, mas sente o impacto","Intenso"]
-]},
-{q:"Em conflitos, você tende a:",a:[
-["Argumentar até se sentir certo","Seguro"],
-["Falar demais e depois se culpar","Ansioso"],
-["Se calar e se afastar","Evitativo"],
-["Buscar entendimento real","Intenso"]
-]},
-{q:"Você se sente mais atraído(a) por pessoas que:",a:[
-["Precisam de orientação emocional","Seguro"],
-["Te fazem sentir necessário(a)","Ansioso"],
-["Não estão totalmente disponíveis","Evitativo"],
-["Sabem o que querem","Intenso"]
-]},
-{q:"Quando alguém depende emocionalmente de você, você sente:",a:[
-["Responsabilidade excessiva","Seguro"],
-["Importância","Ansioso"],
-["Sufocamento","Evitativo"],
-["Necessidade de limites","Intenso"]
-]},
-{q:"Quando percebe que alguém NÃO depende de você, você:",a:[
-["Questiona se é interesse real","Seguro"],
-["Se esforça mais para ser visto(a)","Ansioso"],
-["Perde parte do interesse","Evitativo"],
-["Mantém constância","Intenso"]
-]},
-{q:"O que mais gera conflito interno em você no amor?",a:[
-["Perder controle","Seguro"],
-["Ser deixado(a)","Ansioso"],
-["Perder liberdade","Evitativo"],
-["Fazer escolhas erradas","Intenso"]
-]},
-{q:"Quando um relacionamento começa a ficar estável, você:",a:[
-["Começa a analisar demais","Seguro"],
-["Cria mais expectativas","Ansioso"],
-["Sente vontade de sair","Evitativo"],
-["Relaxar gradualmente","Intenso"]
-]},
-{q:"Após términos, você costuma:",a:[
-["Entender tudo, mas sentir pouco","Seguro"],
-["Sentir tudo intensamente","Ansioso"],
-["Cortar sentimentos rápido","Evitativo"],
-["Processar com o tempo","Intenso"]
-]},
-{q:"No fundo, você acredita que:",a:[
-["Amor exige vigilância","Seguro"],
-["Amor é prova constante","Ansioso"],
-["Amor limita","Evitativo"],
-["Amor sustenta","Intenso"]
-]},
-{q:"Se fosse brutalmente honesto(a), você diria que:",a:[
-["Usa a razão para não se machucar","Seguro"],
-["Usa a intensidade para não se sentir só","Ansioso"],
-["Usa o afastamento para se proteger","Evitativo"],
-["Usa a consciência para se regular","Intenso"]
-]},
-{q:"Quando sente que está emocionalmente exposto(a), você:",a:[
-["Tenta entender em vez de sentir","Seguro"],
-["Se apega ainda mais","Ansioso"],
-["Cria distância","Evitativo"],
-["Observa e regula","Intenso"]
-]}
+{q:"Quando alguém se afasta emocionalmente, você:",a:[["Sente ansiedade","Ansioso"],["Mantém distância","Evitativo"]]},
+{q:"Em conflitos você tende a:",a:[["Buscar conversa imediata","Ansioso"],["Se fechar","Evitativo"]]},
+{q:"Você sente medo de abandono?",a:[["Sim","Ansioso"],["Não","Seguro"]]},
+{q:"Relacionamento ideal para você é:",a:[["Estável","Seguro"],["Intenso","Intenso"]]},
+{q:"Quando se apaixona:",a:[["Se entrega rápido","Ansioso"],["Mantém controle","Evitativo"]]},
+{q:"Discussões fazem você:",a:[["Oscilar emoções","Intenso"],["Buscar equilíbrio","Seguro"]]},
+{q:"Você valoriza mais:",a:[["Conexão","Ansioso"],["Liberdade","Evitativo"]]},
+{q:"Seu histórico amoroso é:",a:[["Estável","Seguro"],["Cheio de altos e baixos","Intenso"]]},
+{q:"Quando algo incomoda:",a:[["Fala","Ansioso"],["Guarda","Evitativo"]]},
+{q:"Você se sente responsável pelas emoções do outro?",a:[["Sim","Ansioso"],["Não","Seguro"]]},
+{q:"Amor para você é:",a:[["Presença","Seguro"],["Intensidade","Intenso"]]},
+{q:"Quando se sente rejeitado:",a:[["Insiste","Ansioso"],["Se afasta","Evitativo"]]},
+{q:"Você se considera emocionalmente:",a:[["Sensível","Ansioso"],["Controlado","Seguro"]]},
+{q:"Em relações você:",a:[["Busca fusão","Intenso"],["Busca equilíbrio","Seguro"]]},
+{q:"Seu maior desafio amoroso é:",a:[["Insegurança","Ansioso"],["Expressar sentimentos","Evitativo"]]}
 ];
 
 let i=0;
@@ -339,26 +265,10 @@ function show(){
  document.getElementById("sec").textContent=sec;
 
  const textos={
- Seguro:{
-  ativa:"Você usa a razão como mecanismo de proteção emocional. Entende tudo, mas evita sentir quando o risco aumenta.",
-  melhorar:"Controle excessivo reduz profundidade emocional.",
-  elogios:["Clareza emocional","Autocontrole"]
- },
- Ansioso:{
-  ativa:"Você busca proximidade intensa como forma de garantir o vínculo.",
-  melhorar:"Nem toda distância é abandono.",
-  elogios:["Sensibilidade","Entrega emocional"]
- },
- Evitativo:{
-  ativa:"Você se afasta para se proteger quando o vínculo aprofunda.",
-  melhorar:"Proximidade não é perda de liberdade.",
-  elogios:["Autonomia","Autoproteção"]
- },
- Intenso:{
-  ativa:"Você sente, sustenta e regula, mas tende a carregar mais do que precisa.",
-  melhorar:"Estabilidade não exige esforço constante.",
-  elogios:["Presença","Consciência emocional"]
- }
+ Seguro:{ativa:"Você tende a criar vínculos com maturidade emocional.",melhorar:"Cuidado para não assumir responsabilidades emocionais que não são suas.",elogios:["Estabilidade emocional","Capacidade de diálogo"]},
+ Ansioso:{ativa:"Você busca proximidade e conexão profunda.",melhorar:"Desenvolver autonomia emocional.",elogios:["Sensibilidade","Entrega emocional"]},
+ Evitativo:{ativa:"Você protege sua autonomia emocional.",melhorar:"Expressar sentimentos conscientemente.",elogios:["Autossuficiência","Clareza interna"]},
+ Intenso:{ativa:"Você vive o amor com profundidade emocional.",melhorar:"Buscar regulação emocional.",elogios:["Paixão","Conexão profunda"]}
  };
 
  document.getElementById("ativa").textContent=textos[main].ativa;
@@ -383,7 +293,7 @@ Analise considerando meu padrão emocional.
 Aponte reações automáticas.
 Mostre pontos cegos.
 Diferencie o que está sob meu controle.
-Evite conselhos genéricos.`;
+Evite diagnósticos genéricos.`;
 }
 </script>
 
