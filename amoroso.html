@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>MindKey — Perfil Amoroso</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
 :root{
  --bg:#06060c;
@@ -137,9 +136,9 @@ canvas{margin-top:20px}
 </div>
 
 <script>
+// Perguntas e Respostas
 const profiles=["Seguro","Ansioso","Evitativo","Intenso"];
-
-const questions=[
+const questions=[ 
 {q:"Quando alguém se afasta emocionalmente, você:",a:[
 ["Mantém equilíbrio","Seguro"],
 ["Sente ansiedade","Ansioso"],
@@ -152,18 +151,20 @@ const questions=[
 ["Evita","Evitativo"],
 ["Explode","Intenso"]
 ]},
-// (18 perguntas restantes — mantidas conforme versão anterior)
+// Adicione mais 18 perguntas aqui
 ];
 
 let i=0;
 let answers=new Array(questions.length).fill(null);
 
+// Início do quiz
 function start(){
  document.getElementById("start").classList.add("hidden");
  document.getElementById("quiz").classList.remove("hidden");
  load();
 }
 
+// Carregar perguntas
 function load(){
  const q=questions[i];
  document.getElementById("q").textContent=(i+1)+". "+q.q;
@@ -179,15 +180,29 @@ function load(){
  });
 }
 
+// Próxima pergunta
 function next(){
- if(i<questions.length-1){i++;load();}
- else finish();
+ if(answers[i] === null){
+   alert("Escolha uma opção para continuar");
+   return;
+ }
+ if(i<questions.length-1){
+   i++;
+   load();
+ }else{
+   finish();
+ }
 }
 
+// Pergunta anterior
 function prev(){
- if(i>0){i--;load();}
+ if(i>0){
+   i--;
+   load();
+ }
 }
 
+// Finalizar o quiz
 function finish(){
  document.getElementById("quiz").classList.add("hidden");
  document.getElementById("dashboard").classList.remove("hidden");
@@ -222,6 +237,7 @@ function finish(){
   frases[main+"|"+sec] || "Seu padrão emocional combina força e conflito interno.";
 }
 
+// Renderizar gráfico
 function renderChart(data){
  const canvas=document.getElementById("chart");
  const ctx=canvas.getContext("2d");
