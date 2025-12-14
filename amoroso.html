@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>MINDKEY — Perfil Amoroso Premium</title>
+<title>MindKey — Perfil Amoroso</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -12,8 +12,10 @@
  --soft:#1b1b3a;
  --text:#f1f1f7;
  --muted:#a3a3c2;
- --accent:#ff6b9d;
+ --accent:#4dd0e1;
 }
+
+*{box-sizing:border-box}
 
 body{
  margin:0;
@@ -23,9 +25,9 @@ body{
 }
 
 .container{
- max-width:760px;
+ max-width:720px;
  margin:auto;
- padding:90px 20px 140px;
+ padding:64px 20px 80px;
 }
 
 .card{
@@ -33,13 +35,22 @@ body{
  border-radius:22px;
  padding:32px;
  border:1px solid rgba(255,255,255,.06);
- animation:fade .6s ease;
  margin-bottom:28px;
+ animation:fade .6s ease;
 }
 
 @keyframes fade{
  from{opacity:0;transform:translateY(10px)}
  to{opacity:1}
+}
+
+h1,h2,h3{
+ margin-top:0;
+}
+
+p{
+ color:var(--muted);
+ line-height:1.6;
 }
 
 .option{
@@ -64,24 +75,27 @@ body{
  margin-top:20px;
 }
 
-.tag{
- color:var(--accent);
- font-weight:600;
- font-size:14px;
+.soft{
+ background:var(--soft);
+ border-radius:14px;
+ padding:20px;
+ margin-top:20px;
 }
 
 textarea{
  width:100%;
- height:260px;
+ height:220px;
  background:#06060c;
  color:#fff;
  border:1px solid #333366;
  border-radius:14px;
- padding:16px;
- margin-top:18px;
+ padding:14px;
 }
 
-p{line-height:1.7;color:#d4d4ff}
+canvas{
+ margin-top:24px;
+ max-width:100%;
+}
 </style>
 </head>
 
@@ -89,13 +103,13 @@ p{line-height:1.7;color:#d4d4ff}
 
 <div class="container">
 
-<!-- INTRO -->
+<!-- INÍCIO -->
 <div id="start" class="card">
-<span class="tag">Análise Amorosa</span>
-<h1>Perfil Amoroso MindKey</h1>
+<h1>🧠 Perfil Amoroso</h1>
 <p>
-Responda pensando em relações reais.  
-Este teste revela padrões — não rótulos.
+Este relatório revela padrões emocionais que influenciam
+suas relações afetivas.  
+Responda pensando em situações reais.
 </p>
 <div class="option" onclick="start()">Iniciar análise</div>
 </div>
@@ -106,67 +120,132 @@ Este teste revela padrões — não rótulos.
 <div id="opts"></div>
 </div>
 
+<!-- DASHBOARD -->
+<div id="dashboard" class="card hidden">
+<h2>📊 Mapa Comportamental</h2>
+<p>
+Este gráfico mostra como seus padrões emocionais se distribuem.
+Picos indicam reações mais automáticas.
+</p>
+<canvas id="chart" height="260"></canvas>
+<div class="soft">
+Quanto mais equilibrado, maior sua flexibilidade emocional.
+</div>
+</div>
+
 <!-- RESULTADO -->
 <div id="result" class="card hidden">
 
-<h2>🧠 Análise Amorosa MindKey — Relatório Premium</h2>
+<h2>🧠 Relatório Amoroso Premium</h2>
 
 <div class="result">
 <strong>Perfil predominante:</strong> <span id="main"></span><br>
 <strong>Perfil secundário:</strong> <span id="sec"></span>
 </div>
 
+<div class="result">
 <h3>🔑 Seu padrão de vínculo emocional</h3>
-<p>
-Com base nas suas respostas, seu comportamento amoroso tende a seguir
-um padrão consistente de reação emocional diante de proximidade,
-distância e conflito.
-</p>
+<p id="ativa"></p>
+</div>
 
+<div class="result">
 <h3>💎 Pontos fortes no amor</h3>
-<ul id="forcas"></ul>
+<ul id="elogios"></ul>
+</div>
 
+<div class="result">
 <h3>⚠️ Pontos de atenção emocional</h3>
-<ul id="atencao"></ul>
+<p id="melhorar"></p>
+</div>
 
+<div class="result">
 <h3>🎯 O que está sob seu controle</h3>
-<ul id="controle"></ul>
+<p>
+Você não controla o outro, mas pode desenvolver clareza,
+limites emocionais e escolhas conscientes.
+</p>
+</div>
 
-<h3>🤖 Prompt Premium de Autoconhecimento (IA)</h3>
+<hr>
+
+<h3>🤖 Prompt Premium MindKey (copiar e colar)</h3>
 <textarea readonly id="prompt"></textarea>
 
-<p style="font-size:14px;color:#9a9ac2;margin-top:14px">
-Este conteúdo tem finalidade de autoconhecimento.  
-Não substitui acompanhamento profissional.
+<p style="font-size:13px;color:#888;margin-top:12px">
+Este conteúdo é para autoconhecimento e não substitui acompanhamento profissional.
 </p>
+
 </div>
 
 </div>
 
 <script>
-// ================= PERGUNTAS (15) =================
 const questions=[
-{q:"Quando alguém se afasta emocionalmente, você:",a:[["Sente ansiedade","Ansioso"],["Respeita o espaço","Evitativo"]]},
-{q:"Discussões no relacionamento costumam te deixar:",a:[["Muito abalado(a)","Ansioso"],["Frio(a) e distante","Evitativo"]]},
-{q:"Você se sente mais seguro(a) quando:",a:[["Há diálogo constante","Seguro"],["Há previsibilidade","Seguro"]]},
-{q:"Quando algo incomoda, você:",a:[["Fala imediatamente","Ansioso"],["Prefere evitar","Evitativo"]]},
-{q:"Você costuma assumir responsabilidade emocional do outro?",a:[["Sim","Ansioso"],["Não","Seguro"]]},
-{q:"Você se sente sufocado(a) em relações muito intensas?",a:[["Sim","Evitativo"],["Não","Ansioso"]]},
-{q:"Quando se apaixona, você:",a:[["Se entrega rápido","Ansioso"],["Mantém controle","Evitativo"]]},
-{q:"Seu histórico amoroso tende a ser:",a:[["Estável","Seguro"],["Intenso e instável","Ansioso"]]},
-{q:"Em conflitos, você busca:",a:[["Resolução","Seguro"],["Evitar desgaste","Evitativo"]]},
-{q:"Você sente medo de abandono?",a:[["Sim","Ansioso"],["Não","Seguro"]]},
-{q:"Você sente dificuldade em confiar plenamente?",a:[["Sim","Evitativo"],["Não","Seguro"]]},
-{q:"Quando magoado(a), você:",a:[["Insiste na conversa","Ansioso"],["Se fecha","Evitativo"]]},
-{q:"Você valoriza mais:",a:[["Conexão","Ansioso"],["Liberdade","Evitativo"]]},
-{q:"Você se sente confortável em depender emocionalmente?",a:[["Sim","Ansioso"],["Não","Evitativo"]]},
-{q:"Seu ideal de relação é:",a:[["Segura e madura","Seguro"],["Intensa e profunda","Ansioso"]]}
+{q:"Quando alguém se afasta emocionalmente, você:",a:[
+["Sente ansiedade","Ansioso"],
+["Mantém distância","Evitativo"]
+]},
+{q:"Em conflitos você tende a:",a:[
+["Buscar conversa imediata","Ansioso"],
+["Se fechar","Evitativo"]
+]},
+{q:"Você sente medo de abandono?",a:[
+["Sim","Ansioso"],
+["Não","Seguro"]
+]},
+{q:"Relacionamento ideal para você é:",a:[
+["Estável","Seguro"],
+["Intenso","Intenso"]
+]},
+{q:"Quando se apaixona:",a:[
+["Se entrega rápido","Ansioso"],
+["Mantém controle","Evitativo"]
+]},
+{q:"Discussões fazem você:",a:[
+["Oscilar emoções","Intenso"],
+["Buscar equilíbrio","Seguro"]
+]},
+{q:"Você valoriza mais:",a:[
+["Conexão","Ansioso"],
+["Liberdade","Evitativo"]
+]},
+{q:"Seu histórico amoroso é:",a:[
+["Estável","Seguro"],
+["Cheio de altos e baixos","Intenso"]
+]},
+{q:"Quando algo incomoda:",a:[
+["Fala","Ansioso"],
+["Guarda","Evitativo"]
+]},
+{q:"Você se sente responsável pelas emoções do outro?",a:[
+["Sim","Ansioso"],
+["Não","Seguro"]
+]},
+{q:"Amor para você é:",a:[
+["Presença","Seguro"],
+["Intensidade","Intenso"]
+]},
+{q:"Quando se sente rejeitado:",a:[
+["Insiste","Ansioso"],
+["Se afasta","Evitativo"]
+]},
+{q:"Você se considera emocionalmente:",a:[
+["Sensível","Ansioso"],
+["Controlado","Seguro"]
+]},
+{q:"Em relações você:",a:[
+["Busca fusão","Intenso"],
+["Busca equilíbrio","Seguro"]
+]},
+{q:"Seu maior desafio amoroso é:",a:[
+["Insegurança","Ansioso"],
+["Expressar sentimentos","Evitativo"]
+]}
 ];
 
 let i=0;
-let score={Seguro:0,Ansioso:0,Evitativo:0};
+let score={Seguro:0,Ansioso:0,Evitativo:0,Intenso:0};
 
-// ================= QUIZ =================
 function start(){
  document.getElementById("start").classList.add("hidden");
  document.getElementById("quiz").classList.remove("hidden");
@@ -190,14 +269,40 @@ function load(){
 function answer(type){
  score[type]++;
  i++;
- if(i>=questions.length) show();
+ if(i>=questions.length){show();}
  else load();
 }
 
-// ================= RESULTADO =================
+function renderChart(data){
+ const canvas=document.getElementById("chart");
+ const ctx=canvas.getContext("2d");
+ const labels=Object.keys(data);
+ const values=Object.values(data);
+
+ const w=canvas.width=canvas.offsetWidth;
+ const h=canvas.height;
+ ctx.clearRect(0,0,w,h);
+
+ const max=Math.max(...values)+1;
+ const barWidth=w/labels.length*0.6;
+
+ values.forEach((v,i)=>{
+  const x=(i+0.5)*(w/labels.length);
+  const barHeight=(v/max)*(h-60);
+  ctx.fillStyle="#4dd0e1";
+  ctx.fillRect(x-barWidth/2,h-barHeight-30,barWidth,barHeight);
+  ctx.fillStyle="#fff";
+  ctx.textAlign="center";
+  ctx.fillText(labels[i],x,h-10);
+ });
+}
+
 function show(){
  document.getElementById("quiz").classList.add("hidden");
+ document.getElementById("dashboard").classList.remove("hidden");
  document.getElementById("result").classList.remove("hidden");
+
+ renderChart(score);
 
  const sorted=Object.entries(score).sort((a,b)=>b[1]-a[1]);
  const main=sorted[0][0];
@@ -206,60 +311,51 @@ function show(){
  document.getElementById("main").textContent=main;
  document.getElementById("sec").textContent=sec;
 
- // Salvar para leitura integrada
- localStorage.setItem("mindkey_amoroso",JSON.stringify({
-  principal:main,
-  secundario:sec
- }));
-
- const dados={
-  Seguro:{
-   forcas:["Estabilidade emocional","Capacidade de diálogo","Maturidade afetiva"],
-   atencao:["Evitar carregar problemas alheios","Não ignorar sinais sutis"],
-   controle:["Limites claros","Comunicação consciente","Escolhas emocionais"]
-  },
-  Ansioso:{
-   forcas:["Sensibilidade emocional","Capacidade de vínculo","Empatia profunda"],
-   atencao:["Ansiedade relacional","Expectativas não verbalizadas"],
-   controle:["Autonomia emocional","Consciência reativa","Autorregulação"]
-  },
-  Evitativo:{
-   forcas:["Autossuficiência","Clareza emocional","Independência"],
-   atencao:["Fechamento emocional","Dificuldade de expressão"],
-   controle:["Expressar limites","Presença consciente","Comunicação gradual"]
-  }
+ const textos={
+ Seguro:{
+  ativa:"Você tende a criar vínculos com maturidade emocional e presença.",
+  melhorar:"Cuidado para não assumir responsabilidades emocionais que não são suas.",
+  elogios:["Estabilidade emocional","Capacidade de diálogo"]
+ },
+ Ansioso:{
+  ativa:"Você busca proximidade e conexão profunda.",
+  melhorar:"Desenvolver autonomia emocional e limites claros.",
+  elogios:["Sensibilidade","Entrega emocional"]
+ },
+ Evitativo:{
+  ativa:"Você protege sua autonomia emocional.",
+  melhorar:"Expressar sentimentos de forma consciente.",
+  elogios:["Autossuficiência","Clareza interna"]
+ },
+ Intenso:{
+  ativa:"Você vive o amor com profundidade e emoção.",
+  melhorar:"Buscar estabilidade e regulação emocional.",
+  elogios:["Paixão genuína","Conexão profunda"]
+ }
  };
 
- ["forcas","atencao","controle"].forEach(tipo=>{
-  const ul=document.getElementById(tipo);
-  ul.innerHTML="";
-  dados[main][tipo].forEach(t=>{
-   const li=document.createElement("li");
-   li.textContent=t;
-   ul.appendChild(li);
-  });
+ document.getElementById("ativa").textContent=textos[main].ativa;
+ document.getElementById("melhorar").textContent=textos[main].melhorar;
+
+ const ul=document.getElementById("elogios");
+ ul.innerHTML="";
+ textos[main].elogios.forEach(e=>{
+  const li=document.createElement("li");
+  li.textContent=e;
+  ul.appendChild(li);
  });
 
  document.getElementById("prompt").value=
-`🧠 Prompt MindKey — Análise Amorosa Profunda
-
-Tenho tendência comportamental amorosa predominante ${main},
-com traço secundário ${sec}.
+`Tenho perfil amoroso predominante ${main}, com traço secundário ${sec}.
 
 Estou vivendo a seguinte situação amorosa real:
+[DESCREVA A SITUAÇÃO]
 
-[DESCREVA A SITUAÇÃO COM SUAS PALAVRAS]
-
-Quero que você:
-- Analise essa situação considerando meu padrão emocional
-- Aponte reações automáticas que talvez eu não perceba
-- Mostre pontos cegos comuns a esse perfil
-- Diferencie o que está sob meu controle do que não está
-- Sugira posturas mais conscientes, sem julgamento
-
-Evite diagnósticos.
-Evite conselhos genéricos.
-Foque em clareza emocional e responsabilidade pessoal.`;
+Analise considerando meu padrão emocional.
+Aponte reações automáticas.
+Mostre pontos cegos.
+Diferencie o que está sob meu controle.
+Evite diagnósticos e conselhos genéricos.`;
 }
 </script>
 
