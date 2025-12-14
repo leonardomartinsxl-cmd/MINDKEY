@@ -37,7 +37,6 @@ body{
  border:1px solid rgba(255,255,255,.05);
  margin-bottom:36px;
  animation:fade .6s ease;
- text-align:center;
 }
 
 @keyframes fade{
@@ -51,9 +50,37 @@ h1{
  margin-top:0;
 }
 
+h2{
+ font-size:28px;
+ margin-top:0;
+}
+
+h3{
+ font-size:20px;
+ margin-bottom:8px;
+}
+
 p{
  line-height:1.7;
  color:#d4d4d8;
+}
+
+.highlight{
+ color:var(--accent);
+ font-weight:600;
+}
+
+.grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+ gap:22px;
+ margin-top:28px;
+}
+
+.box{
+ background:var(--soft);
+ border-radius:18px;
+ padding:24px;
 }
 
 button{
@@ -65,7 +92,6 @@ button{
  font-size:16px;
  font-weight:700;
  cursor:pointer;
- margin:12px;
  box-shadow:0 10px 28px rgba(77,208,225,.28);
 }
 
@@ -79,31 +105,6 @@ button:hover{
  color:#888;
  margin-top:80px;
 }
-
-.dashboard{
- margin-top:24px;
- text-align:left;
- background:var(--soft);
- padding:24px;
- border-radius:18px;
-}
-
-/* Barra de progresso */
-.progress-container{
- background:rgba(77,208,225,.15);
- border-radius:12px;
- width:100%;
- height:18px;
- margin-top:24px;
-}
-
-.progress-bar{
- height:100%;
- width:0%;
- background:linear-gradient(135deg,#4dd0e1,#00acc1);
- border-radius:12px;
- transition:width .5s ease;
-}
 </style>
 </head>
 
@@ -113,32 +114,144 @@ button:hover{
 
 <!-- HERO -->
 <div class="card">
-<h1>Escolha seu Quiz</h1>
+<h1>Entenda seus padrões.<br>Antes que eles decidam por você.</h1>
+
 <p>
-<span style="color:#4dd0e1;font-weight:600;">MindKey</span> oferece três áreas de análise: amoroso, profissional e social.
-Você pode fazer na ordem que quiser e ver o relatório integrado ao final.
+<span class="highlight">MindKey</span> é uma ferramenta de
+<strong>autoconhecimento comportamental</strong> que revela
+como você reage no amor, no trabalho e nas relações sociais.
 </p>
 
-<button id="btnAmoroso">❤️ Amoroso</button>
-<button id="btnProfissional">💼 Profissional</button>
-<button id="btnSocial">🧭 Social</button>
+<p>
+Sem rótulos clínicos.<br>
+Sem promessas vazias.<br>
+Apenas <strong>clareza real</strong>.
+</p>
 
-<div class="progress-container">
- <div class="progress-bar" id="progressBar"></div>
+<br>
+<button onclick="location.href='amoroso.html'">
+Iniciar minha análise
+</button>
+</div>
+
+<!-- COMO FUNCIONA -->
+<div class="card">
+<h2>Como funciona</h2>
+
+<div class="grid">
+<div class="box">
+<h3>1️⃣ Responda</h3>
+<p>
+Perguntas diretas revelam padrões reais de comportamento,
+não respostas ideais.
+</p>
+</div>
+
+<div class="box">
+<h3>2️⃣ Reconheça</h3>
+<p>
+Você identifica reações automáticas que se repetem
+em diferentes áreas da vida.
+</p>
+</div>
+
+<div class="box">
+<h3>3️⃣ Reposicione</h3>
+<p>
+Receba orientações práticas e prompts de IA
+para agir com mais consciência.
+</p>
 </div>
 </div>
+</div>
 
-<!-- DASHBOARD INTEGRADO -->
-<div class="card dashboard" id="dashboard">
-<h2>📊 Seu Mapa Comportamental Integrado</h2>
-<p>Aqui você pode ver um resumo de todos os perfis que você completou.</p>
+<!-- EIXOS -->
+<div class="card">
+<h2>Os três eixos comportamentais</h2>
+<p>
+A análise do MindKey não classifica pessoas.
+Ela identifica <strong>forças internas em tensão</strong>
+que moldam suas decisões e relações.
+</p>
 
-<p id="amorosoPerfil">Perfil Amoroso: —</p>
-<p id="profissionalPerfil">Perfil Profissional: —</p>
-<p id="socialPerfil">Perfil Social: —</p>
+<div class="grid">
+<div class="box">
+<h3>1️⃣ Apego & Medo de Perda</h3>
+<p>
+Avalia como você cria vínculos, reage à possibilidade de abandono
+ou rejeição e o quanto suas escolhas são guiadas pela necessidade
+de segurança emocional.
+</p>
+</div>
 
-<h3>🤖 Prompt Premium Integrado</h3>
-<textarea readonly id="promptFinal" style="width:100%;height:220px;background:#05070c;color:#fff;border:1px solid #2a2f55;border-radius:14px;padding:14px;"></textarea>
+<div class="box">
+<h3>2️⃣ Controle & Autoproteção</h3>
+<p>
+Analisa o grau de controle que você exerce sobre pessoas e situações,
+bem como os mecanismos de defesa usados para evitar frustração,
+vulnerabilidade ou perda de poder.
+</p>
+</div>
+
+<div class="box">
+<h3>3️⃣ Intensidade & Regulação</h3>
+<p>
+Observa a intensidade emocional com que você vive experiências
+e sua capacidade de regular impulsos, emoções e reações
+em momentos de pressão.
+</p>
+</div>
+</div>
+</div>
+
+<!-- CAMADAS -->
+<div class="card">
+<h2>Onde esses padrões se manifestam</h2>
+
+<div class="grid">
+<div class="box">
+<h3>❤️ Amoroso</h3>
+<p>
+Relações afetivas, apego, ciúmes,
+conflitos e intimidade.
+</p>
+</div>
+
+<div class="box">
+<h3>💼 Profissional</h3>
+<p>
+Decisão, desempenho, liderança,
+pressão e reconhecimento.
+</p>
+</div>
+
+<div class="box">
+<h3>🧭 Social</h3>
+<p>
+Pertencimento, posicionamento,
+adaptação e limites em grupo.
+</p>
+</div>
+</div>
+</div>
+
+<!-- DIFERENCIAL -->
+<div class="card">
+<h2>O que torna o MindKey diferente</h2>
+
+<div class="grid">
+<div class="box">
+<p>✔ Não é teste genérico</p>
+<p>✔ Não faz diagnóstico</p>
+<p>✔ Não entrega respostas prontas</p>
+</div>
+
+<div class="box">
+<p>✔ Integra comportamento + IA</p>
+<p>✔ Foco em responsabilidade pessoal</p>
+<p>✔ Leitura profunda e ética</p>
+</div>
+</div>
 </div>
 
 <!-- AVISO -->
@@ -146,7 +259,10 @@ Você pode fazer na ordem que quiser e ver o relatório integrado ao final.
 <h2>Importante</h2>
 <p>
 MindKey é uma ferramenta de reflexão e autoconhecimento.
-Não substitui acompanhamento psicológico, psiquiátrico ou orientação profissional.
+</p>
+<p>
+<strong>Não substitui</strong> acompanhamento psicológico,
+psiquiátrico ou orientação profissional.
 </p>
 </div>
 
@@ -155,73 +271,6 @@ Não substitui acompanhamento psicológico, psiquiátrico ou orientação profis
 </div>
 
 </div>
-
-<script>
-// Função para atualizar o dashboard e barra de progresso
-function atualizarDashboard() {
-  const amoroso = JSON.parse(localStorage.getItem("mindkey_amoroso"));
-  const profissional = JSON.parse(localStorage.getItem("mindkey_profissional"));
-  const social = JSON.parse(localStorage.getItem("mindkey_social"));
-
-  let completados = 0;
-
-  if(amoroso){
-    document.getElementById("amorosoPerfil").textContent =
-      "Perfil Amoroso: " + amoroso.principal + " (Secundário: " + amoroso.secundario + ")";
-    completados++;
-  }
-
-  if(profissional){
-    document.getElementById("profissionalPerfil").textContent =
-      "Perfil Profissional: " + profissional.principal + " (Secundário: " + profissional.secundario + ")";
-    completados++;
-  }
-
-  if(social){
-    document.getElementById("socialPerfil").textContent =
-      "Perfil Social: " + social.principal + " (Secundário: " + social.secundario + ")";
-    completados++;
-  }
-
-  // Atualiza a barra de progresso
-  const progressPercent = (completados / 3) * 100;
-  document.getElementById("progressBar").style.width = progressPercent + "%";
-
-  // Prompt Premium Integrado
-  if(amoroso && profissional && social){
-    document.getElementById("promptFinal").value =
-`Tenho o seguinte Mapa Comportamental MindKey:
-
-• Amoroso: ${amoroso.principal} (secundário ${amoroso.secundario})
-• Profissional: ${profissional.principal} (secundário ${profissional.secundario})
-• Social: ${social.principal} (secundário ${social.secundario})
-
-Estou vivendo a seguinte situação real:
-
-[DESCREVA A SITUAÇÃO AQUI]
-
-Quero que você:
-- Analise meus padrões emocionais e comportamentais integrados
-- Mostre pontos cegos que eu possa não perceber
-- Diferencie o que está sob meu controle do que não está
-- Sugira posturas mais conscientes, sem julgamento
-- Evite diagnósticos e conselhos genéricos
-
-Foque em clareza, responsabilidade pessoal e autoconhecimento.`;
-  }
-}
-
-// Inicializa dashboard ao carregar
-atualizarDashboard();
-
-// Botões para abrir quizzes
-document.getElementById("btnAmoroso").onclick = () => location.href='amoroso.html';
-document.getElementById("btnProfissional").onclick = () => location.href='profissional.html';
-document.getElementById("btnSocial").onclick = () => location.href='social.html';
-
-// Atualiza dashboard sempre que a página ganha foco
-window.addEventListener("focus", atualizarDashboard);
-</script>
 
 </body>
 </html>
