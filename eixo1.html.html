@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>MindKey — Eixo 1 | Apego & Medo de Perda</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+ --bg:#0b0c0f;
+ --card:#15171c;
+ --soft:#1f2229;
+ --text:#eaeaea;
+ --muted:#a1a1aa;
+ --accent:#4dd0e1;
+}
+
+*{box-sizing:border-box}
+
+body{
+ margin:0;
+ font-family:Inter,system-ui,sans-serif;
+ background:linear-gradient(180deg,#0b0c0f,#0f1117);
+ color:var(--text);
+}
+
+.container{
+ max-width:900px;
+ margin:auto;
+ padding:60px 20px 120px;
+}
+
+.card{
+ background:var(--card);
+ border-radius:26px;
+ padding:34px;
+ border:1px solid rgba(255,255,255,.05);
+ margin-bottom:32px;
+ animation:fade .6s ease;
+}
+
+@keyframes fade{
+ from{opacity:0;transform:translateY(10px)}
+ to{opacity:1}
+}
+
+h1{font-size:36px;margin-top:0}
+h2{font-size:24px;margin-top:0}
+
+p{line-height:1.7;color:#d4d4d8}
+
+.question{margin-bottom:26px}
+
+.options{display:grid;gap:12px;margin-top:14px}
+
+.option{
+ background:var(--soft);
+ border-radius:16px;
+ padding:16px 18px;
+ cursor:pointer;
+ border:1px solid rgba(255,255,255,.05);
+ transition:.2s
+}
+
+.option:hover{border-color:var(--accent)}
+
+.option.selected{
+ border-color:var(--accent);
+ background:rgba(77,208,225,.08)
+}
+
+button{
+ margin-top:30px;
+ background:linear-gradient(135deg,#4dd0e1,#00acc1);
+ color:#000;
+ border:none;
+ padding:16px 38px;
+ border-radius:999px;
+ font-weight:700;
+ cursor:pointer
+}
+
+.progress{font-size:13px;color:var(--muted);margin-bottom:10px}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<div class="card">
+<h1>Eixo 1 — Apego & Medo de Perda</h1>
+<p>
+Este eixo observa o que acontece em você quando surge a possibilidade de ser deixado, trocado ou esquecido.
+Não mede amor. Mede <strong>resposta interna ao risco de perda</strong>.
+</p>
+</div>
+
+<div class="card" id="quiz"></div>
+
+</div>
+
+<script src="mindkey-engine.js"></script>
+<script>
+const perguntas = [
+{
+ texto: "Quando alguém importante demora a responder, o que surge primeiro em você?",
+ opcoes: [
+  "Uma leitura emocional do que isso pode significar",
+  "Uma necessidade de confirmar se está tudo bem",
+  "Um incômodo difícil de ignorar",
+  "Uma vontade de fazer algo para não perder conexão"
+ ]
+},
+{
+ texto: "O que mais te desorganiza no início de um vínculo?",
+ opcoes: [
+  "Não saber exatamente onde está pisando",
+  "Sentir que pode estar gostando mais",
+  "Não ter sinais claros de reciprocidade",
+  "Ter que esperar o tempo do outro"
+ ]
+}
+];
+
+let atual = 0;
+let respostas = [];
+
+function render(){
+ const q = perguntas[atual];
+ document.getElementById('quiz').innerHTML = `
+  <div class="progress">Pergunta ${atual+1} de ${perguntas.length}</div>
+  <h2>${q.texto}</h2>
+  <div class="options">
+   ${q.opcoes.map((o,i)=>`<div class="option" onclick="responder(${i})">${o}</div>`).join('')}
+  </div>
+ `;
+}
+
+function responder(i){
+ respostas.push(i+1);
+ responderPergunta('eixo1', i+1);
+ atual++;
+ if(atual < perguntas.length) render();
+ else finalizar();
+}
+
+function finalizar(){
+ const resultado = gerarRelatorioFinal();
+ document.getElementById('quiz').innerHTML = `
+  <h2>Análise concluída</h2>
+  <p>${resultado.eixo1.leitura}</p>
+  <button onclick="location.href='index.html'">Voltar</button>
+ `;
+}
+
+render();
+</script>
+</body>
+</html>
