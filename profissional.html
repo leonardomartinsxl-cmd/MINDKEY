@@ -92,6 +92,18 @@ canvas{
  margin-top:24px;
  max-width:100%;
 }
+
+button{
+ background:linear-gradient(135deg,#4dd0e1,#00acc1);
+ color:#000;
+ border:none;
+ padding:16px 36px;
+ border-radius:999px;
+ font-size:16px;
+ font-weight:600;
+ cursor:pointer;
+ margin-top:14px;
+}
 </style>
 </head>
 
@@ -166,6 +178,11 @@ mas pode controlar postura, decisões e limites.
 <h3>🤖 Prompt Premium MindKey — Profissional</h3>
 <textarea readonly id="prompt"></textarea>
 
+<!-- 🔽 BOTÃO ADICIONADO (IGUAL AO AMOROSO) -->
+<button onclick="location.href='social.html'">
+Próximo: Social 🧭
+</button>
+
 <p style="font-size:13px;color:#888;margin-top:12px">
 Ferramenta de autoconhecimento.  
 Não substitui orientação profissional especializada.
@@ -177,66 +194,21 @@ Não substitui orientação profissional especializada.
 
 <script>
 const questions=[
-{q:"Diante de um problema você:",a:[
-["Resolve rápido","Executor"],
-["Analisa antes","Analítico"]
-]},
-{q:"Você se sente mais confortável:",a:[
-["Decidindo","Executor"],
-["Planejando","Estrategista"]
-]},
-{q:"Sob pressão você:",a:[
-["Age","Executor"],
-["Mantém controle","Estrategista"]
-]},
-{q:"No trabalho você prefere:",a:[
-["Autonomia","Executor"],
-["Processos claros","Analítico"]
-]},
-{q:"Você se destaca mais por:",a:[
-["Comunicação","Comunicador"],
-["Organização","Analítico"]
-]},
-{q:"Feedback direto:",a:[
-["Gosto","Executor"],
-["Prefiro cuidado","Comunicador"]
-]},
-{q:"Ambientes ideais:",a:[
-["Dinâmicos","Executor"],
-["Previsíveis","Analítico"]
-]},
-{q:"Você lida melhor com:",a:[
-["Pessoas","Comunicador"],
-["Dados","Analítico"]
-]},
-{q:"Planejamento é:",a:[
-["Essencial","Estrategista"],
-["Flexível","Executor"]
-]},
-{q:"Você prefere liderança:",a:[
-["Direta","Executor"],
-["Estratégica","Estrategista"]
-]},
-{q:"Seu ritmo é:",a:[
-["Acelerado","Executor"],
-["Constante","Analítico"]
-]},
-{q:"Em equipe você:",a:[
-["Influência","Comunicador"],
-["Organiza","Analítico"]
-]},
-{q:"Mudanças repentinas:",a:[
-["Animam","Executor"],
-["Incomodam","Analítico"]
-]},
-{q:"Você se vê como:",a:[
-["Visionário","Estrategista"],
-["Prático","Executor"]
-]},
-{q:"Seu maior desafio profissional:",a:[
-["Paciência","Executor"],
-["Decisão","Analítico"]
-]}
+{q:"Diante de um problema você:",a:[["Resolve rápido","Executor"],["Analisa antes","Analítico"]]},
+{q:"Você se sente mais confortável:",a:[["Decidindo","Executor"],["Planejando","Estrategista"]]},
+{q:"Sob pressão você:",a:[["Age","Executor"],["Mantém controle","Estrategista"]]},
+{q:"No trabalho você prefere:",a:[["Autonomia","Executor"],["Processos claros","Analítico"]]},
+{q:"Você se destaca mais por:",a:[["Comunicação","Comunicador"],["Organização","Analítico"]]},
+{q:"Feedback direto:",a:[["Gosto","Executor"],["Prefiro cuidado","Comunicador"]]},
+{q:"Ambientes ideais:",a:[["Dinâmicos","Executor"],["Previsíveis","Analítico"]]},
+{q:"Você lida melhor com:",a:[["Pessoas","Comunicador"],["Dados","Analítico"]]},
+{q:"Planejamento é:",a:[["Essencial","Estrategista"],["Flexível","Executor"]]},
+{q:"Você prefere liderança:",a:[["Direta","Executor"],["Estratégica","Estrategista"]]},
+{q:"Seu ritmo é:",a:[["Acelerado","Executor"],["Constante","Analítico"]]},
+{q:"Em equipe você:",a:[["Influência","Comunicador"],["Organiza","Analítico"]]},
+{q:"Mudanças repentinas:",a:[["Animam","Executor"],["Incomodam","Analítico"]]},
+{q:"Você se vê como:",a:[["Visionário","Estrategista"],["Prático","Executor"]]},
+{q:"Seu maior desafio profissional:",a:[["Paciência","Executor"],["Decisão","Analítico"]]}
 ];
 
 let i=0;
@@ -308,26 +280,10 @@ function show(){
  document.getElementById("sec").textContent=sec;
 
  const textos={
- Executor:{
-  padrao:"Você age com foco em resultado, decisão e execução.",
-  melhorar:"Desenvolver paciência e escuta estratégica.",
-  elogios:["Alta execução","Coragem para decidir"]
- },
- Estrategista:{
-  padrao:"Você pensa no longo prazo e estrutura caminhos.",
-  melhorar:"Evitar excesso de planejamento sem ação.",
-  elogios:["Visão","Clareza estratégica"]
- },
- Analítico:{
-  padrao:"Você prioriza lógica, organização e precisão.",
-  melhorar:"Tomar decisões mesmo sem 100% de dados.",
-  elogios:["Confiabilidade","Rigor técnico"]
- },
- Comunicador:{
-  padrao:"Você gera conexão, influência e alinhamento.",
-  melhorar:"Criar limites e foco em execução.",
-  elogios:["Empatia","Persuasão"]
- }
+ Executor:{padrao:"Você age com foco em resultado, decisão e execução.",melhorar:"Desenvolver paciência e escuta estratégica.",elogios:["Alta execução","Coragem para decidir"]},
+ Estrategista:{padrao:"Você pensa no longo prazo e estrutura caminhos.",melhorar:"Evitar excesso de planejamento sem ação.",elogios:["Visão","Clareza estratégica"]},
+ Analítico:{padrao:"Você prioriza lógica, organização e precisão.",melhorar:"Tomar decisões mesmo sem 100% de dados.",elogios:["Confiabilidade","Rigor técnico"]},
+ Comunicador:{padrao:"Você gera conexão, influência e alinhamento.",melhorar:"Criar limites e foco em execução.",elogios:["Empatia","Persuasão"]}
  };
 
  document.getElementById("padrao").textContent=textos[main].padrao;
@@ -340,6 +296,11 @@ function show(){
   li.textContent=e;
   ul.appendChild(li);
  });
+
+ localStorage.setItem("mindkey_profissional",JSON.stringify({
+  principal:main,
+  secundario:sec
+ }));
 
  document.getElementById("prompt").value=
 `Tenho perfil profissional predominante ${main}, com traço secundário ${sec}.
