@@ -4,105 +4,185 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MINDKEY — Relatório Premium</title>
-<link rel="stylesheet" href="styles.css">
 
 <style>
-.gate{
-  position:fixed;
-  inset:0;
-  background:rgba(11,12,15,.92);
-  backdrop-filter:blur(6px);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:10;
+:root{
+ --bg:#0b0c0f;
+ --card:#15171c;
+ --soft:#1f2229;
+ --text:#eaeaea;
+ --muted:#a1a1aa;
+ --accent:#4dd0e1;
 }
-
-.gate-box{
-  max-width:520px;
-  background:var(--card);
-  border-radius:20px;
-  padding:36px;
-  text-align:center;
-  border:1px solid rgba(255,255,255,.05);
+*{box-sizing:border-box;font-family:Inter,system-ui,sans-serif}
+body{
+ margin:0;
+ background:linear-gradient(180deg,#0b0c0f,#0f1117);
+ color:var(--text)
 }
-
-.gate-box h2{
-  margin-bottom:12px;
+.container{
+ max-width:900px;
+ margin:auto;
+ padding:56px 20px 100px
 }
-
-.gate-box p{
-  color:var(--muted);
-  margin-bottom:20px;
+.block{
+ background:var(--card);
+ border-radius:20px;
+ padding:30px;
+ margin-bottom:28px;
+ border:1px solid rgba(255,255,255,.05)
 }
-
-.features{
-  text-align:left;
-  margin:20px 0;
+h1{font-size:38px;margin-bottom:6px}
+.subtitle{color:var(--muted);margin-bottom:36px}
+.highlight{color:var(--accent)}
+h2{margin-bottom:10px}
+p{line-height:1.7;color:#d4d4d8}
+ul{padding-left:18px}
+li{margin-bottom:10px}
+.soft{
+ background:var(--soft);
+ border-radius:16px;
+ padding:22px;
+ margin-top:18px
 }
-
-.features li{
-  margin-bottom:10px;
+textarea{
+ width:100%;
+ height:200px;
+ background:#0b0c0f;
+ color:#eaeaea;
+ border:1px solid #2a2e37;
+ border-radius:14px;
+ padding:18px;
+ resize:none;
+ margin-top:14px
 }
 </style>
 </head>
 
-<body onload="loadReport()">
-
-<!-- GATE PREMIUM -->
-<div class="gate" id="gate">
-  <div class="gate-box">
-    <h2>Desbloqueie seu Relatório Premium</h2>
-    <p>
-      Acesse sua análise completa com orientações práticas
-      para vida profissional, amorosa e social.
-    </p>
-
-    <ul class="features">
-      <li>✔ Perfil dominante + secundário</li>
-      <li>✔ Leitura comportamental aprofundada</li>
-      <li>✔ Prompt inteligente para IA</li>
-      <li>✔ Clareza prática para decisões</li>
-    </ul>
-
-    <button onclick="unlock()">Desbloquear agora</button>
-
-    <p style="font-size:13px;margin-top:14px;color:var(--muted)">
-      * Etapa de validação — pagamento será ativado em breve
-    </p>
-  </div>
-</div>
-
+<body>
 <div class="container">
 
-  <div class="block">
-    <h1>Relatório Comportamental</h1>
-    <p>
-      Esta análise reflete padrões naturais do seu comportamento.
-      Use como ferramenta de autoconhecimento e crescimento.
-    </p>
+<div class="block">
+<h1>Relatório Comportamental Premium</h1>
+<p class="subtitle">
+Este relatório revela padrões profundos que influenciam
+suas decisões, relações e resultados — muitas vezes sem você perceber.
+</p>
+</div>
 
-    <p><strong>Perfil dominante:</strong> <span id="mainProfile"></span></p>
-    <p><strong>Perfil secundário:</strong> <span id="secondProfile"></span></p>
-  </div>
-
-  <div class="block" id="report"></div>
-
-  <div class="block">
-    <h2>Prompt Inteligente</h2>
-    <p>Copie e use em uma IA:</p>
-    <pre id="prompt"></pre>
-  </div>
+<div class="block" id="diagnostico"></div>
+<div class="block" id="conflitos"></div>
+<div class="block" id="profissional"></div>
+<div class="block" id="emocional"></div>
+<div class="block" id="acao"></div>
+<div class="block" id="prompt"></div>
 
 </div>
 
-<script src="app.js"></script>
-
 <script>
-function unlock(){
-  document.getElementById("gate").style.display="none";
-}
-</script>
+// PERFIS
+const perfis={
+ Executor:{
+  nome:"Executor",
+  diagnostico:"Você tem impulso natural para agir, decidir e avançar. Ambientes parados drenam sua energia.",
+  conflito:"Sua maior tensão interna surge entre agir rápido e lidar com consequências emocionais.",
+  profissional:"Você performa melhor com metas claras, autonomia e desafios. Trava quando sente controle excessivo.",
+  emocional:"Tende a parecer forte, mas evita demonstrar vulnerabilidade. Pode parecer duro sem intenção.",
+  sabotagem:"Age antes de refletir, gerando conflitos desnecessários.",
+  energia:"Desafios, progresso visível e reconhecimento por resultados."
+ },
+ Analítico:{
+  nome:"Analítico",
+  diagnostico:"Você busca lógica, clareza e previsibilidade. Segurança mental é essencial para agir.",
+  conflito:"Seu conflito interno está entre pensar demais e perder o timing.",
+  profissional:"Você se destaca em estratégia, análise e planejamento. Trava sob pressão emocional.",
+  emocional:"Demonstra amor através de atitudes racionais, não palavras.",
+  sabotagem:"Excesso de análise leva à procrastinação.",
+  energia:"Ambientes organizados, processos claros e tempo para pensar."
+ },
+ Comunicador:{
+  nome:"Comunicador",
+  diagnostico:"Você é guiado por conexão, emoção e troca. Ambientes frios te drenam.",
+  conflito:"Oscila entre agradar e se perder de si.",
+  profissional:"Se destaca em comunicação, vendas e liderança humana. Trava quando é ignorado.",
+  emocional:"Sente profundamente e cria vínculos intensos.",
+  sabotagem:"Busca validação externa excessiva.",
+  energia:"Reconhecimento, troca emocional e pertencimento."
+ },
+ Estrategista:{
+  nome:"Estrategista",
+  diagnostico:"Você enxerga padrões e possibilidades antes dos outros.",
+  conflito:"Sua tensão está entre visão e execução.",
+  profissional:"Vai bem em planejamento e visão de longo prazo. Trava em rotinas rígidas.",
+  emocional:"Prefere profundidade a intensidade.",
+  sabotagem:"Adiar decisões esperando o momento ideal.",
+  energia:"Liberdade, visão e autonomia."
+ }
+};
 
+// SIMULAÇÃO (conectar futuramente ao quiz)
+const primary="Executor";
+const secondary="Analítico";
+
+function render(){
+ const p=perfis[primary];
+ const s=perfis[secondary];
+
+ diagnostico.innerHTML=`
+ <h2>Diagnóstico central</h2>
+ <p><span class="highlight">${p.nome}</span> com influência de <span class="highlight">${s.nome}</span>.</p>
+ <p>${p.diagnostico}</p>
+ `;
+
+ conflitos.innerHTML=`
+ <h2>Conflito interno dominante</h2>
+ <p>${p.conflito}</p>
+ `;
+
+ profissional.innerHTML=`
+ <h2>Vida profissional</h2>
+ <p>${p.profissional}</p>
+ <div class="soft">
+ <strong>O que mais te trava:</strong>
+ <p>${p.sabotagem}</p>
+ </div>
+ `;
+
+ emocional.innerHTML=`
+ <h2>Vida emocional e relações</h2>
+ <p>${p.emocional}</p>
+ <div class="soft">
+ <strong>O que mais te energiza:</strong>
+ <p>${p.energia}</p>
+ </div>
+ `;
+
+ acao.innerHTML=`
+ <h2>Plano prático</h2>
+ <ul>
+  <li>Crie limites claros antes de agir impulsivamente.</li>
+  <li>Transforme decisões grandes em micro ações imediatas.</li>
+  <li>Peça feedback direto sem interpretar como ataque.</li>
+ </ul>
+ <div class="soft">
+ <strong>Alerta:</strong>
+ <p>Ignorar esse padrão tende a gerar conflitos recorrentes e desgaste emocional.</p>
+ </div>
+ `;
+
+ prompt.innerHTML=`
+ <h2>Prompt Premium de Autoconhecimento</h2>
+ <textarea readonly>
+Sou do perfil ${p.nome} com influência de ${s.nome}.
+Quero uma análise profunda dos meus padrões inconscientes,
+meus sabotadores comportamentais e um plano de evolução
+profissional e emocional baseado nesse perfil.
+Seja direto, estratégico e sem motivação vazia.
+ </textarea>
+ `;
+}
+
+render();
+</script>
 </body>
 </html>
