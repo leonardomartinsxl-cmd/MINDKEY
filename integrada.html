@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>MindKey — Leitura Integrada Premium</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+ --bg:#0b0c0f;
+ --card:#15171c;
+ --soft:#1f2229;
+ --text:#eaeaea;
+ --muted:#a1a1aa;
+ --accent:#4dd0e1;
+}
+
+*{box-sizing:border-box}
+
+body{
+ margin:0;
+ font-family:Inter,system-ui,sans-serif;
+ background:linear-gradient(180deg,#0b0c0f,#0f1117);
+ color:var(--text);
+}
+
+.container{
+ max-width:1000px;
+ margin:auto;
+ padding:72px 20px 100px;
+}
+
+.card{
+ background:var(--card);
+ border-radius:26px;
+ padding:36px;
+ border:1px solid rgba(255,255,255,.05);
+ margin-bottom:32px;
+ animation:fade .6s ease;
+}
+
+@keyframes fade{
+ from{opacity:0;transform:translateY(10px)}
+ to{opacity:1}
+}
+
+h1,h2,h3{margin-top:0}
+
+p{color:var(--muted);line-height:1.7}
+
+.grid{
+ display:grid;
+ grid-template-columns:1fr;
+ gap:24px;
+}
+
+@media(min-width:800px){
+ .grid{grid-template-columns:repeat(3,1fr)}
+}
+
+.soft{
+ background:var(--soft);
+ border-radius:18px;
+ padding:20px;
+ margin-top:16px;
+}
+
+canvas{
+ width:100%;
+ height:180px;
+ margin-top:20px;
+}
+
+textarea{
+ width:100%;
+ height:240px;
+ background:#05070c;
+ color:#fff;
+ border:1px solid #2a2f55;
+ border-radius:16px;
+ padding:16px;
+}
+
+.alert{
+ background:#221b1b;
+ border:1px solid #402020;
+ border-radius:18px;
+ padding:20px;
+ color:#ffb3b3;
+}
+
+.footer{
+ text-align:center;
+ font-size:13px;
+ color:#777;
+ margin-top:80px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🧠 Leitura Integrada Premium</h1>
+<p>Seu mapa comportamental completo: Amoroso, Profissional e Social.</p>
+
+<div id="alert" class="card alert" style="display:none"></div>
+
+<div id="content" style="display:none">
+
+<div class="grid">
+
+<!-- AMOROSO -->
+<div class="card">
+<h3>❤️ Amoroso</h3>
+<p id="amorosoPerfil"></p>
+<canvas id="chartAmoroso"></canvas>
+<p id="amorosoInsight"></p>
+</div>
+
+<!-- PROFISSIONAL -->
+<div class="card">
+<h3>💼 Profissional</h3>
+<p id="profissionalPerfil"></p>
+<canvas id="chartProfissional"></canvas>
+<p id="profissionalInsight"></p>
+</div>
+
+<!-- SOCIAL -->
+<div class="card">
+<h3>🧭 Social</h3>
+<p id="socialPerfil"></p>
+<canvas id="chartSocial"></canvas>
+<p id="socialInsight"></p>
+</div>
+
+</div>
+
+<!-- SÍNTESE -->
+<div class="card">
+<h2>🔗 Síntese Integrada</h2>
+
+<div class="soft">
+<p id="coerencia"></p>
+<p id="conflito"></p>
+</div>
+
+<div class="soft">
+<h3>💎 Pontos Fortes Integrados</h3>
+<ul id="forcas"></ul>
+</div>
+
+<div class="soft">
+<h3>⚠️ Pontos de Atenção</h3>
+<p id="atencao"></p>
+</div>
+</div>
+
+<!-- PROMPT -->
+<div class="card">
+<h2>🤖 Prompt Premium Integrado</h2>
+<textarea readonly id="promptFinal"></textarea>
+</div>
+
+</div>
+
+<div class="footer">
+MindKey • Autoconhecimento com consciência
+</div>
+
+</div>
+
+<script>
+const amoroso = JSON.parse(localStorage.getItem("mindkey_amoroso"));
+const profissional = JSON.parse(localStorage.getItem("mindkey_profissional"));
+const social = JSON.parse(localStorage.getItem("mindkey_social"));
+
+const alertBox = document.getElementById("alert");
+const content = document.getElementById("content");
+
+if(!amoroso || !profissional || !social){
+  alertBox.style.display="block";
+  alertBox.innerHTML = `
+    <h3>⚠️ Leitura incompleta</h3>
+    <p>Para liberar sua Leitura Integrada Premium, complete todos os quizzes:</p>
+    <ul>
+      ${!amoroso ? "<li>❤️ Amoroso</li>" : ""}
+      ${!profissional ? "<li>💼 Profissional</li>" : ""}
+      ${!social ? "<li>🧭 Social</li>" : ""}
+    </ul>
+  `;
+}else{
+  content.style.display="block";
+}
+
+function renderChart(canvasId, data){
+ const c=document.getElementById(canvasId);
+ const ctx=c.getContext("2d");
+ const labels=Object.keys(data);
+ const values=Object.values(data);
+
+ const w=c.width=c.offsetWidth;
+ const h=c.height;
+ ctx.clearRect(0,0,w,h);
+
+ const max=Math.max(...values)+1;
+ const bw=w/labels.length*0.6;
+
+ values.forEach((v,i)=>{
+  const x=(i+.5)*(w/labels.length);
+  const bh=(v/max)*(h-40);
+  ctx.fillStyle="#4dd0e1";
+  ctx.fillRect(x-bw/2,h-bh-20,bw,bh);
+  ctx.fillStyle="#fff";
+  ctx.textAlign="center";
+  ctx.fillText(labels[i],x,h-6);
+ });
+}
+
+function fill(id, txt){document.getElementById(id).textContent=txt;}
+
+if(amoroso && profissional && social){
+
+ fill("amorosoPerfil",`Perfil: ${amoroso.principal} (sec. ${amoroso.secundario})`);
+ fill("profissionalPerfil",`Perfil: ${profissional.principal} (sec. ${profissional.secundario})`);
+ fill("socialPerfil",`Perfil: ${social.principal} (sec. ${social.secundario})`);
+
+ renderChart("chartAmoroso",amoroso.scores || {});
+ renderChart("chartProfissional",profissional.scores || {});
+ renderChart("chartSocial",social.scores || {});
+
+ fill("amorosoInsight","Mostra como você se vincula emocionalmente.");
+ fill("profissionalInsight","Reflete sua forma de agir e decidir.");
+ fill("socialInsight","Revela sua postura em grupos.");
+
+ fill("coerencia",
+ "Quando seus três perfis convergem, você age com clareza e menos conflito interno.");
+
+ fill("conflito",
+ "Quando há diferença entre sentir, agir e se posicionar, surgem tensões que pedem consciência.");
+
+ ["Clareza de padrões","Autopercepção elevada","Capacidade de ajuste"].forEach(t=>{
+  const li=document.createElement("li");
+  li.textContent=t;
+  document.getElementById("forcas").appendChild(li);
+ });
+
+ fill("atencao",
+ "Observe situações onde você reage automaticamente para manter controle ou evitar desconforto.");
+
+ document.getElementById("promptFinal").value=
+`Tenho o Mapa Comportamental MindKey:
+
+• Amoroso: ${amoroso.principal}
+• Profissional: ${profissional.principal}
+• Social: ${social.principal}
+
+Situação real:
+[DESCREVA]
+
+Analise padrões integrados.
+Mostre conflitos internos possíveis.
+Aponte pontos cegos.
+Diferencie controle e aceitação.
+Evite rótulos e diagnósticos.`;
+}
+</script>
+
+</body>
+</html>
