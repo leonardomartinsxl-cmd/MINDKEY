@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>MindKey — Perfil Profissional</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
 :root{
  --bg:#05070c;
@@ -115,8 +114,7 @@ button{
 <div id="start" class="card">
 <h1>🧠 Perfil Profissional</h1>
 <p>
-Este relatório revela como você reage a pressão,
-decisão, liderança e execução no trabalho.
+Este relatório revela como você reage a pressão, decisão, liderança e execução no trabalho.
 </p>
 <div class="option" onclick="start()">Iniciar análise</div>
 </div>
@@ -125,6 +123,10 @@ decisão, liderança e execução no trabalho.
 <div id="quiz" class="card hidden">
 <h2 id="q"></h2>
 <div id="opts"></div>
+<div class="nav">
+<button onclick="prev()">Anterior</button>
+<button onclick="next()">Próximo</button>
+</div>
 </div>
 
 <!-- DASHBOARD -->
@@ -178,7 +180,7 @@ mas pode controlar postura, decisões e limites.
 <h3>🤖 Prompt Premium MindKey — Profissional</h3>
 <textarea readonly id="prompt"></textarea>
 
-<!-- 🔽 BOTÃO ADICIONADO (IGUAL AO AMOROSO) -->
+<!-- 🔽 BOTÃO ADICIONADO -->
 <button onclick="location.href='social.html'">
 Próximo: Social 🧭
 </button>
@@ -193,33 +195,81 @@ Não substitui orientação profissional especializada.
 </div>
 
 <script>
+// Perguntas e Respostas
 const questions=[
-{q:"Diante de um problema você:",a:[["Resolve rápido","Executor"],["Analisa antes","Analítico"]]},
-{q:"Você se sente mais confortável:",a:[["Decidindo","Executor"],["Planejando","Estrategista"]]},
-{q:"Sob pressão você:",a:[["Age","Executor"],["Mantém controle","Estrategista"]]},
-{q:"No trabalho você prefere:",a:[["Autonomia","Executor"],["Processos claros","Analítico"]]},
-{q:"Você se destaca mais por:",a:[["Comunicação","Comunicador"],["Organização","Analítico"]]},
-{q:"Feedback direto:",a:[["Gosto","Executor"],["Prefiro cuidado","Comunicador"]]},
-{q:"Ambientes ideais:",a:[["Dinâmicos","Executor"],["Previsíveis","Analítico"]]},
-{q:"Você lida melhor com:",a:[["Pessoas","Comunicador"],["Dados","Analítico"]]},
-{q:"Planejamento é:",a:[["Essencial","Estrategista"],["Flexível","Executor"]]},
-{q:"Você prefere liderança:",a:[["Direta","Executor"],["Estratégica","Estrategista"]]},
-{q:"Seu ritmo é:",a:[["Acelerado","Executor"],["Constante","Analítico"]]},
-{q:"Em equipe você:",a:[["Influência","Comunicador"],["Organiza","Analítico"]]},
-{q:"Mudanças repentinas:",a:[["Animam","Executor"],["Incomodam","Analítico"]]},
-{q:"Você se vê como:",a:[["Visionário","Estrategista"],["Prático","Executor"]]},
-{q:"Seu maior desafio profissional:",a:[["Paciência","Executor"],["Decisão","Analítico"]]}
+{q:"Diante de um problema você:",a:[
+["Resolve rápido","Executor"],
+["Analisa antes","Analítico"]
+]},
+{q:"Você se sente mais confortável:",a:[
+["Decidindo","Executor"],
+["Planejando","Estrategista"]
+]},
+{q:"Sob pressão você:",a:[
+["Age","Executor"],
+["Mantém controle","Estrategista"]
+]},
+{q:"No trabalho você prefere:",a:[
+["Autonomia","Executor"],
+["Processos claros","Analítico"]
+]},
+{q:"Você se destaca mais por:",a:[
+["Comunicação","Comunicador"],
+["Organização","Analítico"]
+]},
+{q:"Feedback direto:",a:[
+["Gosto","Executor"],
+["Prefiro cuidado","Comunicador"]
+]},
+{q:"Ambientes ideais:",a:[
+["Dinâmicos","Executor"],
+["Previsíveis","Analítico"]
+]},
+{q:"Você lida melhor com:",a:[
+["Pessoas","Comunicador"],
+["Dados","Analítico"]
+]},
+{q:"Planejamento é:",a:[
+["Essencial","Estrategista"],
+["Flexível","Executor"]
+]},
+{q:"Você prefere liderança:",a:[
+["Direta","Executor"],
+["Estratégica","Estrategista"]
+]},
+{q:"Seu ritmo é:",a:[
+["Acelerado","Executor"],
+["Constante","Analítico"]
+]},
+{q:"Em equipe você:",a:[
+["Influência","Comunicador"],
+["Organiza","Analítico"]
+]},
+{q:"Mudanças repentinas:",a:[
+["Animam","Executor"],
+["Incomodam","Analítico"]
+]},
+{q:"Você se vê como:",a:[
+["Visionário","Estrategista"],
+["Prático","Executor"]
+]},
+{q:"Seu maior desafio profissional:",a:[
+["Paciência","Executor"],
+["Decisão","Analítico"]
+]}
 ];
 
 let i=0;
 let score={Executor:0,Estrategista:0,Analítico:0,Comunicador:0};
 
+// Início do quiz
 function start(){
  document.getElementById("start").classList.add("hidden");
  document.getElementById("quiz").classList.remove("hidden");
  load();
 }
 
+// Carregar perguntas
 function load(){
  const q=questions[i];
  document.getElementById("q").textContent=q.q;
@@ -234,23 +284,22 @@ function load(){
  });
 }
 
+// Responder
 function answer(type){
  score[type]++;
  i++;
- if(i>=questions.length){show();}
- else load();
+ if(i>=questions.length){show();}else load();
 }
 
+// Renderizar gráfico
 function renderChart(data){
  const canvas=document.getElementById("chart");
  const ctx=canvas.getContext("2d");
  const labels=Object.keys(data);
  const values=Object.values(data);
-
  const w=canvas.width=canvas.offsetWidth;
  const h=canvas.height;
  ctx.clearRect(0,0,w,h);
-
  const max=Math.max(...values)+1;
  const bw=w/labels.length*0.6;
 
@@ -265,6 +314,7 @@ function renderChart(data){
  });
 }
 
+// Exibir resultado
 function show(){
  document.getElementById("quiz").classList.add("hidden");
  document.getElementById("dashboard").classList.remove("hidden");
@@ -280,10 +330,10 @@ function show(){
  document.getElementById("sec").textContent=sec;
 
  const textos={
- Executor:{padrao:"Você age com foco em resultado, decisão e execução.",melhorar:"Desenvolver paciência e escuta estratégica.",elogios:["Alta execução","Coragem para decidir"]},
- Estrategista:{padrao:"Você pensa no longo prazo e estrutura caminhos.",melhorar:"Evitar excesso de planejamento sem ação.",elogios:["Visão","Clareza estratégica"]},
- Analítico:{padrao:"Você prioriza lógica, organização e precisão.",melhorar:"Tomar decisões mesmo sem 100% de dados.",elogios:["Confiabilidade","Rigor técnico"]},
- Comunicador:{padrao:"Você gera conexão, influência e alinhamento.",melhorar:"Criar limites e foco em execução.",elogios:["Empatia","Persuasão"]}
+  Executor:{padrao:"Você age com foco em resultado, decisão e execução.",melhorar:"Desenvolver paciência e escuta estratégica.",elogios:["Alta execução","Coragem para decidir"]},
+  Estrategista:{padrao:"Você pensa no longo prazo e estrutura caminhos.",melhorar:"Evitar excesso de planejamento sem ação.",elogios:["Visão","Clareza estratégica"]},
+  Analítico:{padrao:"Você prioriza lógica, organização e precisão.",melhorar:"Tomar decisões mesmo sem 100% de dados.",elogios:["Confiabilidade","Rigor técnico"]},
+  Comunicador:{padrao:"Você gera conexão, influência e alinhamento.",melhorar:"Criar limites e foco em execução.",elogios:["Empatia","Persuasão"]}
  };
 
  document.getElementById("padrao").textContent=textos[main].padrao;
