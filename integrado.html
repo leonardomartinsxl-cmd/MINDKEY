@@ -1,24 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>MindKey — Leitura Integrada Premium</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+ --bg:#0b0c0f;
+ --card:#15171c;
+ --soft:#1f2229;
+ --text:#eaeaea;
+ --muted:#a1a1aa;
+ --accent:#4dd0e1;
+}
+
+*{box-sizing:border-box}
+
+body{
+ margin:0;
+ font-family:Inter,system-ui,sans-serif;
+ background:linear-gradient(180deg,#0b0c0f,#0f1117);
+ color:var(--text);
+}
+
+.container{
+ max-width:960px;
+ margin:auto;
+ padding:64px 20px 80px;
+}
+
+.card{
+ background:var(--card);
+ border-radius:22px;
+ padding:32px;
+ border:1px solid rgba(255,255,255,.05);
+ margin-bottom:28px;
+ animation:fade .6s ease;
+}
+
+@keyframes fade{
+ from{opacity:0;transform:translateY(10px)}
+ to{opacity:1}
+}
+
+h1,h2,h3{margin-top:0}
+
+p{
+ line-height:1.6;
+ color:var(--muted);
+}
+
+.soft{
+ background:var(--soft);
+ border-radius:14px;
+ padding:20px;
+ margin-top:12px;
+}
+
+textarea{
+ width:100%;
+ height:220px;
+ background:#05070c;
+ color:#fff;
+ border:1px solid #2a2f55;
+ border-radius:14px;
+ padding:14px;
+}
+
+canvas{
+ margin-top:24px;
+ max-width:100%;
+}
+
+.grid{
+ display:grid;
+ grid-template-columns:1fr;
+ gap:20px;
+}
+
+@media(min-width:720px){
+ .grid{grid-template-columns:repeat(3,1fr)}
+}
+
+ul{padding-left:20px}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🧠 Leitura Integrada Premium</h1>
+<p>Veja seu mapa comportamental completo: Amoroso, Profissional e Social.</p>
+
+<div class="grid">
+<!-- Amoroso -->
+<div class="card">
+<h3>❤️ Perfil Amoroso</h3>
+<p id="amorosoPerfil">Carregando...</p>
+<canvas id="chartAmoroso" height="150"></canvas>
+<ul id="amorosoElogios"></ul>
+<p id="amorosoMelhorar"></p>
+</div>
+
+<!-- Profissional -->
+<div class="card">
+<h3>💼 Perfil Profissional</h3>
+<p id="profissionalPerfil">Carregando...</p>
+<canvas id="chartProfissional" height="150"></canvas>
+<ul id="profissionalElogios"></ul>
+<p id="profissionalMelhorar"></p>
+</div>
+
+<!-- Social -->
+<div class="card">
+<h3>🧭 Perfil Social</h3>
+<p id="socialPerfil">Carregando...</p>
+<canvas id="chartSocial" height="150"></canvas>
+<ul id="socialElogios"></ul>
+<p id="socialMelhorar"></p>
+</div>
+</div>
+
+<div class="card">
+<h2>🤖 Prompt Premium Integrado</h2>
+<textarea readonly id="promptFinal">Carregando...</textarea>
+<p style="font-size:13px;color:#888;margin-top:12px">
+Use este prompt para analisar situações reais com clareza, responsabilidade e autoconhecimento.  
+Não substitui acompanhamento profissional.
+</p>
+</div>
+
+</div>
+
 <script>
+// Recupera dados salvos de cada quiz
 const amoroso = JSON.parse(localStorage.getItem("mindkey_amoroso"));
 const profissional = JSON.parse(localStorage.getItem("mindkey_profissional"));
 const social = JSON.parse(localStorage.getItem("mindkey_social"));
 
-if(amoroso){
-  document.getElementById("amorosoPerfil").textContent =
-    "Perfil Amoroso: " + amoroso.principal;
+function renderChart(canvasId, data){
+ const canvas = document.getElementById(canvasId);
+ const ctx = canvas.getContext("2d");
+ const labels = Object.keys(data);
+ const values = Object.values(data);
+
+ const w = canvas.width = canvas.offsetWidth;
+ const h = canvas.height;
+ ctx.clearRect(0,0,w,h);
+
+ const max = Math.max(...values)+1;
+ const barWidth = w/labels.length*0.6;
+
+ values.forEach((v,i)=>{
+   const x=(i+0.5)*(w/labels.length);
+   const barHeight=(v/max)*(h-40);
+   ctx.fillStyle="#4dd0e1";
+   ctx.fillRect(x-barWidth/2,h-barHeight-20,barWidth,barHeight);
+   ctx.fillStyle="#fff";
+   ctx.textAlign="center";
+   ctx.fillText(labels[i],x,h-5);
+ });
 }
 
-if(profissional){
-  document.getElementById("profissionalPerfil").textContent =
-    "Perfil Profissional: " + profissional.principal;
+// Função para preencher perfil
+function fillProfile(perfil, idPerfil, idElogios, idMelhorar, chartId){
+ if(perfil){
+   document.getElementById(idPerfil).textContent =
+     `Perfil: ${perfil.principal} (Secundário: ${perfil.secundario})`;
+   const ul = document.getElementById(idElogios);
+   ul.innerHTML = "";
+   perfil.elogios.forEach(e => {
+     const li = document.createElement("li");
+     li.textContent = e;
+     ul.appendChild(li);
+   });
+   document.getElementById(idMelhorar).textContent = perfil.melhorar;
+   renderChart(chartId, perfil.scores);
+ }
 }
 
-if(social){
-  document.getElementById("socialPerfil").textContent =
-    "Perfil Social: " + social.principal;
-}
+// Preenche os três perfis
+fillProfile(amoroso,"amorosoPerfil","amorosoElogios","amorosoMelhorar","chartAmoroso");
+fillProfile(profissional,"profissionalPerfil","profissionalElogios","profissionalMelhorar","chartProfissional");
+fillProfile(social,"socialPerfil","socialElogios","socialMelhorar","chartSocial");
 
-// 🧠 Prompt Premium Integrado
+// Prompt Integrado
 if(amoroso && profissional && social){
   document.getElementById("promptFinal").value =
 `Tenho o seguinte Mapa Comportamental MindKey:
@@ -28,7 +196,6 @@ if(amoroso && profissional && social){
 • Social: ${social.principal} (secundário ${social.secundario})
 
 Estou vivendo a seguinte situação real:
-
 [DESCREVA A SITUAÇÃO AQUI]
 
 Quero que você:
@@ -41,3 +208,6 @@ Quero que você:
 Foque em clareza, responsabilidade pessoal e autoconhecimento.`;
 }
 </script>
+
+</body>
+</html>
