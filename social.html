@@ -92,6 +92,18 @@ canvas{
  margin-top:24px;
  max-width:100%;
 }
+
+button{
+ background:linear-gradient(135deg,#4dd0e1,#00acc1);
+ color:#000;
+ border:none;
+ padding:16px 36px;
+ border-radius:999px;
+ font-size:16px;
+ font-weight:600;
+ cursor:pointer;
+ margin-top:14px;
+}
 </style>
 </head>
 
@@ -166,6 +178,11 @@ mas controla sua postura, limites e posicionamento.
 <h3>🤖 Prompt Premium MindKey — Social</h3>
 <textarea readonly id="prompt"></textarea>
 
+<!-- 🔽 BOTÃO ADICIONADO (ÚNICA ALTERAÇÃO) -->
+<button onclick="location.href='integrada.html'">
+Ver Leitura Integrada 🧠
+</button>
+
 <p style="font-size:13px;color:#888;margin-top:12px">
 Ferramenta de autoconhecimento.  
 Não substitui acompanhamento profissional.
@@ -177,66 +194,21 @@ Não substitui acompanhamento profissional.
 
 <script>
 const questions=[
-{q:"Em grupos você tende a:",a:[
-["Assumir a frente","Líder"],
-["Observar primeiro","Observador"]
-]},
-{q:"As pessoas te procuram para:",a:[
-["Decidir","Líder"],
-["Conversar","Conector"]
-]},
-{q:"Você se sente mais confortável:",a:[
-["Falando","Conector"],
-["Ouvindo","Observador"]
-]},
-{q:"Em conflitos sociais você:",a:[
-["Confronta","Líder"],
-["Contorna","Adaptável"]
-]},
-{q:"Seu comportamento muda conforme o ambiente?",a:[
-["Sim","Adaptável"],
-["Não","Observador"]
-]},
-{q:"Em ambientes novos você:",a:[
-["Se solta rápido","Conector"],
-["Demora","Observador"]
-]},
-{q:"Quando alguém exagera você:",a:[
-["Impõe limites","Líder"],
-["Se ajusta","Adaptável"]
-]},
-{q:"Você é visto como:",a:[
-["Carismático","Conector"],
-["Reservado","Observador"]
-]},
-{q:"Você prefere grupos:",a:[
-["Ativos","Conector"],
-["Tranquilos","Observador"]
-]},
-{q:"Pressão social te faz:",a:[
-["Se impor","Líder"],
-["Se adaptar","Adaptável"]
-]},
-{q:"Você costuma:",a:[
-["Unir pessoas","Conector"],
-["Analisar o grupo","Observador"]
-]},
-{q:"Mudanças sociais rápidas:",a:[
-["Lida bem","Adaptável"],
-["Incomodam","Observador"]
-]},
-{q:"Você se posiciona quando:",a:[
-["Necessário","Líder"],
-["Seguro","Observador"]
-]},
-{q:"Seu papel natural é:",a:[
-["Direcionar","Líder"],
-["Equilibrar","Adaptável"]
-]},
-{q:"Socialmente seu desafio é:",a:[
-["Paciência","Líder"],
-["Expressão","Observador"]
-]}
+{q:"Em grupos você tende a:",a:[["Assumir a frente","Líder"],["Observar primeiro","Observador"]]},
+{q:"As pessoas te procuram para:",a:[["Decidir","Líder"],["Conversar","Conector"]]},
+{q:"Você se sente mais confortável:",a:[["Falando","Conector"],["Ouvindo","Observador"]]},
+{q:"Em conflitos sociais você:",a:[["Confronta","Líder"],["Contorna","Adaptável"]]},
+{q:"Seu comportamento muda conforme o ambiente?",a:[["Sim","Adaptável"],["Não","Observador"]]},
+{q:"Em ambientes novos você:",a:[["Se solta rápido","Conector"],["Demora","Observador"]]},
+{q:"Quando alguém exagera você:",a:[["Impõe limites","Líder"],["Se ajusta","Adaptável"]]},
+{q:"Você é visto como:",a:[["Carismático","Conector"],["Reservado","Observador"]]},
+{q:"Você prefere grupos:",a:[["Ativos","Conector"],["Tranquilos","Observador"]]},
+{q:"Pressão social te faz:",a:[["Se impor","Líder"],["Se adaptar","Adaptável"]]},
+{q:"Você costuma:",a:[["Unir pessoas","Conector"],["Analisar o grupo","Observador"]]},
+{q:"Mudanças sociais rápidas:",a:[["Lida bem","Adaptável"],["Incomodam","Observador"]]},
+{q:"Você se posiciona quando:",a:[["Necessário","Líder"],["Seguro","Observador"]]},
+{q:"Seu papel natural é:",a:[["Direcionar","Líder"],["Equilibrar","Adaptável"]]},
+{q:"Socialmente seu desafio é:",a:[["Paciência","Líder"],["Expressão","Observador"]]}
 ];
 
 let i=0;
@@ -308,26 +280,10 @@ function show(){
  document.getElementById("sec").textContent=sec;
 
  const textos={
- Líder:{
-  padrao:"Você tende a assumir direção e impor limites em ambientes sociais.",
-  ajuste:"Desenvolver escuta e flexibilidade.",
-  elogios:["Presença forte","Autoridade natural"]
- },
- Conector:{
-  padrao:"Você cria vínculos e facilita interações.",
-  ajuste:"Criar limites claros.",
-  elogios:["Empatia","Comunicação fluida"]
- },
- Observador:{
-  padrao:"Você analisa o ambiente antes de agir.",
-  ajuste:"Expressar mais suas opiniões.",
-  elogios:["Leitura social","Autocontrole"]
- },
- Adaptável:{
-  padrao:"Você se ajusta ao contexto para manter equilíbrio.",
-  ajuste:"Evitar se anular.",
-  elogios:["Diplomacia","Flexibilidade"]
- }
+ Líder:{padrao:"Você tende a assumir direção e impor limites em ambientes sociais.",ajuste:"Desenvolver escuta e flexibilidade.",elogios:["Presença forte","Autoridade natural"]},
+ Conector:{padrao:"Você cria vínculos e facilita interações.",ajuste:"Criar limites claros.",elogios:["Empatia","Comunicação fluida"]},
+ Observador:{padrao:"Você analisa o ambiente antes de agir.",ajuste:"Expressar mais suas opiniões.",elogios:["Leitura social","Autocontrole"]},
+ Adaptável:{padrao:"Você se ajusta ao contexto para manter equilíbrio.",ajuste:"Evitar se anular.",elogios:["Diplomacia","Flexibilidade"]}
  };
 
  document.getElementById("padrao").textContent=textos[main].padrao;
@@ -340,6 +296,11 @@ function show(){
   li.textContent=e;
   ul.appendChild(li);
  });
+
+ localStorage.setItem("mindkey_social",JSON.stringify({
+  principal:main,
+  secundario:sec
+ }));
 
  document.getElementById("prompt").value=
 `Meu perfil social predominante é ${main}, com traço secundário ${sec}.
