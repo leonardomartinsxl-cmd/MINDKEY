@@ -64,15 +64,25 @@ p{
 
 .hidden{display:none}
 
-.result{
- background:#0a0c1a;
- border-radius:14px;
- padding:20px;
+.nav{
+ display:flex;
+ justify-content:space-between;
  margin-top:20px;
 }
 
-.soft{
- background:var(--soft);
+button{
+ background:linear-gradient(135deg,#4dd0e1,#00acc1);
+ color:#000;
+ border:none;
+ padding:14px 28px;
+ border-radius:999px;
+ font-size:15px;
+ font-weight:600;
+ cursor:pointer;
+}
+
+.result{
+ background:#0a0c1a;
  border-radius:14px;
  padding:20px;
  margin-top:20px;
@@ -87,23 +97,6 @@ textarea{
  border-radius:14px;
  padding:14px;
 }
-
-canvas{
- margin-top:24px;
- max-width:100%;
-}
-
-button{
- background:linear-gradient(135deg,#4dd0e1,#00acc1);
- color:#000;
- border:none;
- padding:16px 36px;
- border-radius:999px;
- font-size:16px;
- font-weight:600;
- cursor:pointer;
- margin-top:14px;
-}
 </style>
 </head>
 
@@ -115,8 +108,8 @@ button{
 <div id="start" class="card">
 <h1>🧭 Perfil Social</h1>
 <p>
-Este relatório revela como você costuma agir, reagir
-e ser percebido em grupos, relações e ambientes sociais.
+Este teste analisa como você se comporta, reage e se posiciona
+em grupos, relações e ambientes sociais.
 </p>
 <div class="option" onclick="start()">Iniciar análise</div>
 </div>
@@ -125,18 +118,10 @@ e ser percebido em grupos, relações e ambientes sociais.
 <div id="quiz" class="card hidden">
 <h2 id="q"></h2>
 <div id="opts"></div>
-</div>
 
-<!-- DASHBOARD -->
-<div id="dashboard" class="card hidden">
-<h2>📊 Mapa de Presença Social</h2>
-<p>
-O gráfico mostra onde sua energia social aparece com mais força.
-</p>
-<canvas id="chart" height="260"></canvas>
-<div class="soft">
-Picos indicam comportamento dominante.  
-Equilíbrio indica maturidade social.
+<div class="nav">
+<button onclick="prev()">Anterior</button>
+<button onclick="next()">Próximo</button>
 </div>
 </div>
 
@@ -151,7 +136,7 @@ Equilíbrio indica maturidade social.
 </div>
 
 <div class="result">
-<h3>🔑 Seu padrão social dominante</h3>
+<h3>🔑 Padrão social dominante</h3>
 <p id="padrao"></p>
 </div>
 
@@ -161,16 +146,8 @@ Equilíbrio indica maturidade social.
 </div>
 
 <div class="result">
-<h3>⚠️ Pontos de atenção social</h3>
+<h3>⚠️ Pontos de atenção</h3>
 <p id="ajuste"></p>
-</div>
-
-<div class="result">
-<h3>🎯 O que está sob seu controle</h3>
-<p>
-Você não controla a reação dos outros,
-mas controla sua postura, limites e posicionamento.
-</p>
 </div>
 
 <hr>
@@ -178,7 +155,6 @@ mas controla sua postura, limites e posicionamento.
 <h3>🤖 Prompt Premium MindKey — Social</h3>
 <textarea readonly id="prompt"></textarea>
 
-<!-- 🔽 BOTÃO ADICIONADO (ÚNICA ALTERAÇÃO) -->
 <button onclick="location.href='integrada.html'">
 Ver Leitura Integrada 🧠
 </button>
@@ -193,26 +169,18 @@ Não substitui acompanhamento profissional.
 </div>
 
 <script>
+// ⚠️ PERGUNTAS PROVISÓRIAS (VOCÊ VAI TROCAR DEPOIS)
 const questions=[
-{q:"Em grupos você tende a:",a:[["Assumir a frente","Líder"],["Observar primeiro","Observador"]]},
-{q:"As pessoas te procuram para:",a:[["Decidir","Líder"],["Conversar","Conector"]]},
+{q:"Em grupos você tende a:",a:[["Assumir a frente","Lider"],["Observar","Observador"]]},
 {q:"Você se sente mais confortável:",a:[["Falando","Conector"],["Ouvindo","Observador"]]},
-{q:"Em conflitos sociais você:",a:[["Confronta","Líder"],["Contorna","Adaptável"]]},
-{q:"Seu comportamento muda conforme o ambiente?",a:[["Sim","Adaptável"],["Não","Observador"]]},
-{q:"Em ambientes novos você:",a:[["Se solta rápido","Conector"],["Demora","Observador"]]},
-{q:"Quando alguém exagera você:",a:[["Impõe limites","Líder"],["Se ajusta","Adaptável"]]},
-{q:"Você é visto como:",a:[["Carismático","Conector"],["Reservado","Observador"]]},
-{q:"Você prefere grupos:",a:[["Ativos","Conector"],["Tranquilos","Observador"]]},
-{q:"Pressão social te faz:",a:[["Se impor","Líder"],["Se adaptar","Adaptável"]]},
-{q:"Você costuma:",a:[["Unir pessoas","Conector"],["Analisar o grupo","Observador"]]},
-{q:"Mudanças sociais rápidas:",a:[["Lida bem","Adaptável"],["Incomodam","Observador"]]},
-{q:"Você se posiciona quando:",a:[["Necessário","Líder"],["Seguro","Observador"]]},
-{q:"Seu papel natural é:",a:[["Direcionar","Líder"],["Equilibrar","Adaptável"]]},
-{q:"Socialmente seu desafio é:",a:[["Paciência","Líder"],["Expressão","Observador"]]}
+{q:"Conflitos sociais:",a:[["Enfrenta","Lider"],["Evita","Adaptavel"]]},
+{q:"Ambientes novos:",a:[["Se adapta rápido","Adaptavel"],["Demora","Observador"]]},
+{q:"Seu papel social costuma ser:",a:[["Unir pessoas","Conector"],["Analisar","Observador"]]}
 ];
 
-let i=0;
-let score={Líder:0,Conector:0,Observador:0,Adaptável:0};
+let index=0;
+let answers=[];
+let score={Lider:0,Conector:0,Observador:0,Adaptavel:0};
 
 function start(){
  document.getElementById("start").classList.add("hidden");
@@ -221,56 +189,43 @@ function start(){
 }
 
 function load(){
- const q=questions[i];
+ const q=questions[index];
  document.getElementById("q").textContent=q.q;
  const o=document.getElementById("opts");
  o.innerHTML="";
- q.a.forEach(x=>{
+ q.a.forEach((x,i)=>{
   const d=document.createElement("div");
   d.className="option";
   d.textContent=x[0];
-  d.onclick=()=>answer(x[1]);
+  d.onclick=()=>select(i);
   o.appendChild(d);
  });
 }
 
-function answer(type){
- score[type]++;
- i++;
- if(i>=questions.length){show();}
- else load();
+function select(i){
+ answers[index]=i;
 }
 
-function renderChart(data){
- const canvas=document.getElementById("chart");
- const ctx=canvas.getContext("2d");
- const labels=Object.keys(data);
- const values=Object.values(data);
+function next(){
+ if(answers[index]!==undefined){
+  const type=questions[index].a[answers[index]][1];
+  score[type]++;
+  index++;
+  if(index>=questions.length){show();}
+  else load();
+ }
+}
 
- const w=canvas.width=canvas.offsetWidth;
- const h=canvas.height;
- ctx.clearRect(0,0,w,h);
-
- const max=Math.max(...values)+1;
- const bw=w/labels.length*0.6;
-
- values.forEach((v,i)=>{
-  const x=(i+0.5)*(w/labels.length);
-  const bh=(v/max)*(h-60);
-  ctx.fillStyle="#4dd0e1";
-  ctx.fillRect(x-bw/2,h-bh-30,bw,bh);
-  ctx.fillStyle="#fff";
-  ctx.textAlign="center";
-  ctx.fillText(labels[i],x,h-10);
- });
+function prev(){
+ if(index>0){
+  index--;
+  load();
+ }
 }
 
 function show(){
  document.getElementById("quiz").classList.add("hidden");
- document.getElementById("dashboard").classList.remove("hidden");
  document.getElementById("result").classList.remove("hidden");
-
- renderChart(score);
 
  const sorted=Object.entries(score).sort((a,b)=>b[1]-a[1]);
  const main=sorted[0][0];
@@ -279,23 +234,11 @@ function show(){
  document.getElementById("main").textContent=main;
  document.getElementById("sec").textContent=sec;
 
- const textos={
- Líder:{padrao:"Você tende a assumir direção e impor limites em ambientes sociais.",ajuste:"Desenvolver escuta e flexibilidade.",elogios:["Presença forte","Autoridade natural"]},
- Conector:{padrao:"Você cria vínculos e facilita interações.",ajuste:"Criar limites claros.",elogios:["Empatia","Comunicação fluida"]},
- Observador:{padrao:"Você analisa o ambiente antes de agir.",ajuste:"Expressar mais suas opiniões.",elogios:["Leitura social","Autocontrole"]},
- Adaptável:{padrao:"Você se ajusta ao contexto para manter equilíbrio.",ajuste:"Evitar se anular.",elogios:["Diplomacia","Flexibilidade"]}
- };
-
- document.getElementById("padrao").textContent=textos[main].padrao;
- document.getElementById("ajuste").textContent=textos[main].ajuste;
+ document.getElementById("padrao").textContent="Descrição do padrão social será definida depois.";
+ document.getElementById("ajuste").textContent="Pontos de ajuste social serão refinados.";
 
  const ul=document.getElementById("elogios");
- ul.innerHTML="";
- textos[main].elogios.forEach(e=>{
-  const li=document.createElement("li");
-  li.textContent=e;
-  ul.appendChild(li);
- });
+ ul.innerHTML="<li>Ponto forte provisório</li>";
 
  localStorage.setItem("mindkey_social",JSON.stringify({
   principal:main,
@@ -305,14 +248,13 @@ function show(){
  document.getElementById("prompt").value=
 `Meu perfil social predominante é ${main}, com traço secundário ${sec}.
 
-Estou vivendo a seguinte situação social real:
-[DESCREVA A SITUAÇÃO]
+Descreva minha situação social atual:
+[SITUAÇÃO]
 
-Analise considerando meu padrão social.
-Mostre reações automáticas que posso não perceber.
-Aponte pontos cegos comuns a esse perfil.
-Diferencie o que está sob meu controle.
-Evite diagnósticos e conselhos genéricos.`;
+Analise meu comportamento social.
+Aponte reações automáticas.
+Mostre pontos cegos comuns.
+Diferencie o que está sob meu controle.`;
 }
 </script>
 
