@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>MINDKEY — Mapa da Mente</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+ --bg:#05060b;
+ --card:#101226;
+ --soft:#1a1d40;
+ --text:#f1f2ff;
+ --muted:#9ca2d9;
+ --accent:#6be4ff;
+}
+
+body{
+ margin:0;
+ font-family:Inter,system-ui,sans-serif;
+ background:radial-gradient(circle at top,#141a4a,#05060b);
+ color:var(--text);
+}
+
+.container{
+ max-width:900px;
+ margin:auto;
+ padding:100px 20px 140px;
+}
+
+h1{
+ font-size:40px;
+ margin-bottom:10px;
+}
+
+.subtitle{
+ color:var(--muted);
+ font-size:18px;
+ max-width:700px;
+ line-height:1.6;
+}
+
+.section{
+ margin-top:70px;
+}
+
+.card{
+ background:linear-gradient(180deg,#101226,#0a0c1a);
+ border-radius:22px;
+ padding:28px;
+ border:1px solid rgba(255,255,255,.06);
+ margin-top:26px;
+}
+
+.grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+ gap:20px;
+}
+
+.tag{
+ color:var(--accent);
+ font-weight:600;
+ font-size:14px;
+}
+
+p{
+ line-height:1.6;
+ color:#d7d9ff;
+}
+
+ul{
+ padding-left:18px;
+}
+
+li{
+ margin-bottom:10px;
+}
+
+textarea{
+ width:100%;
+ height:220px;
+ background:#05060b;
+ color:#fff;
+ border:1px solid #2c2f6a;
+ border-radius:14px;
+ padding:16px;
+ margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Seu Mapa da Mente</h1>
+<p class="subtitle">
+Nada aqui é aleatório.  
+Este é o padrão que conecta suas emoções, comportamentos e decisões.
+</p>
+
+<!-- AMOROSO -->
+<div class="section">
+<span class="tag">Camada Amorosa</span>
+<div class="card">
+<h3 id="amorosoPerfil">Perfil Amoroso</h3>
+<p id="amorosoTexto"></p>
+</div>
+</div>
+
+<!-- SOCIAL -->
+<div class="section">
+<span class="tag">Camada Social</span>
+<div class="card">
+<h3 id="socialPerfil">Perfil Social</h3>
+<p id="socialTexto"></p>
+</div>
+</div>
+
+<!-- INTERNO -->
+<div class="section">
+<span class="tag">Camada Interna</span>
+<div class="card">
+<h3 id="internoPerfil">Perfil Interno</h3>
+<p id="internoTexto"></p>
+</div>
+</div>
+
+<!-- LEITURA FINAL -->
+<div class="section">
+<span class="tag">Leitura Integrada</span>
+<div class="card">
+<h3>O padrão que se repete em você</h3>
+<p id="integrado"></p>
+
+<h3>Ponto central de evolução</h3>
+<p id="evolucao"></p>
+
+<h3>Força que você subestima</h3>
+<p id="forca"></p>
+</div>
+</div>
+
+<!-- PROMPT -->
+<div class="section">
+<span class="tag">Prompt Final</span>
+<div class="card">
+<h3>Aprofunde sua jornada</h3>
+<textarea readonly id="promptFinal"></textarea>
+</div>
+</div>
+
+</div>
+
+<script>
+// 🔹 SIMULAÇÃO DE DADOS (depois virão dos quizzes)
+const dados = {
+ amoroso:"Seguro",
+ social:"Conector",
+ interno:"Explorador"
+};
+
+document.getElementById("amorosoPerfil").textContent =
+ "Perfil Amoroso: " + dados.amoroso;
+
+document.getElementById("amorosoTexto").textContent =
+ "Você busca conexões estáveis e valoriza diálogo emocional.";
+
+document.getElementById("socialPerfil").textContent =
+ "Perfil Social: " + dados.social;
+
+document.getElementById("socialTexto").textContent =
+ "As pessoas te veem como alguém acessível e comunicativo.";
+
+document.getElementById("internoPerfil").textContent =
+ "Perfil Interno: " + dados.interno;
+
+document.getElementById("internoTexto").textContent =
+ "Você é movido por sentido, crescimento e curiosidade.";
+
+document.getElementById("integrado").textContent =
+ "Existe um padrão claro de busca por conexão com profundidade e propósito.";
+
+document.getElementById("evolucao").textContent =
+ "Desenvolver constância emocional sem perder sua sensibilidade.";
+
+document.getElementById("forca").textContent =
+ "Sua capacidade de entender pessoas e contextos com profundidade.";
+
+document.getElementById("promptFinal").value =
+`Este é meu Mapa da Mente:
+
+Perfil Amoroso: ${dados.amoroso}
+Perfil Social: ${dados.social}
+Perfil Interno: ${dados.interno}
+
+Com base nisso:
+- Quais padrões inconscientes regem minhas decisões?
+- O que preciso desenvolver agora?
+- Como alinhar emoção, ação e propósito?`;
+</script>
+
+</body>
+</html>
