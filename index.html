@@ -99,12 +99,12 @@ button:hover{
 <h1>Escolha seu Quiz</h1>
 <p>
 <span style="color:#4dd0e1;font-weight:600;">MindKey</span> oferece três áreas de análise:
-amoroso, profissional e social. Você pode fazer na ordem que quiser e ter o relatório integrado ao final.
+amoroso, profissional e social. Você pode fazer na ordem que quiser e ver o relatório integrado ao final.
 </p>
 
-<button onclick="location.href='amoroso.html'">❤️ Amoroso</button>
-<button onclick="location.href='profissional.html'">💼 Profissional</button>
-<button onclick="location.href='social.html'">🧭 Social</button>
+<button id="btnAmoroso">❤️ Amoroso</button>
+<button id="btnProfissional">💼 Profissional</button>
+<button id="btnSocial">🧭 Social</button>
 </div>
 
 <!-- DASHBOARD INTEGRADO -->
@@ -136,29 +136,29 @@ Não substitui acompanhamento psicológico, psiquiátrico ou orientação profis
 </div>
 
 <script>
-// Carrega resultados salvos no localStorage
-const amoroso = JSON.parse(localStorage.getItem("mindkey_amoroso"));
-const profissional = JSON.parse(localStorage.getItem("mindkey_profissional"));
-const social = JSON.parse(localStorage.getItem("mindkey_social"));
+// Função para atualizar o dashboard sem recarregar a página
+function atualizarDashboard() {
+  const amoroso = JSON.parse(localStorage.getItem("mindkey_amoroso"));
+  const profissional = JSON.parse(localStorage.getItem("mindkey_profissional"));
+  const social = JSON.parse(localStorage.getItem("mindkey_social"));
 
-if(amoroso){
-  document.getElementById("amorosoPerfil").textContent =
-    "Perfil Amoroso: " + amoroso.principal + " (Secundário: " + amoroso.secundario + ")";
-}
+  if(amoroso){
+    document.getElementById("amorosoPerfil").textContent =
+      "Perfil Amoroso: " + amoroso.principal + " (Secundário: " + amoroso.secundario + ")";
+  }
 
-if(profissional){
-  document.getElementById("profissionalPerfil").textContent =
-    "Perfil Profissional: " + profissional.principal + " (Secundário: " + profissional.secundario + ")";
-}
+  if(profissional){
+    document.getElementById("profissionalPerfil").textContent =
+      "Perfil Profissional: " + profissional.principal + " (Secundário: " + profissional.secundario + ")";
+  }
 
-if(social){
-  document.getElementById("socialPerfil").textContent =
-    "Perfil Social: " + social.principal + " (Secundário: " + social.secundario + ")";
-}
-
-// Prompt Premium Integrado
-if(amoroso && profissional && social){
-  document.getElementById("promptFinal").value =
+  if(social){
+    document.getElementById("socialPerfil").textContent =
+      "Perfil Social: " + social.principal + " (Secundário: " + social.secundario + ")";
+  
+  // Prompt Premium Integrado
+  if(amoroso && profissional && social){
+    document.getElementById("promptFinal").value =
 `Tenho o seguinte Mapa Comportamental MindKey:
 
 • Amoroso: ${amoroso.principal} (secundário ${amoroso.secundario})
@@ -177,7 +177,20 @@ Quero que você:
 - Evite diagnósticos e conselhos genéricos
 
 Foque em clareza, responsabilidade pessoal e autoconhecimento.`;
+  }
+  }
 }
+
+// Inicializa dashboard ao carregar
+atualizarDashboard();
+
+// Botões para abrir quizzes
+document.getElementById("btnAmoroso").onclick = () => location.href='amoroso.html';
+document.getElementById("btnProfissional").onclick = () => location.href='profissional.html';
+document.getElementById("btnSocial").onclick = () => location.href='social.html';
+
+// Atualiza dashboard sempre que a página ganha foco
+window.addEventListener("focus", atualizarDashboard);
 </script>
 
 </body>
