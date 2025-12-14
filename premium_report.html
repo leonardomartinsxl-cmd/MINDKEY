@@ -32,13 +32,20 @@ body{
  margin-bottom:28px;
  border:1px solid rgba(255,255,255,.05)
 }
-h1{font-size:38px;margin-bottom:6px}
-.subtitle{color:var(--muted);margin-bottom:36px}
-.highlight{color:var(--accent)}
+.hidden{display:none}
+.option{
+ background:var(--soft);
+ padding:16px;
+ border-radius:14px;
+ margin-top:14px;
+ cursor:pointer;
+ transition:.15s
+}
+.option:hover{background:#2a2e37}
+h1{font-size:36px}
 h2{margin-bottom:10px}
 p{line-height:1.7;color:#d4d4d8}
-ul{padding-left:18px}
-li{margin-bottom:10px}
+.highlight{color:var(--accent)}
 .soft{
  background:var(--soft);
  border-radius:16px;
@@ -62,127 +69,155 @@ textarea{
 <body>
 <div class="container">
 
-<div class="block">
-<h1>Relatório Comportamental Premium</h1>
-<p class="subtitle">
-Este relatório revela padrões profundos que influenciam
-suas decisões, relações e resultados — muitas vezes sem você perceber.
-</p>
+<!-- QUIZ -->
+<div id="quiz" class="block">
+<h1>Teste Premium</h1>
+<p class="highlight" id="context"></p>
+<h2 id="question"></h2>
+<div id="options"></div>
 </div>
 
-<div class="block" id="diagnostico"></div>
-<div class="block" id="conflitos"></div>
-<div class="block" id="profissional"></div>
-<div class="block" id="emocional"></div>
-<div class="block" id="acao"></div>
-<div class="block" id="prompt"></div>
+<!-- RESULTADO -->
+<div id="result" class="hidden">
+ <div class="block" id="diagnostico"></div>
+ <div class="block" id="conflitos"></div>
+ <div class="block" id="profissional"></div>
+ <div class="block" id="emocional"></div>
+ <div class="block" id="acao"></div>
+ <div class="block" id="prompt"></div>
+</div>
 
 </div>
 
 <script>
-// PERFIS
-const perfis={
- Executor:{
-  nome:"Executor",
-  diagnostico:"Você tem impulso natural para agir, decidir e avançar. Ambientes parados drenam sua energia.",
-  conflito:"Sua maior tensão interna surge entre agir rápido e lidar com consequências emocionais.",
-  profissional:"Você performa melhor com metas claras, autonomia e desafios. Trava quando sente controle excessivo.",
-  emocional:"Tende a parecer forte, mas evita demonstrar vulnerabilidade. Pode parecer duro sem intenção.",
-  sabotagem:"Age antes de refletir, gerando conflitos desnecessários.",
-  energia:"Desafios, progresso visível e reconhecimento por resultados."
- },
- Analítico:{
-  nome:"Analítico",
-  diagnostico:"Você busca lógica, clareza e previsibilidade. Segurança mental é essencial para agir.",
-  conflito:"Seu conflito interno está entre pensar demais e perder o timing.",
-  profissional:"Você se destaca em estratégia, análise e planejamento. Trava sob pressão emocional.",
-  emocional:"Demonstra amor através de atitudes racionais, não palavras.",
-  sabotagem:"Excesso de análise leva à procrastinação.",
-  energia:"Ambientes organizados, processos claros e tempo para pensar."
- },
- Comunicador:{
-  nome:"Comunicador",
-  diagnostico:"Você é guiado por conexão, emoção e troca. Ambientes frios te drenam.",
-  conflito:"Oscila entre agradar e se perder de si.",
-  profissional:"Se destaca em comunicação, vendas e liderança humana. Trava quando é ignorado.",
-  emocional:"Sente profundamente e cria vínculos intensos.",
-  sabotagem:"Busca validação externa excessiva.",
-  energia:"Reconhecimento, troca emocional e pertencimento."
- },
- Estrategista:{
-  nome:"Estrategista",
-  diagnostico:"Você enxerga padrões e possibilidades antes dos outros.",
-  conflito:"Sua tensão está entre visão e execução.",
-  profissional:"Vai bem em planejamento e visão de longo prazo. Trava em rotinas rígidas.",
-  emocional:"Prefere profundidade a intensidade.",
-  sabotagem:"Adiar decisões esperando o momento ideal.",
-  energia:"Liberdade, visão e autonomia."
- }
-};
+// ===== PERGUNTAS PREMIUM REFINADAS =====
+const questions=[
+{c:"Decisão",q:"Quando precisa decidir algo importante, o que mais pesa?",a:[
+ ["Agir rápido para não perder oportunidade","Executor"],
+ ["Analisar todos os cenários possíveis","Analítico"],
+ ["Pensar em como isso afeta as pessoas","Comunicador"],
+ ["Esperar o momento certo","Estrategista"]
+]},
+{c:"Pressão",q:"Sob pressão você tende a:",a:[
+ ["Assumir o controle","Executor"],
+ ["Ficar mais racional","Analítico"],
+ ["Buscar apoio","Comunicador"],
+ ["Se afastar para pensar","Estrategista"]
+]},
+{c:"Erro",q:"Quando algo dá errado você:",a:[
+ ["Corrige rápido e segue","Executor"],
+ ["Revê tudo para entender","Analítico"],
+ ["Se culpa emocionalmente","Comunicador"],
+ ["Reformula o plano","Estrategista"]
+]},
+{c:"Trabalho",q:"No trabalho você rende mais quando:",a:[
+ ["Tem desafios constantes","Executor"],
+ ["Tem processos claros","Analítico"],
+ ["Se sente valorizado","Comunicador"],
+ ["Tem autonomia","Estrategista"]
+]},
+{c:"Relacionamentos",q:"Em conflitos emocionais você:",a:[
+ ["Parte para o confronto","Executor"],
+ ["Tenta entender racionalmente","Analítico"],
+ ["Sente profundamente","Comunicador"],
+ ["Evita o conflito","Estrategista"]
+]},
+{c:"Rotina",q:"Sua maior dificuldade é:",a:[
+ ["Ter paciência","Executor"],
+ ["Agir sem certeza","Analítico"],
+ ["Colocar limites","Comunicador"],
+ ["Manter constância","Estrategista"]
+]},
+{c:"Motivação",q:"Você se sente mais motivado por:",a:[
+ ["Resultados","Executor"],
+ ["Clareza","Analítico"],
+ ["Reconhecimento","Comunicador"],
+ ["Liberdade","Estrategista"]
+]},
+{c:"Futuro",q:"Quando pensa no futuro você:",a:[
+ ["Quer conquistar rápido","Executor"],
+ ["Quer segurança","Analítico"],
+ ["Quer se sentir realizado","Comunicador"],
+ ["Quer possibilidades abertas","Estrategista"]
+]}
+];
 
-// SIMULAÇÃO (conectar futuramente ao quiz)
-const primary="Executor";
-const secondary="Analítico";
+let i=0;
+let score={Executor:0,Analítico:0,Comunicador:0,Estrategista:0};
 
-function render(){
- const p=perfis[primary];
- const s=perfis[secondary];
+function load(){
+ const q=questions[i];
+ context.textContent=q.c;
+ question.textContent=q.q;
+ options.innerHTML="";
+ q.a.forEach(x=>{
+  const d=document.createElement("div");
+  d.className="option";
+  d.textContent=x[0];
+  d.onclick=()=>answer(x[1]);
+  options.appendChild(d);
+ });
+}
+
+function answer(p){
+ score[p]++;
+ i++;
+ if(i>=questions.length){finish();return;}
+ load();
+}
+
+function finish(){
+ quiz.classList.add("hidden");
+ result.classList.remove("hidden");
+
+ const sorted=Object.entries(score).sort((a,b)=>b[1]-a[1]);
+ const primary=sorted[0][0];
+ const secondary=sorted[1][0];
 
  diagnostico.innerHTML=`
  <h2>Diagnóstico central</h2>
- <p><span class="highlight">${p.nome}</span> com influência de <span class="highlight">${s.nome}</span>.</p>
- <p>${p.diagnostico}</p>
+ <p>Seu perfil dominante é <span class="highlight">${primary}</span>
+ com influência de <span class="highlight">${secondary}</span>.</p>
  `;
 
  conflitos.innerHTML=`
- <h2>Conflito interno dominante</h2>
- <p>${p.conflito}</p>
+ <h2>Conflito interno</h2>
+ <p>Existe uma tensão constante entre agir e se proteger emocionalmente.</p>
  `;
 
  profissional.innerHTML=`
  <h2>Vida profissional</h2>
- <p>${p.profissional}</p>
- <div class="soft">
- <strong>O que mais te trava:</strong>
- <p>${p.sabotagem}</p>
- </div>
+ <p>Você performa melhor quando seu perfil é respeitado.</p>
  `;
 
  emocional.innerHTML=`
- <h2>Vida emocional e relações</h2>
- <p>${p.emocional}</p>
- <div class="soft">
- <strong>O que mais te energiza:</strong>
- <p>${p.energia}</p>
- </div>
+ <h2>Vida emocional</h2>
+ <p>Seus relacionamentos refletem seu padrão de decisão.</p>
  `;
 
  acao.innerHTML=`
  <h2>Plano prático</h2>
  <ul>
-  <li>Crie limites claros antes de agir impulsivamente.</li>
-  <li>Transforme decisões grandes em micro ações imediatas.</li>
-  <li>Peça feedback direto sem interpretar como ataque.</li>
+  <li>Reconheça seus gatilhos antes de reagir.</li>
+  <li>Crie pausas conscientes nas decisões.</li>
+  <li>Alinhe expectativas com pessoas próximas.</li>
  </ul>
- <div class="soft">
- <strong>Alerta:</strong>
- <p>Ignorar esse padrão tende a gerar conflitos recorrentes e desgaste emocional.</p>
- </div>
  `;
 
  prompt.innerHTML=`
- <h2>Prompt Premium de Autoconhecimento</h2>
+ <h2>Prompt Premium</h2>
  <textarea readonly>
-Sou do perfil ${p.nome} com influência de ${s.nome}.
-Quero uma análise profunda dos meus padrões inconscientes,
-meus sabotadores comportamentais e um plano de evolução
-profissional e emocional baseado nesse perfil.
-Seja direto, estratégico e sem motivação vazia.
+Meu perfil comportamental é ${primary} com influência de ${secondary}.
+Quero uma análise profunda dos meus padrões emocionais,
+meus sabotadores invisíveis e orientações práticas
+para evoluir profissionalmente e nos relacionamentos.
+Seja direto e específico.
  </textarea>
  `;
 }
 
-render();
+load();
 </script>
+
 </body>
 </html>
