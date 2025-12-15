@@ -6,46 +6,75 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+:root{
+ --bg:#0b0c0f;
+ --card:#15171c;
+ --soft:#1f2229;
+ --text:#eaeaea;
+ --muted:#a1a1aa;
+ --accent:#4dd0e1;
+}
+
+*{box-sizing:border-box}
+
 body{
  margin:0;
  font-family:Inter,system-ui,sans-serif;
- background:#0b0c0f;
- color:#eaeaea;
+ background:linear-gradient(180deg,#0b0c0f,#0f1117);
+ color:var(--text);
 }
+
 .container{
- max-width:980px;
+ max-width:900px;
  margin:auto;
- padding:80px 20px;
+ padding:60px 20px 120px;
 }
+
 .card{
- background:#15171c;
+ background:var(--card);
  border-radius:26px;
- padding:36px;
+ padding:34px;
  border:1px solid rgba(255,255,255,.05);
- margin-bottom:36px;
+ margin-bottom:32px;
+ animation:fade .6s ease;
 }
-h1{margin-top:0}
+
+@keyframes fade{
+ from{opacity:0;transform:translateY(10px)}
+ to{opacity:1}
+}
+
+h1{font-size:36px;margin-top:0}
+h2{font-size:24px;margin-top:0}
+h3{font-size:20px}
+
 p{line-height:1.7;color:#d4d4d8}
+
+.options{display:grid;gap:12px;margin-top:14px}
+
 .option{
- background:#1f2229;
- border-radius:18px;
- padding:18px;
- margin-top:14px;
+ background:var(--soft);
+ border-radius:16px;
+ padding:16px 18px;
  cursor:pointer;
+ border:1px solid rgba(255,255,255,.05);
+ transition:.2s
 }
-.option:hover{
- background:#262a33;
-}
+
+.option:hover{border-color:var(--accent)}
+
 button{
+ margin-top:30px;
  background:linear-gradient(135deg,#4dd0e1,#00acc1);
  color:#000;
  border:none;
- padding:18px 42px;
+ padding:16px 38px;
  border-radius:999px;
- font-size:16px;
  font-weight:700;
- cursor:pointer;
+ cursor:pointer
 }
+
+.progress{font-size:13px;color:var(--muted);margin-bottom:10px}
 </style>
 </head>
 
@@ -55,66 +84,197 @@ button{
 <div class="card">
 <h1>Eixo 2 — Controle & Autoproteção</h1>
 <p>
-Este eixo observa o que acontece quando o vínculo começa
-a exigir presença, entrega ou vulnerabilidade.
+Este eixo observa o quanto você precisa se proteger
+para não se sentir invadido, controlado ou engolido pelo vínculo.
+<br><br>
+Não mede frieza. Mede <strong>defesas emocionais</strong>.
 </p>
 </div>
 
-<!-- PERGUNTAS -->
-<div class="card">
-<p><strong>1.</strong> Quando alguém começa a esperar mais de você:</p>
-<div class="option" onclick="responderPergunta('eixo2',1)">Fica atento</div>
-<div class="option" onclick="responderPergunta('eixo2',2)">Sente pressão</div>
-<div class="option" onclick="responderPergunta('eixo2',3)">Reduz presença</div>
-<div class="option" onclick="responderPergunta('eixo2',4)">Cria distância</div>
-</div>
-
-<div class="card">
-<p><strong>2.</strong> Em relações, você se sente mais seguro quando:</p>
-<div class="option" onclick="responderPergunta('eixo2',1)">Nada é cobrado</div>
-<div class="option" onclick="responderPergunta('eixo2',2)">Tem autonomia</div>
-<div class="option" onclick="responderPergunta('eixo2',3)">Controla o ritmo</div>
-<div class="option" onclick="responderPergunta('eixo2',4)">Não depende</div>
-</div>
-
-<div class="card">
-<p><strong>3.</strong> Quando alguém demonstra necessidade emocional:</p>
-<div class="option" onclick="responderPergunta('eixo2',1)">Escuta</div>
-<div class="option" onclick="responderPergunta('eixo2',2)">Se fecha um pouco</div>
-<div class="option" onclick="responderPergunta('eixo2',3)">Racionaliza</div>
-<div class="option" onclick="responderPergunta('eixo2',4)">Se afasta</div>
-</div>
-
-<div class="card">
-<p><strong>4.</strong> Você percebe que se distancia quando:</p>
-<div class="option" onclick="responderPergunta('eixo2',1)">O vínculo aprofunda</div>
-<div class="option" onclick="responderPergunta('eixo2',2)">Surge expectativa</div>
-<div class="option" onclick="responderPergunta('eixo2',3)">Há cobrança emocional</div>
-<div class="option" onclick="responderPergunta('eixo2',4)">Sente invasão</div>
-</div>
-
-<!-- PERGUNTAS 5 A 15 seguem o MESMO PADRÃO -->
-<!-- (mantido propositalmente para estabilidade) -->
-
-<div class="card">
-<p>
-Você concluiu a segunda camada da análise.
-</p>
-
-<h3>
-Próxima etapa:<br>
-<span style="color:#4dd0e1">Identidade & Regulação Emocional</span>
-</h3>
-
-<br>
-
-<button onclick="location.href='eixo3.html'">
-Continuar análise
-</button>
-</div>
+<div class="card" id="quiz"></div>
 
 </div>
 
 <script src="mindkey-engine.js"></script>
+<script>
+const perguntas = [
+{
+ texto: "Quando alguém começa a se aproximar emocionalmente demais, você:",
+ opcoes: [
+  "Fica mais cauteloso",
+  "Reduz a intensidade",
+  "Observa à distância",
+  "Sente necessidade de espaço"
+ ]
+},
+{
+ texto: "Em relações, você se sente mais confortável quando:",
+ opcoes: [
+  "Tem controle do próprio tempo",
+  "Não precisa se explicar muito",
+  "Mantém autonomia emocional",
+  "Não sente cobrança"
+ ]
+},
+{
+ texto: "Quando percebe que alguém espera muito de você, você tende a:",
+ opcoes: [
+  "Se sentir pressionado",
+  "Diminuir presença",
+  "Evitar aprofundar",
+  "Criar distância emocional"
+ ]
+},
+{
+ texto: "O que mais te incomoda no amor?",
+ opcoes: [
+  "Dependência",
+  "Cobrança emocional",
+  "Expectativas não ditas",
+  "Perda de liberdade"
+ ]
+},
+{
+ texto: "Quando alguém demonstra necessidade emocional, você:",
+ opcoes: [
+  "Se fecha um pouco",
+  "Racionaliza a situação",
+  "Se distancia internamente",
+  "Fica desconfortável"
+ ]
+},
+{
+ texto: "Você percebe que se afasta quando:",
+ opcoes: [
+  "O vínculo exige presença",
+  "O outro demonstra apego",
+  "A relação fica intensa",
+  "Esperam algo de você"
+ ]
+},
+{
+ texto: "Em conflitos afetivos, seu impulso automático é:",
+ opcoes: [
+  "Silenciar",
+  "Evitar",
+  "Se retirar",
+  "Analisar friamente"
+ ]
+},
+{
+ texto: "Você costuma mostrar seus sentimentos:",
+ opcoes: [
+  "Só quando confia muito",
+  "De forma controlada",
+  "Apenas parcialmente",
+  "Depois de muito tempo"
+ ]
+},
+{
+ texto: "Quando alguém tenta te ler emocionalmente, você:",
+ opcoes: [
+  "Se fecha",
+  "Se esquiva",
+  "Se protege",
+  "Muda de assunto"
+ ]
+},
+{
+ texto: "Quando alguém se aproxima emocionalmente:",
+ opcoes: [
+  "Você reduz",
+  "Você controla",
+  "Você observa",
+  "Você se distancia"
+ ]
+},
+{
+ texto: "Em relações, você sente que:",
+ opcoes: [
+  "Precisa manter vantagem emocional",
+  "Precisa não se expor demais",
+  "Precisa se preservar",
+  "Precisa manter controle"
+ ]
+},
+{
+ texto: "Quando se envolve, você:",
+ opcoes: [
+  "Mantém partes intocadas",
+  "Não se entrega totalmente",
+  "Evita depender",
+  "Mantém saída emocional"
+ ]
+},
+{
+ texto: "Seu padrão aparece quando:",
+ opcoes: [
+  "O outro se apega",
+  "O vínculo aprofunda",
+  "Surge expectativa",
+  "Surge cobrança"
+ ]
+},
+{
+ texto: "Você confia mais:",
+ opcoes: [
+  "No que controla",
+  "No que entende racionalmente",
+  "No que depende só de você",
+  "No que não exige entrega"
+ ]
+},
+{
+ texto: "Se fosse honesto(a), você diria que no amor você:",
+ opcoes: [
+  "Se protege",
+  "Se resguarda",
+  "Se controla",
+  "Evita depender"
+ ]
+}
+];
+
+let atual = 0;
+
+function render(){
+ const q = perguntas[atual];
+ document.getElementById('quiz').innerHTML = `
+  <div class="progress">Pergunta ${atual+1} de ${perguntas.length}</div>
+  <h2>${q.texto}</h2>
+  <div class="options">
+   ${q.opcoes.map((o,i)=>`<div class="option" onclick="responder(${i})">${o}</div>`).join('')}
+  </div>
+ `;
+}
+
+function responder(i){
+ responderPergunta('eixo2', i+1);
+ atual++;
+ atual < perguntas.length ? render() : finalizar();
+}
+
+function finalizar(){
+ document.getElementById('quiz').innerHTML = `
+  <p style="font-size:18px">
+   Você concluiu a segunda camada da análise.
+   <br><br>
+   Agora vamos observar <strong>como você regula suas emoções</strong>
+   quando o vínculo se torna intenso.
+  </p>
+
+  <h3>
+   Próxima etapa:<br>
+   <span style="color:#4dd0e1">Identidade & Regulação Emocional</span>
+  </h3>
+
+  <button onclick="location.href='eixo3.html'">
+   Continuar análise
+  </button>
+ `;
+}
+
+render();
+</script>
 </body>
 </html>
