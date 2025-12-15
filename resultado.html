@@ -106,35 +106,46 @@ p{
 <body>
 <div class="container">
 
+<!-- ABERTURA -->
 <div class="card">
 <h1>Seu Relatório MindKey</h1>
 <p class="muted">
-Este material não descreve quem você é em essência.  
-Ele revela <strong>como seu sistema emocional reage quando vínculos, pressão e intensidade entram em jogo</strong>.
+Este material <strong>não define quem você é</strong> e não substitui acompanhamento psicológico.  
+Ele interpreta <strong>padrões emocionais ativados com base nas suas respostas</strong> —  
+especialmente em contextos de vínculo, pressão emocional e intensidade.
+</p>
+<p class="muted">
+Leia como um <strong>mapa de funcionamento</strong>, não como um rótulo.
 </p>
 </div>
 
+<!-- DASHBOARD -->
 <div class="card">
 <h2>Visão Geral dos Eixos</h2>
 <p>
-Abaixo está a distribuição dos seus padrões dominantes.  
-O eixo mais elevado indica onde sua mente emocional entra em ação primeiro.
+Abaixo está a distribuição dos padrões que mais tendem a se ativar em você.  
+O eixo mais elevado indica <strong>onde sua energia emocional entra primeiro em ação</strong>.
 </p>
 
 <div class="dashboard" id="dashboard"></div>
 </div>
 
+<!-- LEITURA PRINCIPAL -->
 <div class="card" id="leituraPrincipal"></div>
 
+<!-- LEITURA SECUNDÁRIA -->
 <div class="card" id="leituraSecundaria"></div>
 
+<!-- LEITURA COMBINADA -->
 <div class="card" id="leituraCombinada"></div>
 
+<!-- MARCADORES -->
 <div class="card">
 <h2>Marcadores de Consistência Interna</h2>
 <p id="marcadores"></p>
 </div>
 
+<!-- ENCERRAMENTO -->
 <div class="card">
 <h2>Encerramento</h2>
 <p id="encerramento"></p>
@@ -163,48 +174,113 @@ Object.entries(MindKey.eixos).forEach(([key,eixo])=>{
 document.getElementById("leituraPrincipal").innerHTML = `
 <h2>Eixo Dominante — ${relatorio.eixoPrincipal.nome}</h2>
 <p class="muted">${relatorio.eixoPrincipal.percentual}% de ativação</p>
+
 <div class="divider"></div>
-<p>${relatorio.eixoPrincipal.leitura.replace(/\n/g,"<br>")}</p>
+
+<p>
+Com base nas suas respostas, este é o eixo que mais tende a comandar
+suas reações emocionais quando você se envolve.
+</p>
+
+<p>
+<strong>Isso não significa que você seja isso o tempo todo</strong>,
+mas que, sob pressão emocional, é aqui que seu sistema entra em ação primeiro.
+</p>
+
+<p>
+${relatorio.eixoPrincipal.leitura.replace(/\n/g,"<br>")}
+</p>
+
+<p>
+O ponto central aqui não é julgamento — é custo.
+Quando esse eixo opera sem consciência, ele tende a gerar
+<strong>desgaste emocional, repetição de padrões e decisões reativas</strong>.
+</p>
 `;
 
 // LEITURA SECUNDÁRIA
 document.getElementById("leituraSecundaria").innerHTML = `
 <h2>Eixo Secundário — ${relatorio.eixoSecundario.nome}</h2>
 <p class="muted">${relatorio.eixoSecundario.percentual}% de ativação</p>
+
 <div class="divider"></div>
-<p>${relatorio.eixoSecundario.leitura.replace(/\n/g,"<br>")}</p>
+
+<p>
+Este eixo funciona como um <strong>modulador</strong>.
+Ele interfere em como você expressa, controla ou contém
+o padrão dominante.
+</p>
+
+<p>
+Em muitos momentos, ele pode parecer proteção.
+Em outros, pode virar conflito interno.
+</p>
+
+<p>
+${relatorio.eixoSecundario.leitura.replace(/\n/g,"<br>")}
+</p>
 `;
 
 // LEITURA COMBINADA
 document.getElementById("leituraCombinada").innerHTML = `
-<h2>Leitura Integrada</h2>
+<h2>Leitura Integrada dos Eixos</h2>
+
 <p>
-Quando esses dois eixos se combinam, não atuam separadamente.
-Eles se retroalimentam.
+Esses dois eixos não atuam separadamente.
+Eles se influenciam o tempo todo — criando seu padrão emocional mais recorrente.
 </p>
+
 <div class="divider"></div>
-<p>${relatorio.leituraCombinada || "Não foi possível identificar uma combinação dominante."}</p>
+
+<p>
+${relatorio.leituraCombinada || "Não foi possível identificar uma combinação dominante."}
+</p>
+
+<p>
+Quando essa combinação opera sem consciência,
+ela tende a gerar <strong>ambivalência emocional</strong>:
+vontade de se aproximar e necessidade de se proteger ao mesmo tempo.
+</p>
+
+<p>
+O efeito prático costuma ser:
+<strong>relações intensas, cansativas ou instáveis</strong>,
+mesmo quando existe sentimento genuíno.
+</p>
 `;
 
 // MARCADORES
 const marcadoresAtivos = Object.entries(relatorio.marcadores)
- .filter(([_,v])=>v)
- .map(([k])=>k.replace("_"," ").replace("incoerencia","Incoerência"));
+ .filter(([_,v])=>v);
 
 document.getElementById("marcadores").innerHTML =
  marcadoresAtivos.length
  ? `
- Foram identificados sinais de divergência entre respostas e comportamento emocional.
+ Foram identificados sinais de divergência entre discurso emocional e reação interna.
  <br><br>
- Isso não é erro — indica camadas internas em conflito, comuns em pessoas conscientes.
+ Isso não indica erro ou contradição moral.
+ Indica <strong>camadas internas operando em direções diferentes</strong>.
+ <br><br>
+ Pessoas com alto nível de consciência frequentemente apresentam esse tipo de conflito —
+ porque percebem mais do que sentem.
  `
  : `
- Suas respostas demonstram consistência interna.
- Seu discurso emocional e suas reações caminham na mesma direção.
+ Suas respostas demonstram boa coerência entre percepção, emoção e reação.
+ <br><br>
+ Isso sugere clareza interna e menor gasto de energia emocional
+ em conflitos invisíveis.
  `;
 
 // ENCERRAMENTO
-document.getElementById("encerramento").innerHTML = relatorio.encerramento;
+document.getElementById("encerramento").innerHTML = `
+Você não precisa mudar quem você é.
+Mas pode <strong>mudar a forma como reage</strong> quando certos gatilhos aparecem.
+<br><br>
+Consciência não elimina emoções.
+Ela cria espaço entre o impulso e a escolha.
+<br><br>
+E é nesse espaço que a maturidade emocional se constrói.
+`;
 </script>
 </body>
 </html>
