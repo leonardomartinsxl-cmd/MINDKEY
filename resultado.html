@@ -153,14 +153,14 @@ O eixo mais elevado indica <strong>onde sua energia emocional entra primeiro em 
 
 </div>
 
-<script src="mindkey-engine.js"></script>
+<script src="mindkey-engine.js?v=final"></script>
 <script>
 const relatorio = gerarRelatorioFinal();
 
 // DASHBOARD
 const dash = document.getElementById("dashboard");
 Object.entries(MindKey.eixos).forEach(([key,eixo])=>{
- const pct = calcularPercentual(key);
+ const pct = Math.min(100, calcularPercentual(key));
  dash.innerHTML += `
   <div class="eixoBox">
    <h4>${eixo.nome}</h4>
@@ -284,3 +284,4 @@ E é nesse espaço que a maturidade emocional se constrói.
 </script>
 </body>
 </html>
+
