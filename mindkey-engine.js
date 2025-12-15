@@ -73,19 +73,19 @@ function combinacaoAtiva() {
   return `${ordenados[0].key}_${ordenados[1].key}`;
 }
 
-// ---------- LEITURAS ----------
+// ---------- LEITURAS (AJUSTADAS, MESMA ESTRUTURA) ----------
 const leituras = {
   eixo1(percentual) {
     if (percentual < 35) {
       return `
-Você tende a lidar com vínculos de forma relativamente segura.
-A possibilidade de perda ou afastamento não domina suas decisões.
+Você tende a criar vínculos sem que o medo de perda dite suas ações.
+A possibilidade de afastamento existe, mas não domina sua percepção.
 
-Você sente, se importa, mas consegue sustentar a incerteza
-sem entrar em estado de alerta constante.
+Você sente, se importa e se envolve,
+mas mantém estabilidade interna mesmo diante da incerteza.
 
-Seu afeto não nasce do medo.
-Ele nasce da presença.
+Seu afeto nasce da presença,
+não da urgência.
       `;
     }
 
@@ -94,13 +94,14 @@ Ele nasce da presença.
 Você cria vínculos verdadeiros, mas sua mente entra em alerta
 quando a estabilidade emocional parece ameaçada.
 
-A incerteza ativa pensamentos, leituras de sinais
+A incerteza ativa leituras de sinais,
+pensamentos recorrentes
 e uma necessidade silenciosa de confirmação.
 
 Você não ama em excesso.
 Você ama tentando não perder.
 
-O custo disso é uma tensão interna constante
+O custo é uma tensão interna constante
 que pode transformar conexão em esforço.
       `;
     }
@@ -123,28 +124,112 @@ e relações marcadas mais por tensão do que por presença.
     `;
   },
 
-  eixo2: `
-Você tende a se proteger emocionalmente para não perder autonomia.
-O vínculo é vivido com cautela, controle e racionalização.
+  eixo2(percentual) {
+    if (percentual < 35) {
+      return `
+Você se sente confortável em vínculos sem precisar
+controlar pessoas, situações ou emoções.
 
-Isso reduz conflitos, mas também pode limitar intimidade real.
-  `,
+A proximidade não é vivida como ameaça.
+Você confia na troca
+e não sente necessidade de manter vantagem emocional.
 
-  eixo3: `
-Você vive emoções com intensidade e sensibilidade.
-O desafio não é sentir demais, mas regular sem se perder.
-  `,
+O vínculo é espaço, não risco.
+      `;
+    }
+
+    if (percentual < 70) {
+      return `
+Você se envolve, mas mantém zonas de proteção emocional.
+Quando percebe expectativas, cobrança ou dependência,
+sua resposta interna é cautela.
+
+Você racionaliza sentimentos,
+controla o ritmo
+e regula a proximidade para não se sentir invadido.
+
+O controle aqui não é frieza.
+É autoproteção.
+      `;
+    }
+
+    return `
+Para você, o amor ativa um risco central:
+perder autonomia.
+
+Quando o vínculo aprofunda,
+surgem mecanismos de controle, distanciamento
+ou contenção emocional.
+
+Você sente — mas não confia no impacto disso.
+
+O custo oculto é significativo:
+dificuldade de intimidade real,
+parceiros que sentem distância
+e a sensação recorrente de estar
+sozinho mesmo acompanhado.
+      `;
+  },
+
+  eixo3(percentual) {
+    if (percentual < 35) {
+      return `
+Você possui boa capacidade de regular emoções
+mesmo em contextos intensos.
+
+Suas reações tendem a ser proporcionais,
+e sua identidade se mantém estável
+mesmo sob pressão emocional.
+
+Sentir não te desorganiza.
+      `;
+    }
+
+    if (percentual < 70) {
+      return `
+Você sente com profundidade,
+mas em momentos de tensão
+pode oscilar entre controle e impulsividade.
+
+Há consciência emocional,
+mas nem sempre estabilidade.
+
+O desafio aqui é sustentar equilíbrio
+quando a intensidade aumenta.
+      `;
+    }
+
+    return `
+Suas emoções têm volume alto.
+Quando envolvido, você pode se perder no vínculo
+ou reagir de forma impulsiva para aliviar tensão interna.
+
+O medo central não é o outro —
+é perder a si mesmo.
+
+O custo oculto são relações intensas,
+instáveis
+e ciclos de aproximação e afastamento.
+      `;
+  },
 
   combinacoes: {
     eixo1_eixo2: `
-Você vive o paradoxo entre querer proximidade
+Você vive o conflito entre querer proximidade
 e precisar se proteger para não perder controle.
+
+Deseja vínculo,
+mas teme o custo emocional dele.
     `,
     eixo1_eixo3: `
-Você sente profundamente, mas oscila entre entrega e medo.
+Você sente profundamente,
+mas oscila entre entrega total
+e medo de se perder no vínculo.
     `,
     eixo2_eixo3: `
-Você controla emoções intensas para não ser dominado por elas.
+Você tenta controlar emoções intensas
+para não ser dominado por elas,
+criando distância interna como defesa.
     `
   }
 };
