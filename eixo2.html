@@ -36,6 +36,7 @@ p{color:#cfcfd4;line-height:1.6}
   padding:16px;
   margin-top:14px;
   cursor:pointer;
+  transition:.2s;
 }
 
 .option:hover{
@@ -51,60 +52,156 @@ p{color:#cfcfd4;line-height:1.6}
 <div class="card">
 <h1>Eixo 2 — Controle & Autoproteção</h1>
 <p>
-Este bloco observa como você reage quando sente risco,
-frustração ou perda de controle emocional.
+Este eixo observa o quanto você precisa manter controle,
+distância ou vantagem emocional para se sentir seguro(a).
 </p>
 </div>
 
-<!-- PERGUNTA 1 -->
+<!-- FUNÇÃO DE BLOQUEIO DE DUPLO CLIQUE -->
+<script>
+function responder(eixo,pontos,el){
+  if(el.dataset.respondido) return;
+  el.dataset.respondido = true;
+  responderPergunta(eixo,pontos);
+  el.style.opacity = .5;
+}
+</script>
+
+<!-- PERGUNTAS -->
+<!-- 1 -->
 <div class="card">
-<p><strong>1.</strong> Quando algo começa a sair do seu controle, você:</p>
-<div class="option" onclick="responderPergunta('eixo2',0)">Aceita o desconforto e observa</div>
-<div class="option" onclick="responderPergunta('eixo2',1)">Fica atento, mas espera antes de agir</div>
-<div class="option" onclick="responderPergunta('eixo2',3)">Intervém para retomar controle</div>
-<div class="option" onclick="responderPergunta('eixo2',4)">Age imediatamente para não perder poder</div>
+<p><strong>1.</strong> Quando alguém começa a depender emocionalmente de você:</p>
+<div class="option" onclick="responder('eixo2',0,this)">Me sinto confortável</div>
+<div class="option" onclick="responder('eixo2',1,this)">Fico atento</div>
+<div class="option" onclick="responder('eixo2',3,this)">Crio limites</div>
+<div class="option" onclick="responder('eixo2',4,this)">Me afasto</div>
 </div>
 
-<!-- PERGUNTA 2 -->
+<!-- 2 -->
 <div class="card">
-<p><strong>2.</strong> Em conflitos, sua maior preocupação é:</p>
-<div class="option" onclick="responderPergunta('eixo2',0)">Resolver com clareza</div>
-<div class="option" onclick="responderPergunta('eixo2',1)">Evitar desgaste</div>
-<div class="option" onclick="responderPergunta('eixo2',3)">Não sair em desvantagem</div>
-<div class="option" onclick="responderPergunta('eixo2',4)">Não ser controlado</div>
+<p><strong>2.</strong> Em relações, você se sente mais seguro quando:</p>
+<div class="option" onclick="responder('eixo2',0,this)">Tudo flui naturalmente</div>
+<div class="option" onclick="responder('eixo2',1,this)">Há previsibilidade</div>
+<div class="option" onclick="responder('eixo2',3,this)">Tenho controle do ritmo</div>
+<div class="option" onclick="responder('eixo2',4,this)">Nada depende de mim</div>
 </div>
 
-<!-- PERGUNTA 3 -->
+<!-- 3 -->
 <div class="card">
-<p><strong>3.</strong> Você costuma confiar:</p>
-<div class="option" onclick="responderPergunta('eixo2',0)">Facilmente</div>
-<div class="option" onclick="responderPergunta('eixo2',1)">Com cautela</div>
-<div class="option" onclick="responderPergunta('eixo2',3)">Só depois de testar</div>
-<div class="option" onclick="responderPergunta('eixo2',4)">Raramente</div>
+<p><strong>3.</strong> Quando percebe expectativa sobre você:</p>
+<div class="option" onclick="responder('eixo2',0,this)">Dialogo</div>
+<div class="option" onclick="responder('eixo2',1,this)">Fico cauteloso</div>
+<div class="option" onclick="responder('eixo2',3,this)">Reduzo presença</div>
+<div class="option" onclick="responder('eixo2',4,this)">Me fecho</div>
 </div>
 
-<!-- PERGUNTA 4 -->
+<!-- 4 -->
 <div class="card">
-<p><strong>4.</strong> Quando alguém se aproxima demais emocionalmente:</p>
-<div class="option" onclick="responderPergunta('eixo2',0)">Você se sente confortável</div>
-<div class="option" onclick="responderPergunta('eixo2',1)">Observa antes de se abrir</div>
-<div class="option" onclick="responderPergunta('eixo2',3)">Cria limites claros</div>
-<div class="option" onclick="responderPergunta('eixo2',4)">Se afasta</div>
+<p><strong>4.</strong> Seu maior desconforto no amor é:</p>
+<div class="option" onclick="responder('eixo2',0,this)">Conflito</div>
+<div class="option" onclick="responder('eixo2',1,this)">Cobrança</div>
+<div class="option" onclick="responder('eixo2',3,this)">Dependência</div>
+<div class="option" onclick="responder('eixo2',4,this)">Perda de liberdade</div>
 </div>
 
-<!-- PERGUNTA 5 -->
+<!-- 5 -->
 <div class="card">
-<p><strong>5.</strong> Você se sente mais seguro quando:</p>
-<div class="option" onclick="responderPergunta('eixo2',0)">Tudo está fluindo</div>
-<div class="option" onclick="responderPergunta('eixo2',1)">Tem previsibilidade</div>
-<div class="option" onclick="responderPergunta('eixo2',3)">Tem controle da situação</div>
-<div class="option" onclick="responderPergunta('eixo2',4)">Nada depende de outros</div>
+<p><strong>5.</strong> Quando alguém demonstra fragilidade emocional:</p>
+<div class="option" onclick="responder('eixo2',0,this)">Acolho</div>
+<div class="option" onclick="responder('eixo2',1,this)">Escuto com cautela</div>
+<div class="option" onclick="responder('eixo2',3,this)">Racionalizo</div>
+<div class="option" onclick="responder('eixo2',4,this)">Me afasto</div>
 </div>
 
-<!-- PERGUNTAS 6 A 15 (mantendo padrão seguro) -->
-<!-- Para não quebrar nada, todas seguem mesma estrutura -->
+<!-- 6 -->
+<div class="card">
+<p><strong>6.</strong> Você costuma mostrar sentimentos:</p>
+<div class="option" onclick="responder('eixo2',0,this)">Com facilidade</div>
+<div class="option" onclick="responder('eixo2',1,this)">Aos poucos</div>
+<div class="option" onclick="responder('eixo2',3,this)">De forma controlada</div>
+<div class="option" onclick="responder('eixo2',4,this)">Quase nunca</div>
+</div>
 
-<script src="mindkey-engine.js"></script>
+<!-- 7 -->
+<div class="card">
+<p><strong>7.</strong> Quando sente que pode perder controle:</p>
+<div class="option" onclick="responder('eixo2',0,this)">Aceita</div>
+<div class="option" onclick="responder('eixo2',1,this)">Observa</div>
+<div class="option" onclick="responder('eixo2',3,this)">Intervém</div>
+<div class="option" onclick="responder('eixo2',4,this)">Rompe</div>
+</div>
+
+<!-- 8 -->
+<div class="card">
+<p><strong>8.</strong> Em conflitos afetivos, você tende a:</p>
+<div class="option" onclick="responder('eixo2',0,this)">Conversar</div>
+<div class="option" onclick="responder('eixo2',1,this)">Esperar</div>
+<div class="option" onclick="responder('eixo2',3,this)">Se retirar</div>
+<div class="option" onclick="responder('eixo2',4,this)">Silenciar</div>
+</div>
+
+<!-- 9 -->
+<div class="card">
+<p><strong>9.</strong> Você se sente mais confortável quando:</p>
+<div class="option" onclick="responder('eixo2',0,this)">Existe troca</div>
+<div class="option" onclick="responder('eixo2',1,this)">Há espaço</div>
+<div class="option" onclick="responder('eixo2',3,this)">Há controle</div>
+<div class="option" onclick="responder('eixo2',4,this)">Há distância</div>
+</div>
+
+<!-- 10 -->
+<div class="card">
+<p><strong>10.</strong> Quando alguém se aproxima demais:</p>
+<div class="option" onclick="responder('eixo2',0,this)">Permite</div>
+<div class="option" onclick="responder('eixo2',1,this)">Regula</div>
+<div class="option" onclick="responder('eixo2',3,this)">Freia</div>
+<div class="option" onclick="responder('eixo2',4,this)">Se afasta</div>
+</div>
+
+<!-- 11 -->
+<div class="card">
+<p><strong>11.</strong> Você confia mais:</p>
+<div class="option" onclick="responder('eixo2',0,this)">No vínculo</div>
+<div class="option" onclick="responder('eixo2',1,this)">No tempo</div>
+<div class="option" onclick="responder('eixo2',3,this)">Na razão</div>
+<div class="option" onclick="responder('eixo2',4,this)">Em si mesmo</div>
+</div>
+
+<!-- 12 -->
+<div class="card">
+<p><strong>12.</strong> Seu padrão aparece quando:</p>
+<div class="option" onclick="responder('eixo2',0,this)">Há conflito</div>
+<div class="option" onclick="responder('eixo2',1,this)">Há tensão</div>
+<div class="option" onclick="responder('eixo2',3,this)">Há cobrança</div>
+<div class="option" onclick="responder('eixo2',4,this)">Há dependência</div>
+</div>
+
+<!-- 13 -->
+<div class="card">
+<p><strong>13.</strong> Você sente que precisa:</p>
+<div class="option" onclick="responder('eixo2',0,this)">Confiar</div>
+<div class="option" onclick="responder('eixo2',1,this)">Observar</div>
+<div class="option" onclick="responder('eixo2',3,this)">Se preservar</div>
+<div class="option" onclick="responder('eixo2',4,this)">Se proteger</div>
+</div>
+
+<!-- 14 -->
+<div class="card">
+<p><strong>14.</strong> Quando se envolve emocionalmente:</p>
+<div class="option" onclick="responder('eixo2',0,this)">Se entrega</div>
+<div class="option" onclick="responder('eixo2',1,this)">Vai com cautela</div>
+<div class="option" onclick="responder('eixo2',3,this)">Mantém saída</div>
+<div class="option" onclick="responder('eixo2',4,this)">Evita depender</div>
+</div>
+
+<!-- 15 -->
+<div class="card">
+<p><strong>15.</strong> Se fosse totalmente honesto(a), você diria que no amor:</p>
+<div class="option" onclick="responder('eixo2',0,this)">Confia</div>
+<div class="option" onclick="responder('eixo2',1,this)">Se regula</div>
+<div class="option" onclick="responder('eixo2',3,this)">Se controla</div>
+<div class="option" onclick="responder('eixo2',4,this)">Se protege</div>
+</div>
 
 <div class="card">
 <button onclick="location.href='resultado.html'">
@@ -113,6 +210,8 @@ Finalizar Eixo 2
 </div>
 
 </div>
+
+<script src="mindkey-engine.js"></script>
 
 </body>
 </html>
