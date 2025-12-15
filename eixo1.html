@@ -46,10 +46,9 @@ body{
 
 h1{font-size:36px;margin-top:0}
 h2{font-size:24px;margin-top:0}
+h3{font-size:20px}
 
 p{line-height:1.7;color:#d4d4d8}
-
-.question{margin-bottom:26px}
 
 .options{display:grid;gap:12px;margin-top:14px}
 
@@ -63,11 +62,6 @@ p{line-height:1.7;color:#d4d4d8}
 }
 
 .option:hover{border-color:var(--accent)}
-
-.option.selected{
- border-color:var(--accent);
- background:rgba(77,208,225,.08)
-}
 
 button{
  margin-top:30px;
@@ -90,7 +84,9 @@ button{
 <div class="card">
 <h1>Eixo 1 — Apego & Medo de Perda</h1>
 <p>
-Este eixo observa o que acontece em você quando surge a possibilidade de ser deixado, trocado ou esquecido.
+Este eixo observa o que acontece em você quando surge a possibilidade
+de ser deixado, trocado ou esquecido.
+<br><br>
 Não mede amor. Mede <strong>resposta interna ao risco de perda</strong>.
 </p>
 </div>
@@ -140,13 +136,8 @@ const perguntas = [
 },
 {
  texto: "O silêncio do outro costuma ativar em você:",
- opcoes: [
-  "Interpretação",
-  "Ansiedade",
-  "Urgência",
-  "Insegurança"
- ]
-},
+ opcoes: ["Interpretação","Ansiedade","Urgência","Insegurança"]
+ },
 {
  texto: "Quando alguém se afasta um pouco, seu impulso mais automático é:",
  opcoes: [
@@ -185,12 +176,7 @@ const perguntas = [
 },
 {
  texto: "Quando alguém precisa muito de você, você se sente:",
- opcoes: [
-  "Importante",
-  "Conectado",
-  "Mais seguro",
-  "Necessário"
- ]
+ opcoes: ["Importante","Conectado","Mais seguro","Necessário"]
 },
 {
  texto: "Quando alguém não parece precisar de você, você:",
@@ -212,12 +198,7 @@ const perguntas = [
 },
 {
  texto: "O que mais ativa sua ansiedade emocional?",
- opcoes: [
-  "Incerteza",
-  "Distância",
-  "Mudança de comportamento",
-  "Falta de confirmação"
- ]
+ opcoes: ["Incerteza","Distância","Mudança","Falta de confirmação"]
 },
 {
  texto: "Você percebe que seu padrão se repete quando:",
@@ -240,7 +221,6 @@ const perguntas = [
 ];
 
 let atual = 0;
-let respostas = [];
 
 function render(){
  const q = perguntas[atual];
@@ -254,19 +234,28 @@ function render(){
 }
 
 function responder(i){
- respostas.push(i+1);
  responderPergunta('eixo1', i+1);
  atual++;
- if(atual < perguntas.length) render();
- else finalizar();
+ atual < perguntas.length ? render() : finalizar();
 }
 
 function finalizar(){
- const resultado = gerarRelatorioFinal();
  document.getElementById('quiz').innerHTML = `
-  <h2>Análise concluída</h2>
-  <p>${resultado.eixo1.leitura}</p>
-  <button onclick="location.href='index.html'">Voltar</button>
+  <p style="font-size:18px">
+   Você concluiu a primeira camada da análise.
+   <br><br>
+   Agora vamos observar <strong>como você se protege</strong>
+   quando sente risco emocional ou perda de controle.
+  </p>
+
+  <h3>
+   Próxima etapa:<br>
+   <span style="color:#4dd0e1">Controle & Autoproteção</span>
+  </h3>
+
+  <button onclick="location.href='eixo2.html'">
+   Continuar análise
+  </button>
  `;
 }
 
