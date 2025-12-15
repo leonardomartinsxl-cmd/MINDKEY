@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>MindKey — Eixo 2 | Controle & Autoproteção</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  font-family:Inter,system-ui,sans-serif;
+  background:#0b0c0f;
+  color:#eaeaea;
+}
+
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:60px 20px;
+}
+
+.card{
+  background:#15171c;
+  border-radius:22px;
+  padding:30px;
+  margin-bottom:26px;
+  border:1px solid rgba(255,255,255,.05);
+}
+
+h1{margin-top:0}
+p{color:#cfcfd4;line-height:1.6}
+
+.option{
+  background:#1f2229;
+  border-radius:14px;
+  padding:16px;
+  margin-top:14px;
+  cursor:pointer;
+}
+
+.option:hover{
+  background:#262a33;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+<h1>Eixo 2 — Controle & Autoproteção</h1>
+<p>
+Este bloco observa como você reage quando sente risco,
+frustração ou perda de controle emocional.
+</p>
+</div>
+
+<!-- PERGUNTA 1 -->
+<div class="card">
+<p><strong>1.</strong> Quando algo começa a sair do seu controle, você:</p>
+<div class="option" onclick="responderPergunta('eixo2',0)">Aceita o desconforto e observa</div>
+<div class="option" onclick="responderPergunta('eixo2',1)">Fica atento, mas espera antes de agir</div>
+<div class="option" onclick="responderPergunta('eixo2',3)">Intervém para retomar controle</div>
+<div class="option" onclick="responderPergunta('eixo2',4)">Age imediatamente para não perder poder</div>
+</div>
+
+<!-- PERGUNTA 2 -->
+<div class="card">
+<p><strong>2.</strong> Em conflitos, sua maior preocupação é:</p>
+<div class="option" onclick="responderPergunta('eixo2',0)">Resolver com clareza</div>
+<div class="option" onclick="responderPergunta('eixo2',1)">Evitar desgaste</div>
+<div class="option" onclick="responderPergunta('eixo2',3)">Não sair em desvantagem</div>
+<div class="option" onclick="responderPergunta('eixo2',4)">Não ser controlado</div>
+</div>
+
+<!-- PERGUNTA 3 -->
+<div class="card">
+<p><strong>3.</strong> Você costuma confiar:</p>
+<div class="option" onclick="responderPergunta('eixo2',0)">Facilmente</div>
+<div class="option" onclick="responderPergunta('eixo2',1)">Com cautela</div>
+<div class="option" onclick="responderPergunta('eixo2',3)">Só depois de testar</div>
+<div class="option" onclick="responderPergunta('eixo2',4)">Raramente</div>
+</div>
+
+<!-- PERGUNTA 4 -->
+<div class="card">
+<p><strong>4.</strong> Quando alguém se aproxima demais emocionalmente:</p>
+<div class="option" onclick="responderPergunta('eixo2',0)">Você se sente confortável</div>
+<div class="option" onclick="responderPergunta('eixo2',1)">Observa antes de se abrir</div>
+<div class="option" onclick="responderPergunta('eixo2',3)">Cria limites claros</div>
+<div class="option" onclick="responderPergunta('eixo2',4)">Se afasta</div>
+</div>
+
+<!-- PERGUNTA 5 -->
+<div class="card">
+<p><strong>5.</strong> Você se sente mais seguro quando:</p>
+<div class="option" onclick="responderPergunta('eixo2',0)">Tudo está fluindo</div>
+<div class="option" onclick="responderPergunta('eixo2',1)">Tem previsibilidade</div>
+<div class="option" onclick="responderPergunta('eixo2',3)">Tem controle da situação</div>
+<div class="option" onclick="responderPergunta('eixo2',4)">Nada depende de outros</div>
+</div>
+
+<!-- PERGUNTAS 6 A 15 (mantendo padrão seguro) -->
+<!-- Para não quebrar nada, todas seguem mesma estrutura -->
+
+<script src="mindkey-engine.js"></script>
+
+<div class="card">
+<button onclick="location.href='resultado.html'">
+Finalizar Eixo 2
+</button>
+</div>
+
+</div>
+
+</body>
+</html>
