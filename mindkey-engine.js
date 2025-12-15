@@ -85,11 +85,14 @@ function avaliarEspelho(eixo, respostaA, respostaB) {
   }
 }
 
-// ---------- NORMALIZAÇÃO ----------
+// ---------- NORMALIZAÇÃO (CORRIGIDA) ----------
 function calcularPercentual(eixo) {
   const e = MindKey.eixos[eixo];
-  if (!e) return 0;
-  return Math.round((e.pontuacao / e.max) * 100);
+  if (!e || !e.max) return 0;
+
+  const bruto = (e.pontuacao / e.max) * 100;
+
+  return Math.min(100, Math.max(0, Math.round(bruto)));
 }
 
 // ---------- ORDENAÇÃO ----------
@@ -271,17 +274,27 @@ criando distância interna como defesa.
   }
 };
 
-// ---------- RELATÓRIO ----------
+// ---------- RELATÓRIO (CORRIGIDO) ----------
 function gerarRelatorioFinal() {
   const ordenados = eixosOrdenados();
   const combinacao = combinacaoAtiva();
 
+  const eixoPrincipal = ordenados[0];
+  const eixoSecundario = ordenados[1];
+
   return {
     abertura:
-      "Este relatório não define quem você é. Ele revela padrões que se ativam sob vínculo e pressão.",
+      "Este relatório não define quem você é. Ele interpreta padrões emocionais ativados com base nas suas respostas, especialmente em contextos de vínculo, pressão e intensidade.",
 
-    eixoPrincipal: ordenados[0],
-    eixoSecundario: ordenados[1],
+    eixoPrincipal: {
+      ...eixoPrincipal,
+      leitura: leituras[eixoPrincipal.key](eixoPrincipal.percentual)
+    },
+
+    eixoSecundario: {
+      ...eixoSecundario,
+      leitura: leituras[eixoSecundario.key](eixoSecundario.percentual)
+    },
 
     leituraCombinada: combinacao
       ? leituras.combinacoes[combinacao]
@@ -290,7 +303,7 @@ function gerarRelatorioFinal() {
     marcadores: MindKey.marcadores,
 
     encerramento:
-      "Consciência cria espaço. Espaço cria escolha."
+      "Autoconhecimento não muda quem você é — muda o quanto você reage no automático. Consciência cria espaço. Espaço cria escolha."
   };
 }
 
