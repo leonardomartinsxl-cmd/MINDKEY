@@ -88,11 +88,14 @@ function avaliarEspelho(eixo, respostaA, respostaB) {
 // ---------- NORMALIZAÇÃO (CORRIGIDA) ----------
 function calcularPercentual(eixo) {
   const e = MindKey.eixos[eixo];
-  if (!e || !e.max) return 0;
+  if (!e) return 0;
 
-  const bruto = (e.pontuacao / e.max) * 100;
+  const total = Object.values(MindKey.eixos)
+    .reduce((soma, ex) => soma + ex.pontuacao, 0);
 
-  return Math.min(100, Math.max(0, Math.round(bruto)));
+  if (total === 0) return 0;
+
+  return Math.round((e.pontuacao / total) * 100);
 }
 
 // ---------- ORDENAÇÃO ----------
@@ -317,3 +320,4 @@ function resetMindKey() {
     MindKey.marcadores[m] = false;
   });
 }
+
