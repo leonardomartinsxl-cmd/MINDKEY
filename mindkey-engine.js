@@ -3,7 +3,11 @@
 // =============================
 // Arquivo independente
 // Pode ser substituído inteiro
-// Não altera HTML existente
+// NÃO altera HTML existente
+// COM persistência de dados
+
+// ---------- CHAVE STORAGE ----------
+const MINDKEY_STORAGE_KEY = "mindkey_estado";
 
 // ---------- ESTADO GLOBAL ----------
 const MindKey = {
@@ -35,16 +39,49 @@ const MindKey = {
   }
 };
 
+// ---------- STORAGE ----------
+function salvarEstado() {
+  localStorage.setItem(MINDKEY_STORAGE_KEY, JSON.stringify(MindKey));
+}
+
+function carregarEstado() {
+  const salvo = localStorage.getItem(MINDKEY_STORAGE_KEY);
+  if (!salvo) return;
+
+  try {
+    const dados = JSON.parse(salvo);
+
+    Object.keys(MindKey.eixos).forEach(eixo => {
+      if (dados.eixos?.[eixo]) {
+        MindKey.eixos[eixo].pontuacao = dados.eixos[eixo].pontuacao || 0;
+      }
+    });
+
+    Object.keys(MindKey.marcadores).forEach(m => {
+      if (typeof dados.marcadores?.[m] === "boolean") {
+        MindKey.marcadores[m] = dados.marcadores[m];
+      }
+    });
+  } catch (e) {
+    console.warn("MindKey: erro ao restaurar estado");
+  }
+}
+
+// ---------- RESTAURA AO CARREGAR ----------
+carregarEstado();
+
 // ---------- FUNÇÕES DE PONTUAÇÃO ----------
 function responderPergunta(eixo, pontos) {
   if (!MindKey.eixos[eixo]) return;
   MindKey.eixos[eixo].pontuacao += pontos;
+  salvarEstado();
 }
 
 // ---------- PERGUNTAS-ESPELHO ----------
 function avaliarEspelho(eixo, respostaA, respostaB) {
   if (respostaA !== respostaB) {
     MindKey.marcadores[`incoerencia_${eixo}`] = true;
+    salvarEstado();
   }
 }
 
@@ -73,7 +110,7 @@ function combinacaoAtiva() {
   return `${ordenados[0].key}_${ordenados[1].key}`;
 }
 
-// ---------- LEITURAS (AJUSTADAS, MESMA ESTRUTURA) ----------
+// ---------- LEITURAS ----------
 const leituras = {
   eixo1(percentual) {
     if (percentual < 35) {
@@ -234,35 +271,17 @@ criando distância interna como defesa.
   }
 };
 
-// ---------- GERADOR DE RELATÓRIO ----------
+// ---------- RELATÓRIO ----------
 function gerarRelatorioFinal() {
   const ordenados = eixosOrdenados();
   const combinacao = combinacaoAtiva();
-
-  const eixoPrincipal = ordenados[0];
-  const eixoSecundario = ordenados[1];
 
   return {
     abertura:
       "Este relatório não define quem você é. Ele revela padrões que se ativam sob vínculo e pressão.",
 
-    eixoPrincipal: {
-      nome: eixoPrincipal.nome,
-      percentual: eixoPrincipal.percentual,
-      leitura:
-        typeof leituras[eixoPrincipal.key] === "function"
-          ? leituras[eixoPrincipal.key](eixoPrincipal.percentual)
-          : leituras[eixoPrincipal.key]
-    },
-
-    eixoSecundario: {
-      nome: eixoSecundario.nome,
-      percentual: eixoSecundario.percentual,
-      leitura:
-        typeof leituras[eixoSecundario.key] === "function"
-          ? leituras[eixoSecundario.key](eixoSecundario.percentual)
-          : leituras[eixoSecundario.key]
-    },
+    eixoPrincipal: ordenados[0],
+    eixoSecundario: ordenados[1],
 
     leituraCombinada: combinacao
       ? leituras.combinacoes[combinacao]
@@ -277,15 +296,11 @@ function gerarRelatorioFinal() {
 
 // ---------- RESET ----------
 function resetMindKey() {
+  localStorage.removeItem(MINDKEY_STORAGE_KEY);
   Object.keys(MindKey.eixos).forEach(e => {
     MindKey.eixos[e].pontuacao = 0;
   });
-
   Object.keys(MindKey.marcadores).forEach(m => {
     MindKey.marcadores[m] = false;
   });
 }
-
-// =============================
-// FIM DO MINDKEY ENGINE
-// =============================
