@@ -251,7 +251,10 @@ function render(){
 }
 
 function responder(i){
- responderPergunta('eixo3', i+1);
+ // Pontuação controlada para não quebrar o relatório
+ const pontos = i + 1; // 1 a 4
+ responderPergunta('eixo3', pontos);
+
  atual++;
  atual < perguntas.length ? render() : finalizar();
 }
