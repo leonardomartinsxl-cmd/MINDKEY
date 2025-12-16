@@ -110,12 +110,13 @@ p{
 <div class="card">
 <h1>Seu Relatório MindKey</h1>
 <p class="muted">
-Este material <strong>não define quem você é</strong> e não substitui acompanhamento psicológico.  
-Ele interpreta <strong>padrões emocionais ativados com base nas suas respostas</strong> —  
-especialmente em contextos de vínculo, pressão emocional e intensidade.
+Este relatório não define quem você é e não substitui acompanhamento psicológico.
+Ele revela <strong>padrões emocionais automáticos</strong> que tendem a se ativar
+quando você se envolve, sente pressão emocional ou vive vínculos intensos.
 </p>
 <p class="muted">
-Leia como um <strong>mapa de funcionamento</strong>, não como um rótulo.
+Leia como um <strong>mapa de funcionamento interno</strong>.
+Ele não rotula — ele esclarece.
 </p>
 </div>
 
@@ -123,8 +124,9 @@ Leia como um <strong>mapa de funcionamento</strong>, não como um rótulo.
 <div class="card">
 <h2>Visão Geral dos Eixos</h2>
 <p>
-Abaixo está a distribuição dos padrões que mais tendem a se ativar em você.  
-O eixo mais elevado indica <strong>onde sua energia emocional entra primeiro em ação</strong>.
+Abaixo você vê quais padrões emocionais entram em ação com mais força em você.
+<br>
+O eixo mais elevado mostra <strong>onde sua energia emocional reage primeiro</strong>.
 </p>
 
 <div class="dashboard" id="dashboard"></div>
@@ -178,13 +180,14 @@ document.getElementById("leituraPrincipal").innerHTML = `
 <div class="divider"></div>
 
 <p>
-Com base nas suas respostas, este é o eixo que mais tende a comandar
-suas reações emocionais quando você se envolve.
+Este é o padrão que tende a assumir o controle
+quando algo emocionalmente importante está em jogo.
 </p>
 
 <p>
-<strong>Isso não significa que você seja isso o tempo todo</strong>,
-mas que, sob pressão emocional, é aqui que seu sistema entra em ação primeiro.
+Isso não significa que ele te define o tempo todo,
+mas que <strong>sob pressão emocional</strong>
+é aqui que suas reações costumam nascer.
 </p>
 
 <p>
@@ -192,9 +195,11 @@ ${relatorio.eixoPrincipal.leitura.replace(/\n/g,"<br>")}
 </p>
 
 <p>
-O ponto central aqui não é julgamento — é custo.
-Quando esse eixo opera sem consciência, ele tende a gerar
-<strong>desgaste emocional, repetição de padrões e decisões reativas</strong>.
+O ponto central não é julgamento.
+É consciência de custo.
+<br>
+Quando esse eixo opera no automático,
+ele costuma gerar <strong>desgaste, ansiedade e repetição de situações parecidas</strong>.
 </p>
 `;
 
@@ -206,14 +211,14 @@ document.getElementById("leituraSecundaria").innerHTML = `
 <div class="divider"></div>
 
 <p>
-Este eixo funciona como um <strong>modulador</strong>.
-Ele interfere em como você expressa, controla ou contém
-o padrão dominante.
+Este eixo atua como um <strong>regulador interno</strong>.
+Ele influencia como você segura, expressa ou tenta controlar
+o que o eixo dominante dispara.
 </p>
 
 <p>
-Em muitos momentos, ele pode parecer proteção.
-Em outros, pode virar conflito interno.
+Em alguns momentos, ele protege.
+Em outros, cria tensão interna.
 </p>
 
 <p>
@@ -226,8 +231,8 @@ document.getElementById("leituraCombinada").innerHTML = `
 <h2>Leitura Integrada dos Eixos</h2>
 
 <p>
-Esses dois eixos não atuam separadamente.
-Eles se influenciam o tempo todo — criando seu padrão emocional mais recorrente.
+Esses padrões não funcionam isoladamente.
+Eles se combinam e formam seu estilo emocional mais recorrente.
 </p>
 
 <div class="divider"></div>
@@ -237,15 +242,16 @@ ${relatorio.leituraCombinada || "Não foi possível identificar uma combinação
 </p>
 
 <p>
-Quando essa combinação opera sem consciência,
-ela tende a gerar <strong>ambivalência emocional</strong>:
-vontade de se aproximar e necessidade de se proteger ao mesmo tempo.
+Quando essa combinação atua sem consciência,
+o efeito comum é <strong>ambivalência emocional</strong>:
+uma parte quer se aproximar,
+outra tenta se proteger ao mesmo tempo.
 </p>
 
 <p>
-O efeito prático costuma ser:
+Na prática, isso pode gerar
 <strong>relações intensas, cansativas ou instáveis</strong>,
-mesmo quando existe sentimento genuíno.
+mesmo quando existe sentimento real.
 </p>
 `;
 
@@ -256,25 +262,31 @@ const marcadoresAtivos = Object.entries(relatorio.marcadores)
 document.getElementById("marcadores").innerHTML =
  marcadoresAtivos.length
  ? `
- Foram identificados sinais de divergência entre discurso emocional e reação interna.
+ Foram identificados sinais de conflito interno entre
+ o que você sente, o que pensa e como reage.
  <br><br>
- Isso não indica erro ou contradição moral.
- Indica <strong>camadas internas operando em direções diferentes</strong>.
+ Isso não indica fraqueza.
+ Indica <strong>consciência emocional elevada</strong> —
+ perceber mais camadas gera mais tensão.
  <br><br>
- Pessoas com alto nível de consciência frequentemente apresentam esse tipo de conflito —
- porque percebem mais do que sentem.
+ O trabalho aqui não é se corrigir,
+ é aprender a integrar essas partes.
  `
  : `
- Suas respostas demonstram boa coerência entre percepção, emoção e reação.
+ Suas respostas mostram boa coerência entre
+ percepção, emoção e comportamento.
  <br><br>
- Isso sugere clareza interna e menor gasto de energia emocional
+ Isso sugere clareza interna
+ e menor desperdício de energia emocional
  em conflitos invisíveis.
  `;
 
 // ENCERRAMENTO
 document.getElementById("encerramento").innerHTML = `
 Você não precisa mudar quem você é.
-Mas pode <strong>mudar a forma como reage</strong> quando certos gatilhos aparecem.
+<br>
+Mas pode mudar a forma como reage
+quando certos gatilhos aparecem.
 <br><br>
 Consciência não elimina emoções.
 Ela cria espaço entre o impulso e a escolha.
@@ -284,4 +296,3 @@ E é nesse espaço que a maturidade emocional se constrói.
 </script>
 </body>
 </html>
-
