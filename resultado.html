@@ -100,6 +100,17 @@ p{
  background:rgba(255,255,255,.08);
  margin:40px 0;
 }
+
+button{
+ background:linear-gradient(135deg,var(--accent),var(--accent2));
+ color:#000;
+ border:none;
+ padding:20px 46px;
+ border-radius:999px;
+ font-size:18px;
+ font-weight:800;
+ cursor:pointer;
+}
 </style>
 </head>
 
@@ -153,6 +164,48 @@ O eixo mais elevado mostra <strong>onde sua energia emocional reage primeiro</st
 <p id="encerramento"></p>
 </div>
 
+<!-- CTA PREMIUM -->
+<div class="card">
+<h2>O que este relatório ainda não mostrou</h2>
+
+<p>
+Você acabou de ver <strong>como você reage</strong>.
+<br>
+Mas ainda não viu <strong>por que certos padrões sempre se repetem</strong>
+nem <strong>o que exatamente te ativa ou te desgasta</strong>.
+</p>
+
+<p>
+Existe um nível mais profundo:
+<br>
+como você funciona em silêncio,
+o que te irrita antes de virar conflito,
+e com quais tipos de pessoas, ambientes e serviços
+você realmente combina.
+</p>
+
+<div class="divider"></div>
+
+<p>
+A <strong>Biblioteca Emocional MindKey</strong> é um mapeamento exclusivo
+do seu funcionamento interno.
+<br>
+Não é sobre melhorar.
+É sobre <strong>se entender em um nível que normalmente ninguém explica</strong>.
+</p>
+
+<div style="text-align:center;margin-top:40px">
+<button onclick="location.href='vendasmindkey.html'">
+ Acessar minha Biblioteca Emocional
+</button>
+
+<p class="muted" style="margin-top:14px;font-size:14px">
+Não é um produto.<br>
+É acesso a um tipo de autoconhecimento que muda decisões.
+</p>
+</div>
+</div>
+
 </div>
 
 <script src="mindkey-engine.js?v=final"></script>
@@ -185,21 +238,7 @@ quando algo emocionalmente importante está em jogo.
 </p>
 
 <p>
-Isso não significa que ele te define o tempo todo,
-mas que <strong>sob pressão emocional</strong>
-é aqui que suas reações costumam nascer.
-</p>
-
-<p>
 ${relatorio.eixoPrincipal.leitura.replace(/\n/g,"<br>")}
-</p>
-
-<p>
-O ponto central não é julgamento.
-É consciência de custo.
-<br>
-Quando esse eixo opera no automático,
-ele costuma gerar <strong>desgaste, ansiedade e repetição de situações parecidas</strong>.
 </p>
 `;
 
@@ -211,17 +250,6 @@ document.getElementById("leituraSecundaria").innerHTML = `
 <div class="divider"></div>
 
 <p>
-Este eixo atua como um <strong>regulador interno</strong>.
-Ele influencia como você segura, expressa ou tenta controlar
-o que o eixo dominante dispara.
-</p>
-
-<p>
-Em alguns momentos, ele protege.
-Em outros, cria tensão interna.
-</p>
-
-<p>
 ${relatorio.eixoSecundario.leitura.replace(/\n/g,"<br>")}
 </p>
 `;
@@ -229,29 +257,9 @@ ${relatorio.eixoSecundario.leitura.replace(/\n/g,"<br>")}
 // LEITURA COMBINADA
 document.getElementById("leituraCombinada").innerHTML = `
 <h2>Leitura Integrada dos Eixos</h2>
-
-<p>
-Esses padrões não funcionam isoladamente.
-Eles se combinam e formam seu estilo emocional mais recorrente.
-</p>
-
 <div class="divider"></div>
-
 <p>
 ${relatorio.leituraCombinada || "Não foi possível identificar uma combinação dominante."}
-</p>
-
-<p>
-Quando essa combinação atua sem consciência,
-o efeito comum é <strong>ambivalência emocional</strong>:
-uma parte quer se aproximar,
-outra tenta se proteger ao mesmo tempo.
-</p>
-
-<p>
-Na prática, isso pode gerar
-<strong>relações intensas, cansativas ou instáveis</strong>,
-mesmo quando existe sentimento real.
 </p>
 `;
 
@@ -261,37 +269,15 @@ const marcadoresAtivos = Object.entries(relatorio.marcadores)
 
 document.getElementById("marcadores").innerHTML =
  marcadoresAtivos.length
- ? `
- Foram identificados sinais de conflito interno entre
- o que você sente, o que pensa e como reage.
- <br><br>
- Isso não indica fraqueza.
- Indica <strong>consciência emocional elevada</strong> —
- perceber mais camadas gera mais tensão.
- <br><br>
- O trabalho aqui não é se corrigir,
- é aprender a integrar essas partes.
- `
- : `
- Suas respostas mostram boa coerência entre
- percepção, emoção e comportamento.
- <br><br>
- Isso sugere clareza interna
- e menor desperdício de energia emocional
- em conflitos invisíveis.
- `;
+ ? `Foram identificados sinais de tensão interna entre emoção, pensamento e reação.`
+ : `Suas respostas mostram boa coerência emocional.`;
 
 // ENCERRAMENTO
 document.getElementById("encerramento").innerHTML = `
-Você não precisa mudar quem você é.
-<br>
-Mas pode mudar a forma como reage
-quando certos gatilhos aparecem.
+Consciência cria espaço entre impulso e escolha.
 <br><br>
-Consciência não elimina emoções.
-Ela cria espaço entre o impulso e a escolha.
-<br><br>
-E é nesse espaço que a maturidade emocional se constrói.
+E é nesse espaço que você muda padrões
+sem precisar mudar quem você é.
 `;
 </script>
 </body>
