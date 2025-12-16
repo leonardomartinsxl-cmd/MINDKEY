@@ -14,18 +14,22 @@
  --muted:#a1a1aa;
  --accent:#4dd0e1;
 }
+
 *{box-sizing:border-box}
+
 body{
  margin:0;
  font-family:Inter,system-ui,sans-serif;
  background:linear-gradient(180deg,#0b0c0f,#0f1117);
  color:var(--text);
 }
+
 .container{
  max-width:900px;
  margin:auto;
  padding:60px 20px 120px;
 }
+
 .card{
  background:var(--card);
  border-radius:26px;
@@ -34,15 +38,20 @@ body{
  margin-bottom:32px;
  animation:fade .6s ease;
 }
+
 @keyframes fade{
  from{opacity:0;transform:translateY(10px)}
  to{opacity:1}
 }
+
 h1{font-size:36px;margin-top:0}
 h2{font-size:24px;margin-top:0}
 h3{font-size:20px}
+
 p{line-height:1.7;color:#d4d4d8}
+
 .options{display:grid;gap:12px;margin-top:14px}
+
 .option{
  background:var(--soft);
  border-radius:16px;
@@ -51,7 +60,9 @@ p{line-height:1.7;color:#d4d4d8}
  border:1px solid rgba(255,255,255,.05);
  transition:.2s
 }
+
 .option:hover{border-color:var(--accent)}
+
 button{
  margin-top:30px;
  background:linear-gradient(135deg,#4dd0e1,#00acc1);
@@ -62,6 +73,7 @@ button{
  font-weight:700;
  cursor:pointer
 }
+
 .progress{font-size:13px;color:var(--muted);margin-bottom:10px}
 </style>
 </head>
@@ -85,7 +97,143 @@ Não mede frieza. Mede <strong>como você se protege para não perder autonomia<
 
 <script src="mindkey-engine.js"></script>
 <script>
-const perguntas = [...]; // (perguntas mantidas exatamente iguais)
+const perguntas = [
+{
+ texto: "Quando alguém se aproxima emocionalmente rápido demais, você tende a:",
+ opcoes: [
+  "Ficar mais cauteloso para não se expor",
+  "Reduzir a intensidade da troca",
+  "Observar antes de se envolver mais",
+  "Criar espaço para se sentir seguro"
+ ]
+},
+{
+ texto: "Em um relacionamento, você se sente mais confortável quando:",
+ opcoes: [
+  "Tem controle sobre seu tempo e escolhas",
+  "Não precisa se justificar emocionalmente",
+  "Mantém autonomia mesmo envolvido",
+  "Não sente expectativas constantes"
+ ]
+},
+{
+ texto: "Quando percebe que alguém começa a depender emocionalmente de você, sua reação mais comum é:",
+ opcoes: [
+  "Sentir pressão interna",
+  "Diminuir a presença",
+  "Evitar aprofundar o vínculo",
+  "Criar distância emocional"
+ ]
+},
+{
+ texto: "O que mais ativa sua necessidade de autoproteção no amor?",
+ opcoes: [
+  "Sentir invasão do seu espaço emocional",
+  "Cobranças afetivas diretas",
+  "Expectativas não combinadas",
+  "Sensação de perder liberdade"
+ ]
+},
+{
+ texto: "Quando alguém demonstra fragilidade emocional perto de você, você tende a:",
+ opcoes: [
+  "Se fechar um pouco para não absorver",
+  "Racionalizar para não se envolver demais",
+  "Se afastar internamente",
+  "Ficar desconfortável sem saber como agir"
+ ]
+},
+{
+ texto: "Você percebe que começa a se afastar quando:",
+ opcoes: [
+  "O vínculo exige presença constante",
+  "O outro demonstra apego intenso",
+  "A relação fica emocionalmente pesada",
+  "Surge expectativa clara sobre você"
+ ]
+},
+{
+ texto: "Durante conflitos emocionais, seu impulso mais automático é:",
+ opcoes: [
+  "Silenciar para evitar desgaste",
+  "Evitar confronto direto",
+  "Se retirar emocionalmente",
+  "Analisar friamente a situação"
+ ]
+},
+{
+ texto: "Sobre demonstrar sentimentos, você costuma:",
+ opcoes: [
+  "Falar apenas quando confia muito",
+  "Mostrar de forma controlada",
+  "Revelar só parte do que sente",
+  "Demorar bastante para se abrir"
+ ]
+},
+{
+ texto: "Quando alguém tenta te compreender emocionalmente mais a fundo, você tende a:",
+ opcoes: [
+  "Se fechar para se proteger",
+  "Se esquivar do assunto",
+  "Criar barreiras emocionais",
+  "Mudar o foco da conversa"
+ ]
+},
+{
+ texto: "Quando sente que alguém está se aproximando demais emocionalmente, você geralmente:",
+ opcoes: [
+  "Reduz a proximidade",
+  "Tenta manter controle da situação",
+  "Observa antes de reagir",
+  "Se distancia para se preservar"
+ ]
+},
+{
+ texto: "No fundo, em relações, você sente que precisa:",
+ opcoes: [
+  "Manter alguma vantagem emocional",
+  "Evitar se expor demais",
+  "Se preservar para não se machucar",
+  "Controlar até onde se envolve"
+ ]
+},
+{
+ texto: "Quando se envolve afetivamente, você costuma:",
+ opcoes: [
+  "Manter partes suas intocadas",
+  "Evitar se entregar completamente",
+  "Evitar depender emocionalmente",
+  "Manter uma saída caso precise"
+ ]
+},
+{
+ texto: "Esse padrão de controle aparece mais quando:",
+ opcoes: [
+  "O outro se apega demais",
+  "O vínculo começa a aprofundar",
+  "Surge expectativa emocional",
+  "A relação pede mais entrega"
+ ]
+},
+{
+ texto: "Você tende a confiar mais:",
+ opcoes: [
+  "No que consegue controlar",
+  "No que entende racionalmente",
+  "No que depende apenas de você",
+  "No que não exige entrega emocional"
+ ]
+},
+{
+ texto: "Sendo honesto(a), no amor sua prioridade costuma ser:",
+ opcoes: [
+  "Se proteger emocionalmente",
+  "Manter uma distância segura",
+  "Não perder o controle",
+  "Evitar depender de alguém"
+ ]
+}
+];
 
 let atual = 0;
 
@@ -127,7 +275,7 @@ function finalizar(){
   </p>
 
   <p>
-   O risco desse padrão não é proteger-se.
+   O risco desse padrão não é se proteger.
    É se fechar antes de saber se o vínculo realmente exige tanto assim.
   </p>
 
