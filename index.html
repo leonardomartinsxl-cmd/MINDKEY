@@ -39,15 +39,12 @@
     }
 
     .container {
-      max-width: 1100px;
+      max-width: 900px;
       margin: 0 auto;
       padding: 32px 20px;
     }
 
     header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       margin-bottom: 48px;
     }
 
@@ -56,21 +53,23 @@
       font-weight: 500;
     }
 
-    main h2 {
+    h2 {
       font-size: 28px;
       margin-bottom: 8px;
       font-weight: 600;
     }
 
-    main p.subtitle {
+    p.subtitle {
       color: var(--text-secondary);
       margin-bottom: 32px;
       max-width: 640px;
     }
 
+    /* ---------- CARDS ---------- */
+
     .quiz-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
       gap: 24px;
     }
 
@@ -99,12 +98,6 @@
       margin-bottom: 16px;
     }
 
-    .quiz-status {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-bottom: 16px;
-    }
-
     .quiz-card button {
       background: var(--accent);
       color: #fff;
@@ -113,11 +106,57 @@
       padding: 10px 16px;
       font-size: 14px;
       cursor: pointer;
-      transition: opacity var(--transition);
     }
 
-    .quiz-card button:hover {
-      opacity: 0.9;
+    /* ---------- BOTÕES ---------- */
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-secondary);
+      border: none;
+      font-size: 14px;
+      margin-bottom: 24px;
+      cursor: pointer;
+    }
+
+    /* ---------- TELAS ---------- */
+
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    /* ---------- INTRO ---------- */
+
+    .intro-box {
+      background: var(--bg-secondary);
+      border-radius: var(--radius);
+      padding: 32px;
+      max-width: 700px;
+    }
+
+    .intro-box p {
+      margin-bottom: 16px;
+      color: var(--text-secondary);
+    }
+
+    .intro-note {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 16px;
     }
   </style>
 </head>
@@ -125,42 +164,97 @@
 <body>
 
   <div class="container">
+
     <header>
       <h1>Análises Comportamentais</h1>
     </header>
 
-    <main>
+    <!-- ================= HOME ================= -->
+    <section id="home" class="screen active">
+
       <h2>Análises de Padrões Comportamentais</h2>
       <p class="subtitle">
         Leituras independentes sobre como você tende a agir, reagir e decidir.
       </p>
 
-      <section class="quiz-grid">
+      <div class="quiz-grid">
 
-        <div class="quiz-card">
+        <div class="quiz-card" onclick="openIntro('emocional')">
           <h3>Padrões de Regulação Emocional</h3>
           <p>Raiva • Humor</p>
-          <div class="quiz-status">Não iniciado</div>
           <button>Iniciar</button>
         </div>
 
-        <div class="quiz-card">
+        <div class="quiz-card" onclick="openIntro('comunicacao')">
           <h3>Padrões de Comunicação</h3>
           <p>Clareza • Conflito • Escuta</p>
-          <div class="quiz-status">Não iniciado</div>
           <button>Iniciar</button>
         </div>
 
-        <div class="quiz-card">
+        <div class="quiz-card" onclick="openIntro('temperamento')">
           <h3>Temperamento e Funcionamento</h3>
-          <p>Ritmo • Energia • Resposta a estímulos</p>
-          <div class="quiz-status">Não iniciado</div>
+          <p>Ritmo • Energia • Estímulos</p>
           <button>Iniciar</button>
         </div>
 
-      </section>
-    </main>
+      </div>
+    </section>
+
+    <!-- ================= INTRO QUIZ ================= -->
+    <section id="quiz-intro" class="screen">
+
+      <button class="btn-secondary" onclick="goHome()">← Voltar</button>
+
+      <div class="intro-box">
+        <h2 id="intro-title"></h2>
+
+        <p>
+          Você está prestes a responder um quiz de análise de padrões comportamentais.
+        </p>
+
+        <p>
+          Este quiz observa tendências de funcionamento e resposta no dia a dia.
+          Ele não define quem você é e não gera diagnóstico ou laudo.
+        </p>
+
+        <p>
+          Não existem respostas certas ou erradas.  
+          O objetivo é clareza, não julgamento.
+        </p>
+
+        <div class="intro-note">
+          Use o resultado como um espelho, não como um rótulo.
+        </div>
+
+        <br />
+
+        <button class="btn-primary">
+          Começar quiz
+        </button>
+      </div>
+
+    </section>
+
   </div>
+
+  <script>
+    const titles = {
+      emocional: "Padrões de Regulação Emocional",
+      comunicacao: "Padrões de Comunicação",
+      temperamento: "Temperamento e Funcionamento"
+    };
+
+    function openIntro(type) {
+      document.getElementById("intro-title").innerText = titles[type];
+      document.getElementById("home").classList.remove("active");
+      document.getElementById("quiz-intro").classList.add("active");
+    }
+
+    function goHome() {
+      document.getElementById("quiz-intro").classList.remove("active");
+      document.getElementById("home").classList.add("active");
+    }
+  </script>
 
 </body>
 </html>
