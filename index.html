@@ -1,280 +1,166 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>MindKey — Autoconhecimento Comportamental</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>Análises de Padrões Comportamentais</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<style>
-:root{
- --bg:#0b0c0f;
- --card:#15171c;
- --soft:#1f2229;
- --text:#eaeaea;
- --muted:#a1a1aa;
- --accent:#4dd0e1;
-}
+  <!-- Fonte -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-*{box-sizing:border-box}
+  <style>
+    :root {
+      --bg-primary: #0E0F12;
+      --bg-secondary: #15171C;
+      --bg-tertiary: #1C1F26;
 
-body{
- margin:0;
- font-family:Inter,system-ui,sans-serif;
- background:linear-gradient(180deg,#0b0c0f,#0f1117);
- color:var(--text);
-}
+      --text-primary: #F5F7FA;
+      --text-secondary: #AEB3C2;
+      --text-muted: #7C8193;
 
-.container{
- max-width:980px;
- margin:auto;
- padding:80px 20px 100px;
-}
+      --accent: #4F8CFF;
+      --radius: 12px;
+      --transition: 220ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
 
-.card{
- background:var(--card);
- border-radius:26px;
- padding:36px;
- border:1px solid rgba(255,255,255,.05);
- margin-bottom:36px;
- animation:fade .6s ease;
-}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-@keyframes fade{
- from{opacity:0;transform:translateY(10px)}
- to{opacity:1}
-}
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
 
-h1{
- font-size:42px;
- letter-spacing:-.6px;
- margin-top:0;
-}
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 20px;
+    }
 
-h2{
- font-size:28px;
- margin-top:0;
-}
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 48px;
+    }
 
-h3{
- font-size:20px;
- margin-bottom:8px;
-}
+    header h1 {
+      font-size: 20px;
+      font-weight: 500;
+    }
 
-p{
- line-height:1.7;
- color:#d4d4d8;
-}
+    main h2 {
+      font-size: 28px;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
 
-.highlight{
- color:var(--accent);
- font-weight:600;
-}
+    main p.subtitle {
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      max-width: 640px;
+    }
 
-.grid{
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
- gap:22px;
- margin-top:28px;
-}
+    .quiz-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
 
-.box{
- background:var(--soft);
- border-radius:18px;
- padding:24px;
-}
+    .quiz-card {
+      background: var(--bg-secondary);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: transform var(--transition), background var(--transition);
+      cursor: pointer;
+    }
 
-button{
- background:linear-gradient(135deg,#4dd0e1,#00acc1);
- color:#000;
- border:none;
- padding:18px 42px;
- border-radius:999px;
- font-size:16px;
- font-weight:700;
- cursor:pointer;
- box-shadow:0 10px 28px rgba(77,208,225,.28);
-}
+    .quiz-card:hover {
+      background: var(--bg-tertiary);
+      transform: translateY(-4px);
+    }
 
-button:hover{
- box-shadow:0 16px 36px rgba(77,208,225,.4);
-}
+    .quiz-card h3 {
+      font-size: 18px;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
 
-.footer{
- text-align:center;
- font-size:13px;
- color:#888;
- margin-top:80px;
-}
-</style>
+    .quiz-card p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    .quiz-status {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .quiz-card button {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 16px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: opacity var(--transition);
+    }
+
+    .quiz-card button:hover {
+      opacity: 0.9;
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="container">
+  <div class="container">
+    <header>
+      <h1>Análises Comportamentais</h1>
+    </header>
 
-<!-- HERO -->
-<div class="card">
-<h1>Entenda seus padrões.<br>Antes que eles decidam por você.</h1>
+    <main>
+      <h2>Análises de Padrões Comportamentais</h2>
+      <p class="subtitle">
+        Leituras independentes sobre como você tende a agir, reagir e decidir.
+      </p>
 
-<p>
-<span class="highlight">MindKey</span> é uma ferramenta de
-<strong>autoconhecimento comportamental</strong> que revela
-como você reage no amor, no trabalho e nas relações sociais.
-</p>
+      <section class="quiz-grid">
 
-<p>
-Sem rótulos clínicos.<br>
-Sem promessas vazias.<br>
-Apenas <strong>clareza real</strong>.
-</p>
+        <div class="quiz-card">
+          <h3>Padrões de Regulação Emocional</h3>
+          <p>Raiva • Humor</p>
+          <div class="quiz-status">Não iniciado</div>
+          <button>Iniciar</button>
+        </div>
 
-<br>
-<button onclick="location.href='eixo1.html'">
-Iniciar minha análise
-</button>
-</div>
+        <div class="quiz-card">
+          <h3>Padrões de Comunicação</h3>
+          <p>Clareza • Conflito • Escuta</p>
+          <div class="quiz-status">Não iniciado</div>
+          <button>Iniciar</button>
+        </div>
 
-<!-- COMO FUNCIONA -->
-<div class="card">
-<h2>Como funciona</h2>
+        <div class="quiz-card">
+          <h3>Temperamento e Funcionamento</h3>
+          <p>Ritmo • Energia • Resposta a estímulos</p>
+          <div class="quiz-status">Não iniciado</div>
+          <button>Iniciar</button>
+        </div>
 
-<div class="grid">
-<div class="box">
-<h3>1️⃣ Responda</h3>
-<p>
-Perguntas diretas revelam padrões reais de comportamento,
-não respostas ideais.
-</p>
-</div>
-
-<div class="box">
-<h3>2️⃣ Reconheça</h3>
-<p>
-Você identifica reações automáticas que se repetem
-em diferentes áreas da vida.
-</p>
-</div>
-
-<div class="box">
-<h3>3️⃣ Reposicione</h3>
-<p>
-Receba orientações práticas e prompts de IA
-para agir com mais consciência.
-</p>
-</div>
-</div>
-</div>
-
-<!-- EIXOS -->
-<div class="card">
-<h2>Os três eixos comportamentais</h2>
-<p>
-A análise do MindKey não classifica pessoas.
-Ela identifica <strong>forças internas em tensão</strong>
-que moldam suas decisões e relações.
-</p>
-
-<div class="grid">
-<div class="box">
-<h3>1️⃣ Apego & Medo de Perda</h3>
-<p>
-Avalia como você cria vínculos, reage à possibilidade de abandono
-ou rejeição e o quanto suas escolhas são guiadas pela necessidade
-de segurança emocional.
-</p>
-</div>
-
-<div class="box">
-<h3>2️⃣ Controle & Autoproteção</h3>
-<p>
-Analisa o grau de controle que você exerce sobre pessoas e situações,
-bem como os mecanismos de defesa usados para evitar frustração,
-vulnerabilidade ou perda de poder.
-</p>
-</div>
-
-<div class="box">
-<h3>3️⃣ Intensidade & Regulação</h3>
-<p>
-Observa a intensidade emocional com que você vive experiências
-e sua capacidade de regular impulsos, emoções e reações
-em momentos de pressão.
-</p>
-</div>
-</div>
-</div>
-
-<!-- CAMADAS -->
-<div class="card">
-<h2>Onde esses padrões se manifestam</h2>
-
-<div class="grid">
-<div class="box">
-<h3>❤️ Amoroso</h3>
-<p>
-Relações afetivas, apego, ciúmes,
-conflitos e intimidade.
-</p>
-</div>
-
-<div class="box">
-<h3>💼 Profissional</h3>
-<p>
-Decisão, desempenho, liderança,
-pressão e reconhecimento.
-</p>
-</div>
-
-<div class="box">
-<h3>🧭 Social</h3>
-<p>
-Pertencimento, posicionamento,
-adaptação e limites em grupo.
-</p>
-</div>
-</div>
-</div>
-
-<!-- DIFERENCIAL -->
-<div class="card">
-<h2>O que torna o MindKey diferente</h2>
-
-<div class="grid">
-<div class="box">
-<p>✔ Não é teste genérico</p>
-<p>✔ Não faz diagnóstico</p>
-<p>✔ Não entrega respostas prontas</p>
-</div>
-
-<div class="box">
-<p>✔ Integra comportamento + IA</p>
-<p>✔ Foco em responsabilidade pessoal</p>
-<p>✔ Leitura profunda e ética</p>
-</div>
-</div>
-</div>
-
-<!-- AVISO -->
-<div class="card">
-<h2>Importante</h2>
-<p>
-MindKey é uma ferramenta de reflexão e autoconhecimento.
-</p>
-<p>
-<strong>Não substitui</strong> acompanhamento psicológico,
-psiquiátrico ou orientação profissional.
-</p>
-</div>
-
-<div class="footer">
-© MindKey — Autoconhecimento com consciência
-</div>
-
-</div>
-
-<!-- ENGINE (não quebra nada) -->
-<script src="mindkey-engine.js"></script>
+      </section>
+    </main>
+  </div>
 
 </body>
 </html>
-
